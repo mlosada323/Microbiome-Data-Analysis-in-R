@@ -84,7 +84,7 @@ write.table(tab, file="hsb2demo_out.csv", quote=FALSE, row.names=TRUE,col.names=
 write.csv(tab,file="hsb2demo_out1.csv")
 ```
 
-## 4.1.5	Data Manipulation
+## 4.1.5 Data Manipulation
 ```r
 data()
 attach(iris)
@@ -124,7 +124,7 @@ df = data.frame(Sepal.Width,Petal.Length,Petal.Width)
 df
 ```
 
-## Basic Operations
+### Basic Operations
 ```r
 head(iris) 
 attributes(iris) 
