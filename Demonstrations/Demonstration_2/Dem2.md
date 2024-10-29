@@ -122,11 +122,13 @@ install.packages("ggplot2")
 library(ggplot2)
 ```
 
-## 4.3.3	Creating a Plot Using ggplot() step by step
+## 4.3.3	Creating a Plot Using ggplot()
 ```r
 data(iris)
 head(iris)
 library(ggplot2)
+
+# step by step
 p <- ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) 
 # Sepal.Width and Sepal.Length are columns in iris dataframe
 p   
