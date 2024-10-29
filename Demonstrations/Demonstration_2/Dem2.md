@@ -2,6 +2,9 @@
 Complete the following demonstration in RStudio. Create a markdown file of your script. You can follow detail instructions in Xia et al. (2018), Chapter 4: Introduction to R, RStudio and ggplot2. All the sections below match the sections in the book
 
 ## 4.2. Introduction to the dplyr Package
+dplyr https://cran.r-project.org/web/packages/dplyr/index.html
+dplyr is a grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulation challenges
+
 ```r
 setwd("your working directoty")
 tab <- read.csv("hsb2demo.csv")
