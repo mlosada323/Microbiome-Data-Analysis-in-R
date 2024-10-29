@@ -1,22 +1,18 @@
-## Demonstration 1
+# Demonstration 1
 
-################################################################################
-###Chapter 4: Introduction to R, RStudio and ggplot2
-###Yinglin Xia: September, 2018                                                                 
-################################################################################
+Chapter 4: Introduction to R, RStudio and ggplot2
+Yinglin Xia: September, 2018                                                                 
+4.1.Introduction to R and RStudio
 
-################################################################################ 
-##4.1.Introduction to R and RStudio
-################################################################################
-
-## check citations for packages and RStudio
+# check citations for packages and RStudio
 citation () 
 citation ("ALDEx2")   
 RStudio.Version() 
 
-##4.1.1 Installing R, RStudio, and R Packages    
+# 4.1.1 Installing R, RStudio, and R Packages    
 install.packages("ALDEx2")  
 library(ALDEx2) 
+
 # To see what packages are installed,
 installed.packages()
 installed.packages()[1:5,] 
