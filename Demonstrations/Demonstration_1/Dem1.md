@@ -13,19 +13,19 @@ RStudio.Version()
 ```r
 install.packages("ALDEx2")  
 library(ALDEx2)
-```
-### To see what packages are installed,
-```r
+
+# see what packages are installed
+
 installed.packages()
 installed.packages()[1:5,]
-```
-### To see whether or not a specific package (e.g., ALDEx2) is already installed
-```r
+
+# To see whether or not a specific package (e.g., ALDEx2) is already installed
+
 a<-installed.packages()
 packages<-a[,1] 
 is.element("ALDEx2", packages)
+# [1] TRUE
 ```
-> [1] TRUE
 
 ## 4.1.2 Set Working Directory in R
 ```r
