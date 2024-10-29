@@ -5,3 +5,9 @@ Sincerely,
 
 Marcos
 
+# Timeline
+Paste table here
+
+# Additional Readings
+Statistical Analysis of Microbiome Data with R. Yinglin Xia, Jun Sun & Ding-Geng Chen,	1st edition. 2018
+Additional readings, if needed, are indicated in each assingment
