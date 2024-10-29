@@ -27,7 +27,7 @@ is.element("ALDEx2", packages)
 ```
 > [1] TRUE
 
-##4.1.2 Set Working Directory in R
+## 4.1.2 Set Working Directory in R
 ```r
 getwd()
 > Set Working Directory in R to a file of your choice
@@ -36,12 +36,15 @@ setwd("your working directory")
 getwd() 
 ```
 
-##4.1.3 Data Analysis Through RStudio
+## 4.1.3 Data Analysis Through RStudio
+```r
 setwd("your working directory")
+```
 # working directory for my files
 setwd("/Users/mlosada/Library/CloudStorage/Box-Box/Dropbox/Academia/Teaching/Microbiome\ Data\ Analysis\ in\ R\ 2024/Sessions/Session1")
 
-##4.1.4	Data Import and Export
+## 4.1.4 Data Import and Export
+```r
 tab <- read.table("hsb2demo.csv", header=TRUE,row.names=1, sep=",")
 head(tab)
 tab <- read.table("hsb2demo.txt", header=TRUE,row.names=1, sep="\t") 
@@ -56,8 +59,9 @@ tab <- read.csv('hsb2demo.csv', head = T, row.names = 1, sep = ',', dec = '.')
 head(tab)
 tab <- read.table (file = 'hsb2demo.csv', head = T, row.names = 1, sep = ',', dec = ',')
 head(tab)
+```
 
-# Boxplot of writing score by gender 
+## Boxplot of writing score by gender 
 boxplot(write ~ female,data=tab, main="High School Students Data", 
         xlab="Gender", ylab="Writing score by gender")
 
