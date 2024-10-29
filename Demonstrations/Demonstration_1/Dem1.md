@@ -1,8 +1,7 @@
 # DEMONSTRATION 1
-> Chapter 4: Introduction to R, RStudio and ggplot2
-> Yinglin Xia: September, 2018                                                                 
-
-# 4.1. Introduction to R and RStudio
+## Chapter 4: Introduction to R, RStudio and ggplot2
+## Yinglin Xia: September, 2018                                                                 
+## 4.1. Introduction to R and RStudio
 
 ## check citations for packages and RStudio
 ```r
