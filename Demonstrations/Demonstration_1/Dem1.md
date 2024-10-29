@@ -3,16 +3,16 @@
 > Yinglin Xia: September, 2018                                                                 
 > 4.1. Introduction to R and RStudio
 
-## check citations for packages and RStudio
-```r
-citation () 
-citation ("ALDEx2")   
-RStudio.Version() 
-```
+Complete the following demonstration in RStudio. Create a markdown file of your script. 
+
 ## 4.1.1 Installing R, RStudio, and R Packages    
 ```r
+# Check citation for packages and RStudio
+citation ()
+RStudio.Version()
 install.packages("ALDEx2")  
 library(ALDEx2)
+citation ("ALDEx2")
 
 # see what packages are installed
 
@@ -50,7 +50,8 @@ tab <- read.table("hsb2demo.csv", header=TRUE,row.names=1, sep=",")
 head(tab)
 tab <- read.table("hsb2demo.txt", header=TRUE,row.names=1, sep="\t") 
 head(tab)
-raw<- "https://raw.githubusercontent.com/chvlyl/PLEASE/master/1_Data/Raw_Data/MetaPhlAn/PLEASE/G_Remove_unclassfied_Renormalized_Merge_Rel_MetaPhlAn_Result.xls"  
+raw<- "https://raw.githubusercontent.com/chvlyl/PLEASE/master/1_Data/Raw_Data/MetaPhlAn/PLEASE/
+G_Remove_unclassfied_Renormalized_Merge_Rel_MetaPhlAn_Result.xls"  
 tab <- read.table(raw,sep='\t',header=TRUE,row.names = 1,check.names=FALSE,stringsAsFactors=FALSE)
 head(tab)
 
@@ -67,7 +68,7 @@ head(tab)
 boxplot(write ~ female,data=tab, main="High School Students Data", 
         xlab="Gender", ylab="Writing score by gender")
 ```
-## the readxl package for reading excell files
+## Package readxl for reading excell files
 ```r
 install.packages ("readxl")
 library(readxl)
