@@ -123,6 +123,7 @@ library(ggplot2)
 ```
 
 ## 4.3.3	Creating a Plot Using ggplot()
+### 4.3.3.1 Creating a Plot Layer by Layer with ggplot()
 ```r
 data(iris)
 head(iris)
@@ -182,8 +183,10 @@ ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) +
   coord_cartesian(xlim=c(2.2,4.2), ylim=c(4, 7)) +
   labs(title="Sepal width vs sepal length", subtitle="Using iris dataset", 
        y="Length of Sepal", x="Width of Sepal")
+```
 
-
+### 4.3.3.5 Using Faceting to Detect Patterns Across Conditions
+```r
 #Spliting plots by rows
 ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) +
   geom_point(aes(col=Species), size=3) + 
