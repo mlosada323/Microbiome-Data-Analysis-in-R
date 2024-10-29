@@ -112,3 +112,110 @@ sample_frac(tab, 0.02)
 #Use replace = TRUE to perform a bootstrap sampling
 sample_n(tab, 5,replace = TRUE)
 ```
+## 4.3 Introduction to the ggplot2 Package
+ggplot2 is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details. You can read more about ggplot2 at https://ggplot2.tidyverse.org
+
+## 4.3.1	ggplot2 and the Grammar of Graphics
+```r
+citation("ggplot2")
+install.packages("ggplot2")
+library(ggplot2)
+```
+
+## 4.3.3	Creating a Plot Using ggplot() step by step
+```r
+data(iris)
+head(iris)
+library(ggplot2)
+p <- ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) 
+# Sepal.Width and Sepal.Length are columns in iris dataframe
+p   
+summary(p)
+
+#Add scatterplot geom (layer1)
+p1 <- p + geom_point()  
+summary(p1)
+
+ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) + geom_point()
+
+#Add smoothing geom (layer2)
+p2 <- p1 + geom_smooth(method="lm") 
+p2  
+summary(p2)
+
+#set se = FALSE to turn off confidence bands
+p1 + geom_smooth(method="lm", se = FALSE) 
+
+p3 <- ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) + 
+  #Add scatterplot geom (layer1)
+  geom_point(col="blue", size=3) + 
+  #Add smoothing geom (layer2)
+  geom_smooth(method="lm",col="red",size=2) 
+p3 
+
+p4 <- ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) + 
+  #Add scatterplot geom (layer1)
+  geom_point(aes(col=Species), size=3) + 
+  #Add smoothing geom (layer2)
+  geom_smooth(method="lm",col="red",size=2) 
+p4
+
+p5 <- p4 + coord_cartesian(xlim=c(2.2,4.2), ylim=c(4, 7)) # zooms in
+plot(p5)
+
+#Add Title and Labels using labs()
+p6 <- p5 + labs(title="Sepal width vs sepal length", subtitle="Using iris dataset",
+                y="Length of Sepal", x="Width of Sepal")
+print(p6)#Or plot(p6)
+
+#Add Title and Labels using ggtitle(), xlab() and ylab()
+p7 <-p5 +  ggtitle("Sepal width vs sepal length", subtitle="Using iris dataset") +
+  ylab("Length of Sepal") + xlab("Width of Sepal")
+print(p7)
+
+# Create the full scatterplot call in one step
+ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) +
+  geom_point(aes(col=Species), size=3) + 
+  geom_smooth(method="lm",col="red",size=2) +
+  coord_cartesian(xlim=c(2.2,4.2), ylim=c(4, 7)) +
+  labs(title="Sepal width vs sepal length", subtitle="Using iris dataset", 
+       y="Length of Sepal", x="Width of Sepal")
+
+
+#Spliting plots by rows
+ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) +
+  geom_point(aes(col=Species), size=3) + 
+  geom_smooth(method="lm",col="red",size=2) +
+  coord_cartesian(xlim=c(2.2,4.2), ylim=c(4, 7)) +
+  # Add Facet Grid
+  facet_grid(Species ~.) 
+
+
+#Spliting plots by columns
+ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) +
+  geom_point(aes(col=Species), size=3) + 
+  geom_smooth(method="lm",col="red",size=2) +
+  coord_cartesian(xlim=c(2.2,4.2), ylim=c(4, 7)) +
+  # Add Facet Grid
+  facet_grid(.~ Species) 
+
+
+#Spliting plots by columns
+ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) +
+  geom_point(aes(col=Species), size=3) + 
+  geom_smooth(method="lm",col="red",size=2) +
+  coord_cartesian(xlim=c(2.2,4.2), ylim=c(4, 7)) +
+  # Add Facet Grid
+  facet_grid(.~ Species, margin=TRUE) 
+
+#Facet Wrap
+#Spliting plots by columns
+ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) +
+  geom_point(aes(col=Species), size=3) + 
+  geom_smooth(method="lm",col="red",size=2) +
+  coord_cartesian(xlim=c(2.2,4.2), ylim=c(4, 7)) +
+  #Add Facet Wrap
+  facet_wrap(~ Species, nrow=2) 
+```
+
+
