@@ -1,10 +1,7 @@
 # Demonstration 1
-> Chapter 4: Introduction to R, RStudio and ggplot2
-> Yinglin Xia: September, 2018                                                                 
-> 4.1. Introduction to R and RStudio
+Complete the following demonstration in RStudio. Create a markdown file of your script. You can follow detail instructions in Xia et al. (2018), Chapter 4: Introduction to R, RStudio and ggplot2. All the sections below match the sections in the book
 
-Complete the following demonstration in RStudio. Create a markdown file of your script. 
-
+# 4.1. Introduction to R and RStudio
 ## 4.1.1 Installing R, RStudio, and R Packages    
 ```r
 # Check citation for packages and RStudio
