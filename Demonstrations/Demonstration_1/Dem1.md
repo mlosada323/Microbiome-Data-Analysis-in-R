@@ -1,7 +1,7 @@
 # DEMONSTRATION 1
-## Chapter 4: Introduction to R, RStudio and ggplot2
-## Yinglin Xia: September, 2018                                                                 
-## 4.1. Introduction to R and RStudio
+> Chapter 4: Introduction to R, RStudio and ggplot2
+> Yinglin Xia: September, 2018                                                                 
+> 4.1. Introduction to R and RStudio
 
 ## check citations for packages and RStudio
 ```r
@@ -15,20 +15,26 @@ install.packages("ALDEx2")
 library(ALDEx2)
 ```
 ### To see what packages are installed,
+```r
 installed.packages()
-installed.packages()[1:5,] 
+installed.packages()[1:5,]
+```
 ### To see whether or not a specific package (e.g., ALDEx2) is already installed
+```r
 a<-installed.packages()
 packages<-a[,1] 
-is.element("ALDEx2", packages) 
-#[1] TRUE
+is.element("ALDEx2", packages)
+```
+> [1] TRUE
 
 ##4.1.2 Set Working Directory in R
+```r
 getwd()
-# Set Working Directory in R to a file of your choice
+> Set Working Directory in R to a file of your choice
 setwd("your working directory") 
-# check your new working directory
+> check your new working directory
 getwd() 
+```
 
 ##4.1.3 Data Analysis Through RStudio
 setwd("your working directory")
