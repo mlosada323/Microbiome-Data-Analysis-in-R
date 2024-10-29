@@ -2,22 +2,21 @@
 Complete the following demonstration in RStudio. Create a markdown file of your script. You can follow detail instructions in Xia et al. (2018), Chapter 4: Introduction to R, RStudio and ggplot2. All the sections below match the sections in the book
 
 ## 4.2. Introduction to the dplyr Package
-
-setwd("E:/Home/MicrobiomeStatR/Analysis")
+```r
+setwd("your working directoty")
 tab <- read.csv("hsb2demo.csv")
 head(tab)
 
 install.packages("dplyr")
 library(dplyr)
 
-head(select(tab, id, write))
-
-tab %>% 
-  select(id,write) %>% 
-  head 
-
 #Select columns: id, read, write and math
 head(select(tab, id, read, write, math))
+
+# Same as above using %>% (pipe operator)
+tab %>% 
+  select(id, read, write, math) %>% 
+  head 
 
 #Select all columns between read and socst (inclusive)
 head(select(tab, read:socst))
@@ -30,7 +29,6 @@ head(select(tab, -(female:prog )))
 
 #Select all columns that start with the character string "s"
 head(select(tab, starts_with("s")))
-
 
 #Filter the rows for students with reading score greater than or equal 70.
 filter(tab, read >= 70)
@@ -110,3 +108,4 @@ sample_frac(tab, 0.02)
 
 #Use replace = TRUE to perform a bootstrap sampling
 sample_n(tab, 5,replace = TRUE)
+```
