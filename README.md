@@ -12,5 +12,8 @@ Paste table here
 Statistical Analysis of Microbiome Data with R. Yinglin Xia, Jun Sun & Ding-Geng Chen,	1st edition. 2018
 Additional readings, if needed, are indicated in each assingment.
 
+# Demonstrations
+Each week you will have to complete a demonstration. Create a markdown file of your work. You can follow detail instructions in Xia et al. (2018). Statistical analysis of microbiome data with R.
+
 # Problem Sets
 Each week we will work on Problem Sets to help apply the course material for that week to actual data analytics. Below are the Problem Sets (1-13) for the 14 weeks of the course. Be sure to read carefully the details of each problem set and answer all the associated questions. If you have trouble accessing the data for a given problem set, email your instructor with questions or, better yet, bring your questions to the live session.
