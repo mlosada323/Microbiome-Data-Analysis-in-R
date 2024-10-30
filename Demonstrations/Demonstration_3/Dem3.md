@@ -1,13 +1,14 @@
 # Demonstration 3
 Complete the following demonstration in RStudio. Create a markdown file of your script. You can follow detail instructions in Xia et al. (2018), Chapter 7: Exploratory Analysis of Microbiome Data and Beyond. All the sections below match the sections in the book
 
-# 7.1 Introduc
+# 7.1 Introduction to phyloseq and microbiome packages
+
+## Phyloseq package
 phyloseq provides a set of classes and tools to facilitate the import, storage, analysis, and graphical display of microbiome census data
 https://bioconductor.org/packages/release/bioc/html/phyloseq.html
 
+```r
 # Here, we use some datasets to illustrate how to create a phyloseq object and some operations on phyloseq object. First, we need to install this package using BiocManager
-
-# Phyloseq package
 
 # install physloseq
 if (!requireNamespace("BiocManager", quietly = TRUE))
@@ -130,9 +131,14 @@ write.csv(table_otu,file="otu.csv")
 # Export table of OTUs with taxonomy
 table_all<-cbind(tax_table(ps),otu_table(ps))
 write.csv(table_all,file="otu_tax.csv")
+```
 
-# Microbiome package
+## Microbiome package
+The microbiome package is built on the phyloseq objects and extends some functions of the phyloseq package in order to facilitate manipulation and processing
+microbiome datasets
 
+```r
+# install microbiome
 remotes::install_github("microbiome/microbiome")
 library(microbiome)
 
@@ -215,3 +221,4 @@ library(readr)
 write_csv(otu_df, le = "otu_tab_GlobalPatterns.csv")
 write_csv(tax_df, le = "tax_tab_GlobalPatterns.csv")
 write_csv(sam_df, le = "sam_tab_GlobalPatterns.csv")
+```
