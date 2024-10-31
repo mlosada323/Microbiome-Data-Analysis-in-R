@@ -94,12 +94,17 @@ power.t.test(n=2:10,delta=2.504-2.205,sd=0.05012, type = "one.sample" )
 ## 5.3 Power Analysis for Comparing Diversity Across More than Two Groups Using ANOVA	
 
 ### 5.3.2 Calculating Power or Sample Size Using R Function pwr.avova.test	
+```r
+# First, we subset data of four groups of months 1 and 4 with treatment and control
 df_H_G93WTm1N4 <- filter(df_H_G6,Group%in%c("G93m1","WTm1","G93m4","WTm4"))
 df_H_G93WTm1N4 
 
+# Then, we get F statistic by fitting linear model.
 fit = lm(formula = value~Group,data=df_H_G93WTm1N4)
 anova (fit)
 
+# Finally, we call the pwr.anova.test() function from pwr package to calculate powers
 install.packages("pwr")
 library(pwr)
 pwr.anova.test(f= 0.23,k=4,n=45:55,sig.level=0.05)
+```
