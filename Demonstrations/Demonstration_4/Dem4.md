@@ -5,7 +5,7 @@ Complete the following demonstration in RStudio. Create a markdown file of your 
 # Power Analysis for Microbiome Data
 
 ## 5.2.2 Diversity Data for ALS Study
-
+```r
 # upload the ALS data set including Shannon diversity estimates for 16 samples belonging to two groups
 df_H_G93BUm3 <- read.csv("ALS.csv",row.names=1,check.names=FALSE) 
 df_H_G93BUm3
@@ -26,10 +26,14 @@ head(mu)
 p+geom_vline(data=mu, aes(xintercept=grp.mean, color="red"),
              linetype="dashed")
 
-
+```
 ## 5.2.3 Calculating Power or Sample Size Using R Function power.t.test
+Here, we focus on illustrating how to calculate the power or sample size using R software. In R, the function power.t.test() in basic R and the function pwr.t.test() in the pwr package can be used to conduct power analysis. We use the power.t.test. The usage of this function is shown below:
+power.t.test (n = sample size, delta = effect size, sd = standard deviation, sig. level = 0.05, power = NULL, type = c(“two.sample”, “one.sample”, “paired”), alternative = (“two.sided”, “one.sided”))
+where, n is the number of sample size per group, delta is true difference in means, sd is the standard deviation, sig.level is the significance level (Type I error probability), power is the power of test (1 minus Type II error probability), type is the type of t test, and alternative is one-or-two sided test.
+Since the standard deviation of the mean difference is unknown, it needs to be estimated using formula in this chapter (5.5).
 
-
+```r
 # calculate variance
 mu <- ddply(df_H_G93BUm3, "Group", summarise, grp.mean=mean(value));mu
 
@@ -58,6 +62,21 @@ s
 power.t.test(n=2:10,delta=2.504-2.205,sd=0.05012)
 df_P <-data.frame(n,power)
 df_P
+```
+  n power
+1 2 0.8324
+2 3 0.9994
+3 4 1.0000
+4 5 1.0000
+5 6 1.0000
+6 7 1.0000
+7 8 1.0000
+8 9 1.0000
+9 10 1.0000
+
+From above power analysis, we can see that a size sample of 2 G93A mice per group, randomly assigned to butyrate treatment or no treatment control, will provide 83% power to reject the null hypothesis of no difference in the Shannon diversity in the two groups. If the sample size increases to 3 per group, the power will increase to more than 99%. 
+```r
+# We can generate power and sample size graphs to visualize the power and sample size we need to reject the null hypothesis using following R codes
 
 n = c(2, 3, 4, 5, 6, 7, 8, 9, 10)  
 power = c(0.8324, 0.9994, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000)
@@ -69,9 +88,8 @@ plot(n, power, xlab  = "Sample Size per group", ylab  = "Power to reject null",
 
 abline(h = 0.90, col="blue")
 
-
 power.t.test(n=2:10,delta=2.504-2.205,sd=0.05012, type = "one.sample" )
-
+```
 
 ## 5.3 Power Analysis for Comparing Diversity Across More than Two Groups Using ANOVA	
 
