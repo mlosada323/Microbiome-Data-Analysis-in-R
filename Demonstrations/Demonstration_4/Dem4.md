@@ -62,7 +62,7 @@ s
 power.t.test(n=2:10,delta=2.504-2.205,sd=0.05012)
 df_P <-data.frame(n,power)
 df_P
-```
+
   n power
 1 2 0.8324
 2 3 0.9994
@@ -73,7 +73,7 @@ df_P
 7 8 1.0000
 8 9 1.0000
 9 10 1.0000
-
+```
 From above power analysis, we can see that a size sample of 2 G93A mice per group, randomly assigned to butyrate treatment or no treatment control, will provide 83% power to reject the null hypothesis of no difference in the Shannon diversity in the two groups. If the sample size increases to 3 per group, the power will increase to more than 99%. 
 ```r
 # We can generate power and sample size graphs to visualize the power and sample size we need to reject the null hypothesis using following R codes
