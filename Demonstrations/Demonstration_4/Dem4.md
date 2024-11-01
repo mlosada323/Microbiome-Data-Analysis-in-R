@@ -90,7 +90,6 @@ abline(h = 0.90, col="blue")
 
 power.t.test(n=2:10,delta=2.504-2.205,sd=0.05012, type = "one.sample" )
 ```
-
 ## 5.3 Power Analysis for Comparing Diversity Across More than Two Groups Using ANOVA	
 
 ### 5.3.2 Calculating Power or Sample Size Using R Function pwr.avova.test	
@@ -107,4 +106,164 @@ anova (fit)
 install.packages("pwr")
 library(pwr)
 pwr.anova.test(f= 0.23,k=4,n=45:55,sig.level=0.05)
+```
+## 5.4 Power Analysis for Comparing a Taxon of Interest Across Groups 
+
+### 5.4.2 Power Analysis Using R Function power.prop.test 
+```r
+Butyrivibrio=read.csv("Butyrivibrio.csv",row.names=1,check.names=FALSE)
+Butyrivibrio
+
+# creare 2 x 2 contingency table using the MASS package 
+library(MASS)
+tbl = table(Butyrivibrio$Group, Butyrivibrio$Present) 
+tbl
+
+#          Absent Present
+# Butyrate      0       9
+# Control       3       4
+
+# The above table shows the distribution of the proportion–4 (57%) out of 7 control samples had Butyrivibrio brisolvens, while 9 (100%) out of 9 Butyrate treatment samples did
+
+# The following plain R codes are used to implement the sample size and power calculations using formulas in (5.16) and (5.17)
+
+p1=1.0
+p2=0.57
+r=1
+alpha=0.05
+beta=0.20
+(n2=(p1*(1-p1)/r+p2*(1-p2))*((qnorm(1-alpha/2)+qnorm(1-beta))/(p1-p2))^2)
+ceiling(n2)
+z=(p1-p2)/sqrt(p1*(1-p1)/n2/r+p2*(1-p2)/n2)
+(Power=pnorm(z-qnorm(1-alpha/2))+pnorm(-z-qnorm(1-alpha/2)))
+
+# However, the convenient way is to use following R function power.prop.test.
+# You can specify multiple samples to test the powers
+
+power.prop.test(n=10:20,  p1=1,  p2=.57,  sig.level=0.05, power=NULL,  alternative=c("one.sided"), strict  = FALSE)
+
+# The results show that 11 samples in each group can obtain 83% power to detect the effect sizes based on our pilot study.
+```
+
+## 5.5 Comparing the Frequency of All Taxa Across Groups Using Dirichlet-Multinomial Model                            
+### 5.5.3 Power and Size Calculations Using HMP Package
+```r
+# 5.5.3.1 Preparing Data Sets for Use of HMP Package
+
+install.packages("HMP",repo="http://cran.r-project.org", dep=TRUE)
+library(HMP)
+
+Buty=read.csv("ALSG93A3.5mButyrateGenus.csv",row.names=1,check.names=FALSE)
+NOButy=read.csv("ALSG93A3.5mNoButyrateGenus.csv",row.names=1,check.names=FALSE) 
+
+head(Buty)
+head(NOButy)
+
+# transpose files
+Buty_t <- t(Buty)
+NOButy_t<-t(NOButy)
+
+head(Buty_t)
+head(NOButy_t)
+
+ncol(Buty_t)  # for the number of taxa
+nrow(Buty_t)  # for the number of samples
+
+ncol(NOButy_t)  # for the number of taxa
+nrow(NOButy_t)  # for the number of samples
+
+### 5.5.3.2 Power and Size Calculations Using Taxa Composition Data Analysis
+
+# get a list of Dirichlet-multinomial parameters
+
+fit_Buty <- DM.MoM(Buty_t)
+fit_Buty 
+fit_NOButy <- DM.MoM(NOButy_t)
+fit_NOButy
+
+# set up the number of Monte-Carlo experiments
+numMC <- 1000
+
+#The first number is the number of reads and the second is the number of subjects
+nrsGrp1 <- rep(1000, 10)
+nrsGrp2 <- rep(1000, 10) 
+group_Nrs <- list(nrsGrp1, nrsGrp2)
+
+# compute size of the test statistics (Type I error)
+alphap <- fit_Buty$gamma
+pval1 <- MC.Xdc.statistics(group_Nrs, numMC, alphap, "hnull")
+pval1
+
+# Compute power of the test statistics (Type II error)
+alphap <- rbind(fit_Buty$gamma, fit_NOButy$gamma)
+pval2 <- MC.Xdc.statistics(group_Nrs, numMC, alphap)
+pval2
+
+### 5.5.3.3 Power and Size Calculations Using Rank Abundance Distributions Data Analysis
+
+#### Several Sample RAD-Probability Mean Test Comparison With Known Reference Vector of Proportions
+
+# order taxa in order of decreasing abundance and collapse less-abundant taxa into“Other” category using the Data. lter() function.
+filter_Buty<- Data.filter(Buty_t, "sample", 1000, 10)
+head(filter_Buty)
+
+filter_NOButy<- Data.filter(NOButy_t, "sample", 1000, 10)
+head(filter_NOButy)
+
+# get a list of Dirichlet-multinomial parameters(i.e., loglik, gamma, pi and theta) for the data using the function DM.MoM().
+fit_Buty <- DM.MoM(filter_Buty);fit_NOButy <- DM.MoM(filter_NOButy);
+
+fit_Buty$pi 
+fit_NOButy$pi
+
+fit_Buty$theta  
+fit_NOButy$theta
+
+#set up the number of Monte-Carlo experiments
+numMC <- 1000 
+
+# The first number is the number of reads and the second is the number of subjects
+nrsGrp1 <- rep(1000, 10);nrsGrp2 <- rep(1000, 10)
+group_Nrs <- list(nrsGrp1, nrsGrp2)
+
+# set up the values of the vector of taxa frequencies (taxa proportion) and overdispersion parameters for each group
+pi0 <- fit_Buty$pi
+group_theta <- c(0.007523, 0.01615)
+
+# compute size of the test statistics (Type I error)
+pval1 <- MC.Xmc.statistics(group_Nrs, numMC, pi0, group.theta=group_theta, type="hnull")
+pval1
+
+# compute power of the test statistics (Type II error)
+group_pi <- rbind(fit_Buty$pi, fit_NOButy$pi)
+pval2 <- MC.Xmc.statistics(group_Nrs, numMC, pi0, group_pi, group_theta)
+pval2
+
+#### Several Sample RAD-Probability Mean Test Comparison With Unknown Vector of Proportion
+
+#Generate the number of reads per sample
+#The first number is the number of reads and the second is the number of subjects
+nrsGrp1 <- rep(1000, 10) ;nrsGrp2 <- rep(1000, 10);
+group_Nrs <- list(nrsGrp1, nrsGrp2)
+
+pi0 <- fit_Buty$pi
+group_theta <- c(0.007523, 0.01615)
+
+#Computing size of the test statistics (Type I error)
+group_theta <- c(fit_Buty$theta, fit_NOButy$theta)
+pval1 <- MC.Xmc.statistics(group_Nrs, numMC, pi0, group.theta=group_theta, type="hnull")
+pval1
+
+#Computing Power of the test statistics (Type II error)
+group_pi <- rbind(fit_Buty$pi, fit_NOButy$pi)
+pval2 <- MC.Xmc.statistics(group_Nrs, numMC, pi0, group.pi=group_pi, group.theta=group_theta)
+pval2
+```
+
+## 5.5.4 Effect Size Calculation Using HMP Package
+```r
+#Combine the data sets into a single list
+group_data <- list(filter_Buty, filter_NOButy)
+effect <- Xmcupo.effectsize(group_data)
+effect
 ```
