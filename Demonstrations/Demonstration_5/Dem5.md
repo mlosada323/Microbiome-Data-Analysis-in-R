@@ -6,20 +6,12 @@ Complete the following demonstration in RStudio. Create a markdown file of your 
 ## Estimate alpha-diversity
 ```r
 # Use different R packages to estimate several alpha-diversity and plot the results
-
-library(BiocManager)
-#source("https://bioconductor.org/install")
-#useDevel()
-BiocManager::install(version='devel')
-BiocManager::install("microbiome")
-
 library(microbiome)
 library(phyloseq)
 library(knitr)
 
+# Use GlobalPatterns data (which is a phyloseq object)
 data(GlobalPatterns)
-
-# Rename GlobalPatterns data (which is a phyloseq object)
 ps1 <- GlobalPatterns
 ps1
 
