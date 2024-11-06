@@ -1,7 +1,9 @@
 # Demonstration 5                      
 Complete the following demonstration in RStudio. Create a markdown file of your script. You can read about diversity indices in Xia et al. (2018), Chapter 6: Community Diversity Measures and Calculations
 
-# Estimate alpha-diversity
+# Community Diversity Estimates
+
+## Estimate alpha-diversity
 ```r
 # Use different R packages to estimate several alpha-diversity and plot the results
 
@@ -59,7 +61,7 @@ otuD<-as.data.frame(t(otu_table(physeq)))
 PD<-pd(otuD, phy_tree(physeq), include.root=TRUE)
 head(PD)
 ```
-# Plot alpha-diversity estimates
+### Plot alpha-diversity estimates
 ```r
 # Generating Boxplot
 library(ggpubr)
@@ -77,7 +79,7 @@ chao <- ggplot(diver_all, aes(factor(SampleType), Chao1)) +
         geom_boxplot(aes(fill = factor(SampleType)),outlier.colour = "black", outlier.size = 1)+ geom_jitter(size=1,shape=1)+ ggtitle("Chao1 richness")+labs(y = "Chao1 richness")
 chao
 ```
-# Summarize the Diversity Measures per group using FSA R package
+### Summarize the Diversity Measures per group using FSA R package
 ```r
 library(FSA)
 Summarize(Shannon ~ SampleType, data = diver_all)
@@ -86,7 +88,7 @@ Summarize(Shannon ~ SampleType, data = diver_all)
 library(lattice)
 histogram(~ Shannon|SampleType, data=diver_all,layout=c(3,3))
 ```
-# Estimate beta-diversity
+## Estimate beta-diversity
 ```r
 # Use phyloseq to estimate beta-diversity indices
 
