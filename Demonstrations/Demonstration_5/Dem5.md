@@ -102,3 +102,38 @@ brayd_m <- as.matrix(brayd)
 head(brayd_m)
 write.csv(brayd_m, file = "brayd_m.csv")
 ```
+# Estimate a model of evolution and phylogenetic tree in phangorn
+You can read more about this tutorial here: Tutorial from https://cran.r-project.org/web/packages/phangorn/vignettes/Trees.html
+
+```r
+# install packages
+install.packages("phangorn")
+library(phangorn)
+library(ape)
+
+# Load the phangorn package and read in an alignment from that package
+fdir <- system.file("extdata/trees", package = "phangorn")
+primates <- read.phyDat(file.path(fdir, "primates.dna"), format = "interleaved")
+primates
+
+# Estimate a tree useing distance based methods (no model of evolution)
+dm  <- dist.ml(primates)
+treeUPGMA  <- upgma(dm)
+treeNJ  <- NJ(dm)
+plot(treeUPGMA, main="UPGMA")
+plot(treeNJ, "unrooted", main="NJ")
+
+# Model selection: estimate model fitness for all models
+mt <- modelTest(primates)
+
+# Determine best fit model
+fit_mt <- pml_bb(mt, control = pml.control(trace = 0))
+fit_mt
+
+# Estimate tree under best fit model - TrN+G(4) using the maximum likelihood (ML)
+fitTrNG <- pml_bb(primates, model="TrN+G(4)")
+plot(fitTrNG, "phylogram", main="ML")
+
+# write tree
+write.tree(fitTrNG$tree,digits=3, file="primates.tree")
+```
