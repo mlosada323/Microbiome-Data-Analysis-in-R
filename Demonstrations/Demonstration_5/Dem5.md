@@ -1,7 +1,7 @@
 # Demonstration 5                      
 Complete the following demonstration in RStudio. Create a markdown file of your script. You can read about diversity indices in Xia et al. (2018), Chapter 6: Community Diversity Measures and Calculations
 
-# Community Diversity Estimates
+# I. Community Diversity Estimates
 
 ## Estimate alpha-diversity
 ```r
@@ -102,7 +102,7 @@ brayd_m <- as.matrix(brayd)
 head(brayd_m)
 write.csv(brayd_m, file = "brayd_m.csv")
 ```
-# Estimate a model of evolution and phylogenetic tree in phangorn
+# II. Estimate a model of evolution and phylogenetic tree in phangorn
 You can read more about this exercise here: https://cran.r-project.org/web/packages/phangorn/vignettes/Trees.html
 
 ```r
