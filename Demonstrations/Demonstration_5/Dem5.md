@@ -103,7 +103,7 @@ head(brayd_m)
 write.csv(brayd_m, file = "brayd_m.csv")
 ```
 # Estimate a model of evolution and phylogenetic tree in phangorn
-You can read more about this exercise here: Tutorial from https://cran.r-project.org/web/packages/phangorn/vignettes/Trees.html
+You can read more about this exercise here: https://cran.r-project.org/web/packages/phangorn/vignettes/Trees.html
 
 ```r
 # install packages
