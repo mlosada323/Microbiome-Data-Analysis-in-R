@@ -4,7 +4,7 @@ Complete the following demonstration in RStudio. Create a markdown file of your 
 # Exploratory Analysis of Microbiome Data and Beyond 
 
 ## 7.2 Exploratory Analysis with Graphic Summary
-
+```r
 # load RDS (R Data Serialization) file 
 # An RDS file is a binary file format for storing data in R that's highly compressed and can be read quickly
 readRDS(file = "Demo6.RDS") -> physeq
@@ -58,10 +58,10 @@ plot_tree(psp, ladderize = "left", color = "Group")
 plot_tree(psp, ladderize = "left", color = "Group",shape = "Group") 
 plot_tree(psp, color = "Group", 
           shape = "Group", ladderize = "left") + coord_polar(theta = "y")
+```
 
- 
 ## 7.3	Clustering                                                                   
-
+```r
 # 7.3.2 Load the package and datasets
 library(vegan)  
 
@@ -96,11 +96,11 @@ plot(cluster_average)
 plot(cluster_ward)
 
 par (mfrow = c(1,1))
-
+```
 ## 7.4	Ordination                          
 
 ### 7.4.1	Principal Component Analysis (PCA)
-
+```r
 abund_table=read.csv("VdrFecalGenusCounts.csv",row.names=1,check.names=FALSE)
 abund_table<-t(abund_table)
 head(abund_table)
@@ -123,9 +123,9 @@ biplot(PCA, display = 'species')
 ordiplot(PCA, display = "sites", type = "text")
 
 # The more informative plot is to use function ordiplot() to draw both genus and sample scores as centroids as below
-
+```
 ## Other ordination methods
-
+```r
 # Other ordination methods required distances instead of proportions
 readRDS(file = "Demo6.RDS") -> ps
 ps
@@ -178,27 +178,9 @@ p = plist[[2]] + scale_colour_brewer(type="qual", palette="Set1") +
   scale_fill_brewer(type="qual", palette="Set1") +
   geom_point(size=3) # + geom_polygon(aes(fill=Group))
 p
-
-# Constrained Correspondence Analysis (CCA): assess how factors impact beta-diversity
-
-install.packages("GUniFrac")
-library(GUniFrac)
-data(throat.otu.tab)
-data(throat.meta)
-
-head(throat.otu.tab)
-head(throat.meta)
-meta <- as_tibble(throat.meta)
-meta
-
-library(dplyr)
-throat_meta <- select(throat.meta, SmokingStatus, Age, Sex, PackYears)
-
-smoker_cca <- cca(throat.otu.tab ~ ., throat_meta)
-smoker_cca
-
-library(picante)
-
+```
+## Constrained Correspondence Analysis (CCA)
+```r
 # delete taxa with abundance = 0
 ps1 <- prune_taxa(taxa_sums(ps) > 1, ps)
 ps1
@@ -215,8 +197,9 @@ head(meta)
 cca1<-cca(otu_c~Group, data=meta)
 cca1
 
-# The total variation before the matrix is subjected to weighted regression is 0.4955; this is the variation that could be explained
-# The variation in the community matrix that explained after weighted regression is 0.1707; this is the variation that will be explained by the axes in the CCA
-# The variance of the residuals of the regression is 0.3248; this is the variation that will not be explained by the axes in the CCA, which can be subjected to CA.
-# Hence 0.1707/0.4955=0.345 (34.5%) of the total variation of data was captured in the CCA by the Group variable
-
+# Intrepretation: how variable Group impact microbial community composition
+The total variation before the matrix is subjected to weighted regression is 0.4955; this is the variation that could be explained
+The variation in the community matrix that explained after weighted regression is 0.1707; this is the variation that will be explained by the axes in the CCA
+The variance of the residuals of the regression is 0.3248; this is the variation that will not be explained by the axes in the CCA, which can be subjected to CA.
+Hence 0.1707/0.4955=0.345 (34.5%) of the total variation of data was captured in the CCA by the Group variable
+```
