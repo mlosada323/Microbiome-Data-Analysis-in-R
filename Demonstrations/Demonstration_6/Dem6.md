@@ -197,9 +197,9 @@ head(meta)
 cca1<-cca(otu_c~Group, data=meta)
 cca1
 
-# Intrepretation: how variable Group impact microbial community composition
-The total variation before the matrix is subjected to weighted regression is 0.4955; this is the variation that could be explained
-The variation in the community matrix that explained after weighted regression is 0.1707; this is the variation that will be explained by the axes in the CCA
-The variance of the residuals of the regression is 0.3248; this is the variation that will not be explained by the axes in the CCA, which can be subjected to CA.
-Hence 0.1707/0.4955=0.345 (34.5%) of the total variation of data was captured in the CCA by the Group variable
+# Intrepretation: how variable "Group" impacts microbial community composition accordign to CCA
+The total variation (i.e., Inertia) before the matrix is subjected to weighted regression is 0.4955; this is the variation in the data that could be explained
+The variation in the community matrix that is explained after weighted regression is 0.1707; this is the variation explained by the axes in the CCA
+The variance of the residuals of the regression is 0.3248; this is the variation not explained by the axes in the CCA
+Hence 0.1707/0.4955=0.345 (34.5%) of the total variation in the data was captured in the CCA by the "Group" variable
 ```
