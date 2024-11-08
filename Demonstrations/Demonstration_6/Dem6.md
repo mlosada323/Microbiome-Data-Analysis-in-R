@@ -59,28 +59,29 @@ plot_tree(psp, ladderize = "left", color = "Group",shape = "Group")
 plot_tree(psp, color = "Group", 
           shape = "Group", ladderize = "left") + coord_polar(theta = "y")
 ```
-### other ggplots
+### other taxon abundance bar plots
 ```r
 # load RDS file
 readRDS(file = "Demo6b.RDS") -> physeq
 physeq
 sample_variables(physeq)
 
-# create bar plots per taxonomic ranks
+# list taxonomic ranks
 rank_names(physeq, errorIfNULL=TRUE)
 
+# agglomerate by phylum
 byphylum <- tax_glom(physeq, taxrank = "Phylum")
 
 # estimate relative proportions
 byphylum.tr <- transform_sample_counts(byphylum, function (x) x/sum(x))
 
-# create plot
+# option 1: bar plot
 p<-plot_bar(byphylum.tr, x="sampleID", fill="Phylum") + geom_bar(aes(color=Phylum, fill=Phylum), stat="identity", position="stack")
 p
 p<-plot_bar(byphylum.tr, x="region", fill="Phylum") + geom_bar(aes(color=Phylum, fill=Phylum), stat="identity", position="stack")
 p
 
-# create bar plots per taxonomic ranks
+# option 2: bar plot
 
 # list the ggplot elements
 myTheme <- list(geom_bar(stat = "identity", color = "black"),
