@@ -6,6 +6,7 @@ Complete the following demonstration in RStudio. Create a markdown file of your 
 ## 8.1 Comparisons of Diversities between Two Groups 
 
 ### 8.1.1 Two-sample Welch's t-test
+```r
 Fecal_G=read.csv("diver.csv",row.names=1,check.names=FALSE)
 Fecal_G
 
@@ -25,14 +26,16 @@ p+geom_vline(data=mu, aes(xintercept=grp.mean, color="red"),
 
 fit_t <- t.test(value ~ Group, data=Fecal_G)
 fit_t
-
+```
 ### 8.1.2 Wilcoxon Rank Sum Test
+```r
 fit_w <- wilcox.test(value ~ Group, data=Fecal_G)
 fit_w 
-
+```
 ## 8.2 Comparisons of a Taxon of Interest between Two Groups                                                                     
 
 ### 8.2.1 Comparison of Relative Abundance using Wilcoxon Rank Sum Test
+```r
 abund_table=read.csv("VdrGenusCounts.csv",row.names=1,check.names=FALSE)
 abund_table<-t(abund_table)
 
@@ -65,9 +68,9 @@ ggplot(Fecal_Bacteroides_G, aes(x=Group, y=Bacteroides,col=factor(Group))) +
 
 fit_w_b <- wilcox.test(Bacteroides ~ Group,data=Fecal_Bacteroides_G)
 fit_w_b
-
-
+```
 ### 8.2.2 Comparison of Present or Absent Taxon using Chi-square Test
+```r
 abund_table[1:16,1:27]
 (Parabacteroides <- abund_table[,27])
 
@@ -90,11 +93,11 @@ chisq.test(tbl)
 # Since Chi-square test may be incorrect, we can applied a Fisher’s exact test
 
 fisher.test(tbl)
-
+```
 ## 8.3 Comparisons among More Than Two Groups Using ANOVA
 
 ### 8.3.1 One-way ANOVA 
-
+```r
 # The following codes make a dataframe of Chao1 richness and add group information into this dataframe
 CH=estimateR(abund_table)[2,] 
 df_CH <-data.frame(sample=names(CH),value=CH,measure=rep("Chao1",length(CH))) 
@@ -136,11 +139,11 @@ aov_fit <- aov(value~Group4,data=df_CH_G)
 summary(aov_fit, intercept=T) 
 
 # Since p-value > 0.05, we accept the null hypothesis H0: the four means are not different
-
+```
 ### 8.3.2 Pairwise and Tukey Multiple Comparisons
 
-# The ANOVA results give the overall test of group difference (in this case, 4 groups with fecal, cecal, Vdr−/−, and WT combination). Our purpose is to also test each pair difference associated with Chao 1 richness. The following steps are to illustrate the capabilities of pairwise t-test and Tukey’s ad hoc multiple comparisons in R.
-
+The ANOVA results give the overall test of group difference (in this case, 4 groups with fecal, cecal, Vdr−/−, and WT combination). Our purpose is to also test each pair difference associated with Chao 1 richness. The following steps are to illustrate the capabilities of pairwise t-test and Tukey’s ad hoc multiple comparisons in R.
+```r
 #Pairwise tests of mean differences
 pairwise.t.test(df_CH_G$value, df_CH_G$Group4, p.adjust="none", pool.sd = T) 
  
@@ -160,11 +163,11 @@ pairwise.t.test(df_CH_G$value, df_CH_G$Group4, p.adjust="BY", pool.sd = T)
 TukeyHSD(aov_fit, conf.level=.95)  
 
 plot(TukeyHSD(aov(df_CH_G$value~df_CH_G$Group4), conf.level=.95))
-
+```
 ## 8.4 Comparisons among More than Two Groups Using Kruskal-Wallis Test                           
 
 ### 8.4.2 Compare Diversities among Groups
-
+```r
 library(dplyr)
 Data <- mutate(df_CH_G, Group = factor(df_CH_G$Group4, levels=unique(df_CH_G$Group4)))
 
@@ -190,12 +193,13 @@ Test_N
 
 # Dunn test
 library(FSA)
-## "bh" suggests Benjamini and Hochberg  method for adjusting p-values
+
+# "bh" suggests Benjamini and Hochberg  method for adjusting p-values
 Test_N = dunnTest(df_CH_G$value ~ df_CH_G$Group4,data=df_CH_G, method="bh")
 Test_N
-              
+  ```            
 ### 8.4.3 Find Significant Taxa among Groups  
-
+```r
 # normalize the abundance data by estimating relative abundances and convert the data to a data frame
 df<-as.data.frame(abund_table/rowSums(abund_table))
 df
@@ -216,9 +220,9 @@ for (i in 1:dim(df)[2]) {
 
 #Check the data frame table
 head(KW_table)
-
+```
 ### 8.4.4 Multiple Testing via FDR: False Discovery Rate (Benjamini and Hochberg, 1995)
-
+```r
 #order p-values from smallest to largest
 KW_table <- KW_table[order(KW_table$p.value, decreasing=FALSE), ]
 head(KW_table)
@@ -241,13 +245,13 @@ last.significant.item <- max(which(KW_table$q.value <= KW_alpha))
 last.significant.item
 
 # there are no q-value less than or equal to the speci ed alpha, so the program returns negative infinite
-
+```
 # Multivariate Community Analysis
 
 ## 9.1 Hypothesis Testing among Groups using Permutational Multivariate Analysis of Variance (PERMANOVA)
 
 ### 9.1.2 Implementing PERMANOVA using vegan Package
-
+```r
 # Load microbial abundances
 abund_table=read.csv("VdrGenusCounts.csv",row.names=1,check.names=FALSE)
 abund_table<-t(abund_table)
@@ -272,10 +276,9 @@ adonis2(bray ~ Location,data=grouping,permutations = 1000)
 
 # same as above 
 adonis2(bray ~ grouping$Location,permutations = 1000) 
-
+```
 ## 9.3 Hypothesis Tests among-Group Differences using Analysis of Similarity (ANOSIM)
-
-
+```r
 anosim(bray, grouping$Group,permutations = 1000)
 
 anosim(abund_table, grouping$Group, permutations = 1000, distance = "bray")
@@ -284,4 +287,4 @@ fit <- anosim(bray, grouping$Group,permutations = 1000)
 summary(fit)
 
 plot(fit)
-
+```
