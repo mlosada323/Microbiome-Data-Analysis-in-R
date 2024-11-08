@@ -59,7 +59,52 @@ plot_tree(psp, ladderize = "left", color = "Group",shape = "Group")
 plot_tree(psp, color = "Group", 
           shape = "Group", ladderize = "left") + coord_polar(theta = "y")
 ```
+### other ggplots
+```r
+# load RDS file
+readRDS(file = "Demo6b.RDS") -> physeq
+physeq
+sample_variables(physeq)
 
+# create bar plots per taxonomic ranks
+rank_names(physeq, errorIfNULL=TRUE)
+
+byphylum <- tax_glom(physeq, taxrank = "Phylum")
+
+# estimate relative proportions
+byphylum.tr <- transform_sample_counts(byphylum, function (x) x/sum(x))
+
+# create plot
+p<-plot_bar(byphylum.tr, x="sampleID", fill="Phylum") + geom_bar(aes(color=Phylum, fill=Phylum), stat="identity", position="stack")
+p
+p<-plot_bar(byphylum.tr, x="region", fill="Phylum") + geom_bar(aes(color=Phylum, fill=Phylum), stat="identity", position="stack")
+p
+
+# create bar plots per taxonomic ranks
+
+# list the ggplot elements
+myTheme <- list(geom_bar(stat = "identity", color = "black"),
+                panel_border(size = 0.75, colour = "black"),
+                theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5, size = 10)),
+                scale_y_continuous(expand = c(0,0), limits = c(0, 1.001)),
+                theme(axis.text.y = element_text(size = 18),
+                      axis.title = element_text(size = 20),
+                      strip.text = element_text(size = 18, margin = margin(0.3,0,0.3,0, "cm")),
+                      plot.title = element_text(size = 20),
+                      legend.text = element_text(size = 18)),
+                labs(x = ""))
+
+# Melt phyloseq data object into a data.frame for producing graphics with ggplot
+byphylum.df <- psmelt(byphylum.tr)
+
+# create plot
+p <- ggplot(data = byphylum.df, aes(x = sampleID, y = Abundance, fill = Phylum)) +
+  facet_grid(~region, space = "free", scales = "free") +  # use ~body*disease1 for extra subdivisions in the bar plot
+  labs(title = "by Phylum") +
+  scale_fill_brewer(palette="Set1") +
+  myTheme
+p
+```
 ## 7.3	Clustering                                                                   
 ```r
 # 7.3.2 Load the package and datasets
