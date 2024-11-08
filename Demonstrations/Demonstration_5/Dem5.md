@@ -80,6 +80,48 @@ Summarize(Shannon ~ SampleType, data = diver_all)
 library(lattice)
 histogram(~ Shannon|SampleType, data=diver_all,layout=c(3,3))
 ```
+### Boxplots of alpha-diversity indices for two factors 
+```r
+library(ggplot2)
+library(cowplot)
+
+# load RDS (R Data Serialization) file 
+# An RDS file is a binary file format for storing data in R that's highly compressed and can be read quickly
+readRDS(file = "Demo6b.RDS") -> physeq
+physeq
+sample_variables(physeq)
+
+# phyloseq: The following R commands estimate multiple indices
+diver<-estimate_richness(physeq, measures=c("Chao1","Shannon"))
+
+# Add diversity indices to metadata
+diver_all<-cbind(sample_data(physeq),diver)
+
+# list the ggplot elements
+myTheme <- list(geom_boxplot(aes(fill = region), outlier.colour = "black", outlier.size = 1),
+                geom_jitter(size=1, shape=1),
+                panel_border(colour = "black", size = 0.75),
+                theme(axis.text.x = element_text(angle = 90, vjust=0.5, hjust=0.95),
+                      legend.position = "none"))
+# create plots
+shan <- ggplot(diver_all, aes(year, Shannon)) +
+  facet_grid(~region) +
+  labs(title = "Shannon",
+       x = "",
+       y = "Shannon") +
+  myTheme
+shan
+
+chao <- ggplot(diver_all, aes(year, Chao1)) +
+  facet_grid(~region) +
+  labs(title = "Chao1",
+       x = "",
+       y = "Chao1") +
+  myTheme
+chao
+
+plot_grid(chao, shan, ncol = 2, nrow = 1)
+```
 ## Estimate beta-diversity
 ```r
 # Use phyloseq to estimate beta-diversity indices
