@@ -7,7 +7,7 @@ Complete the following demonstration in RStudio. Create a markdown file of your 
 ```r
 # load RDS (R Data Serialization) file 
 # An RDS file is a binary file format for storing data in R that's highly compressed and can be read quickly
-readRDS(file = "Demo6.RDS") -> physeq
+readRDS(file = "Demo6a.RDS") -> physeq
 physeq
 sample_variables(physeq)
 
@@ -127,7 +127,7 @@ ordiplot(PCA, display = "sites", type = "text")
 ## Other ordination methods
 ```r
 # Other ordination methods required distances instead of proportions
-readRDS(file = "Demo6.RDS") -> ps
+readRDS(file = "Demo6a.RDS") -> ps
 ps
 sample_variables(ps)
 
