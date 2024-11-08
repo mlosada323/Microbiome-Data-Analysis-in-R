@@ -76,6 +76,7 @@ byphylum <- tax_glom(physeq, taxrank = "Phylum")
 byphylum.tr <- transform_sample_counts(byphylum, function (x) x/sum(x))
 
 # option 1: bar plot
+
 p<-plot_bar(byphylum.tr, x="sampleID", fill="Phylum") + geom_bar(aes(color=Phylum, fill=Phylum), stat="identity", position="stack")
 p
 p<-plot_bar(byphylum.tr, x="region", fill="Phylum") + geom_bar(aes(color=Phylum, fill=Phylum), stat="identity", position="stack")
