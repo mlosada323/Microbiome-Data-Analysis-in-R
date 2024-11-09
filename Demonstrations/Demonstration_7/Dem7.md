@@ -115,9 +115,9 @@ library(ggplot2)
 p <-ggplot(df_CH_G, aes(x=Group4, y=value,col=factor(Group4))) + 
   geom_boxplot(notch=FALSE)
 p
-
-# To apply ANOVA we must first test for normality and homogeneity of variances (homoscedasticity) using the Shapiro-Wilk test and the Bartlett test or Fligner-Killeen tests, respectively 
-
+```
+To apply ANOVA we must first test for normality and homogeneity of variances (homoscedasticity) using the Shapiro-Wilk test and the Bartlett test or Fligner-Killeen tests, respectively 
+```r
 library(dplyr)
 df_CH_G4 <- dplyr::select(df_CH_G, Group4,value)
 df_CH_G4
