@@ -1,5 +1,5 @@
 # Demonstration 2
-Complete the following demonstration in RStudio. Create a markdown file of your script. You can follow detail instructions in Xia et al. (2018), Chapter 4: Introduction to R, RStudio and ggplot2. All the sections below match the sections in the book
+Complete the following demonstration in RStudio. All the sections below match those in Xia et al. (2018), Chapter 4: Introduction to R, RStudio and ggplot2. Review them to interpret scripts and outcomes of your analyses
 
 ## 4.2. Introduction to the dplyr Package
 dplyr is a grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulation challenges
