@@ -1,6 +1,5 @@
 # Demonstration 4
-
-Complete the following demonstration in RStudio. Create a markdown file of your script. You can follow detail instructions in Xia et al. (2018), Chapter 5: Power and Sample Size Calculations for Microbiome Data. All the sections below match the sections in the book
+Complete the following demonstration in RStudio. All the sections below match those in Xia et al. (2018), Chapter 5: Power and Sample Size Calculations for Microbiome Data. Review them to interpret scripts and outcomes of your analyses
 
 # Power Analysis for Microbiome Data
 
