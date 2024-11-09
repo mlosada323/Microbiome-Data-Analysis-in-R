@@ -1,5 +1,5 @@
 # Demonstration 5                      
-Complete the following demonstration in RStudio. Create a markdown file of your script. You can read about diversity indices in Xia et al. (2018), Chapter 6: Community Diversity Measures and Calculations
+Complete the following demonstration in RStudio. You can read about diversity indices in Xia et al. (2018), Chapter 6: Community Diversity Measures and Calculations. Review that to interpret scripts and outcomes of your analyses
 
 # I. Community Diversity Estimates
 
