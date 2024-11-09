@@ -283,11 +283,14 @@ adonis2(bray ~ grouping$Location,permutations = 1000)
 ## 9.3 Hypothesis Tests among-Group Differences using Analysis of Similarity (ANOSIM)
 ```r
 anosim(bray, grouping$Group,permutations = 1000)
-
 anosim(abund_table, grouping$Group, permutations = 1000, distance = "bray")
-
 fit <- anosim(bray, grouping$Group,permutations = 1000)
 summary(fit)
 
 plot(fit)
+```
+## 9.4 Hypothesis Tests of Multi-Response Permutation Procedures (MRPP)
+```r
+mrpp(bray, grouping$Group,permutations = 1000)
+mrpp(abund_table, grouping$Group, permutations = 1000, distance = "bray")
 ```
