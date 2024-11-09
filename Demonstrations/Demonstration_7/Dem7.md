@@ -116,13 +116,16 @@ p <-ggplot(df_CH_G, aes(x=Group4, y=value,col=factor(Group4))) +
   geom_boxplot(notch=FALSE)
 p
 
-# To apply ANOVA we must first test for homogeneity of variances using Bartlett test or Fligner-Killeen test 
+# To apply ANOVA we must first test for normality and homogeneity of variances (homoscedasticity) using the Shapiro-Wilk test and the Bartlett test or Fligner-Killeen tests, respectively 
 
-# Bartlett test of homogeneity of variances
 library(dplyr)
 df_CH_G4 <- dplyr::select(df_CH_G, Group4,value)
 df_CH_G4
 
+# Shapiro-Wilk normality test
+shapiro.test(df_CH_G4$value)
+
+# Bartlett test of homogeneity of variances
 bartlett.test(value~Group4, data=df_CH_G4) 
 qchisq(0.95, 1)
 
