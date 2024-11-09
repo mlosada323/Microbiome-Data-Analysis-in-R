@@ -1,5 +1,5 @@
 # Demonstration 3
-Complete the following demonstration in RStudio. Create a markdown file of your script. Xia et al. (2018), Chapter 7: Exploratory Analysis of Microbiome Data and Beyond provides some directions, but more information can be found at the https://bioconductor.org/packages/release/bioc/html/phyloseq.html. 
+Complete the following demonstration in RStudio. Xia et al. (2018), Chapter 7: Exploratory Analysis of Microbiome Data and Beyond provides some directions, but more information can be found at the https://bioconductor.org/packages/release/bioc/html/phyloseq.html. Review them to interpret scripts and outcomes of your analyses
 
 # Introduction to phyloseq and microbiome packages
 
