@@ -250,3 +250,27 @@ The variation in the community matrix that is explained after weighted regressio
 The variance of the residuals of the regression is 0.3248; this is the variation not explained by the axes in the CCA
 Hence 0.1707/0.4955=0.345 (34.5%) of the total variation in the data was captured in the CCA by the "Group" variable
 ```
+## core microbiome: determine the core using the microbime package
+```r
+library(microbiome)
+library(knitr)
+
+readRDS(file = "Demo6b.RDS") -> ps
+ps
+
+# identify core microbial species (ASVs) with a 90% prevalence
+ps.core <- core(ps, detection = 0, prevalence = 0.9)
+core.taxa <- taxa(ps.core);core.taxa
+
+# get their taxonomy
+tax.mat <- tax_table(ps.core)
+tax.df <- as.data.frame(tax.mat)
+
+# add the ASVs to last column
+tax.df$ASV <- rownames(tax.df)
+
+# select taxonomy of only those ASVs that are core members based on the thresholds that were used
+core.taxa.class <- dplyr::filter(tax.df, rownames(tax.df) %in% core.taxa)
+knitr::kable(head(core.taxa.class))
+knitr::kable(core.taxa.class)
+```
