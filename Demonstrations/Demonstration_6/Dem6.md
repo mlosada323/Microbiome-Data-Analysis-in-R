@@ -250,7 +250,7 @@ The variation in the community matrix that is explained after weighted regressio
 The variance of the residuals of the regression is 0.3248; this is the variation not explained by the axes in the CCA
 Hence 0.1707/0.4955=0.345 (34.5%) of the total variation in the data was captured in the CCA by the "Group" variable
 ```
-## core microbiome: determine the core using the microbime package
+# core microbiome: determine the core using the microbime package
 ```r
 library(microbiome)
 library(knitr)
