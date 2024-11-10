@@ -1,10 +1,10 @@
 # Linear mixed effects modelling in R
 
-# What is mixed effects modelling and why does it matter? 
-# Longitudinal data are often complex and messy. We can have different grouping factors like populations, species, sites where we collect the data, etc. Sample sizes might leave something to be desired too, especially if we are trying to fit complicated models with many parameters. On top of that, our data points might not be truly independent. For instance, we might be using quadrats within our sites to collect the data (and so there is structure to our data: quadrats are nested within the sites). This is why mixed models were developed, to deal with such messy data and to allow us to use all our data, even when we have low sample sizes, structured data and many covariates to fit. Oh, and on top of all that, mixed models allow us to save degrees of freedom compared to running standard linear models! Sounds good, doesn’t it? 
+What is mixed effects modelling and why does it matter? 
+Longitudinal data are often complex and messy. We can have different grouping factors like populations, species, sites where we collect the data, etc. Sample sizes might leave something to be desired too, especially if we are trying to fit complicated models with many parameters. On top of that, our data points might not be truly independent. For instance, we might be using quadrats within our sites to collect the data (and so there is structure to our data: quadrats are nested within the sites). This is why mixed models were developed, to deal with such messy data and to allow us to use all our data, even when we have low sample sizes, structured data and many covariates to fit. Oh, and on top of all that, mixed models allow us to save degrees of freedom compared to running standard linear models! Sounds good, doesn’t it? 
 
-# We are going to focus on a fictional study system, dragons, so that we don’t have to get too distracted with the specifics of this example. Imagine that we decided to train dragons and so we went out into the mountains and collected data on dragon intelligence ( testScore) as a prerequisite. We sampled individuals with a range of body lengths across three sites in eight different mountain ranges. 
-
+We are going to focus on a fictional study system, dragons, so that we don’t have to get too distracted with the specifics of this example. Imagine that we decided to train dragons and so we went out into the mountains and collected data on dragon intelligence ( testScore) as a prerequisite. We sampled individuals with a range of body lengths across three sites in eight different mountain ranges. 
+```r
 # load the data and have a look at it
 load("dragons.RData")
 head(dragons)
@@ -26,7 +26,7 @@ head(dragons)
 
 # One way to analyse this data would be to try fitting a linear model to all our data, ignoring the sites and the mountain ranges for now.
 # Fit the model with testScore as the response and bodyLength2 as the predictor and have a look at the output
-
+```
 library(lme4)
 
 basic.lm <- lm(testScore ~ bodyLength2, data = dragons)
