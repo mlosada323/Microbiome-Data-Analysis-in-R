@@ -168,9 +168,9 @@ full.lmer <- lmer(testScore ~ bodyLength2 + (1|mountainRange), data = dragons, R
 reduced.lmer <- lmer(testScore ~ 1 + (1|mountainRange), data = dragons, REML = FALSE)
 
 anova(reduced.lmer, full.lmer)  
-# the two models are not significantly different
+# the two models are not significantly different, as expected since dragon's body length does not impact dragon’s test score
 
-# The Akaike Information Criteria is a good criterion of the quality of the model
+# The Akaike Information Criteria is also a good criterion of the quality of the model
 AIC(reduced.lmer, full.lmer)
 
 ```
