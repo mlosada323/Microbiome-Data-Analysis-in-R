@@ -127,32 +127,11 @@ library(lme4)
 mixed.lmer <- lmer(testScore ~ bodyLength2 + (1|mountainRange), data = dragons)
 summary(mixed.lmer)
 ```
-Linear mixed model fit by REML
-Formula: testScore ~ bodyLength2 + (1 | mountainRange)
-   Data: dragons
+Take a look at the ouput:
 
-REML criterion at convergence: 3985.6
+First, dragon's body length does not seem to impact dragon’s test score
 
-Scaled residuals: 
-    Min      1Q  Median      3Q     Max 
--3.4815 -0.6513  0.0066  0.6685  2.9583 
-
-Random effects:
- Groups        Name        Variance Std.Dev.
- mountainRange (Intercept) 339.7    18.43   
- Residual                  223.8    14.96   
-Number of obs: 480, groups:  mountainRange, 8
-
-Fixed effects:
-            Estimate Std. Error t value
-(Intercept)  50.3860     6.5517   7.690
-bodyLength2   0.5377     1.2750   0.422
-
-Correlation of Fixed Effects:
-            (Intr)
-bodyLength2 0.000 
-
-We can see the variance for mountainRange = 339.7. Mountain ranges are clearly important: they explain a lot of variation. How do we know that? We can take the variance for the mountainRange and divide it by the total variance:
+Then, we can see the variance for mountainRange (random effects) is 339.7. Mountain ranges are clearly important, they explain a lot of variation. How do we know that? We can take the variance for the mountainRange and divide it by the total variance:
 
 339.7/(339.7 + 223.8)=0.60 ~60 %
 
@@ -168,9 +147,10 @@ full.lmer <- lmer(testScore ~ bodyLength2 + (1|mountainRange), data = dragons, R
 reduced.lmer <- lmer(testScore ~ 1 + (1|mountainRange), data = dragons, REML = FALSE)
 
 anova(reduced.lmer, full.lmer)  
-# the two models are not significantly different, as expected since dragon's body length does not impact dragon’s test score
 
 # The Akaike Information Criteria is also a good criterion of the quality of the model
 AIC(reduced.lmer, full.lmer)
+
+# the two models are not significantly different, as expected since dragon's body length does not impact dragon’s test score
 
 ```
