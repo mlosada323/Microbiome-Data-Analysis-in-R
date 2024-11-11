@@ -3,6 +3,8 @@
 What is mixed effects modelling and why does it matter? 
 Longitudinal data are often complex and messy. We can have different grouping factors like populations, species, sites where we collect the data, etc. Sample sizes might leave something to be desired too, especially if we are trying to fit complicated models with many parameters. On top of that, our data points might not be truly independent. For instance, we might be using quadrats within our sites to collect the data (and so there is structure to our data: quadrats are nested within the sites). This is why mixed models were developed, to deal with such messy data and to allow us to use all our data, even when we have low sample sizes, structured data and many covariates to fit. Oh, and on top of all that, mixed models allow us to save degrees of freedom compared to running standard linear models! Sounds good, doesn’t it? 
 
+# Dragons
+
 We are going to focus on a fictional study system, dragons, so that we don’t have to get too distracted with the specifics of this example. Imagine that we decided to train dragons and so we went out into the mountains and collected data on dragon intelligence ( testScore) as a prerequisite. We sampled individuals with a range of body lengths across three sites in eight different mountain ranges. 
 ```r
 # load the data and have a look at it
@@ -153,4 +155,25 @@ AIC(reduced.lmer, full.lmer)
 
 # the two models are not significantly different, as expected since dragon's body length does not impact dragon’s test score
 
+```
+# Microbiome data
+
+Now we want to test if microbial diversity estimates (response variable) is impacted by skin region and gender (fixed effect) while contoling by patient (random effects) 
+```r
+# load RDS file 
+readRDS(file = "Demo6b.RDS") -> physeq
+physeq
+
+# phyloseq: The following R commands estimate multiple indices
+diver<-estimate_richness(physeq, measures=c("Chao1","Shannon"))
+
+# Add diversity indices to metadata
+diver_all<-cbind(sample_data(physeq),diver)
+head(diver_all)
+
+t1 <- lmer(Shannon ~ region + gender +(1|patient), data = diver_all)
+anova(t1)
+summary(t1)
+
+# We can conclude that skin region impacts Shannon diversity 
 ```
