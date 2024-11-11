@@ -122,8 +122,8 @@ install.packages("ggplot2")
 library(ggplot2)
 ```
 
-## 4.3.3	Creating a Plot Using ggplot()
-### 4.3.3.1 Creating a Plot Layer by Layer with ggplot()
+## 4.3.3	Creating a plot Using ggplot
+### 4.3.3.1 Creating a plot Layer by Layer with ggplot
 ```r
 data(iris)
 head(iris)
@@ -222,7 +222,7 @@ ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) +
   #Add Facet Wrap
   facet_wrap(~ Species, nrow=2) 
 ```
-## Creating plots using ggpubr
+## Creating plots with ggpubr
 
 ### Box plots
 ```r
