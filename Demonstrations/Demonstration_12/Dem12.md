@@ -175,5 +175,9 @@ t1 <- lmer(Shannon ~ region + gender +(1|patient), data = diver_all)
 anova(t1)
 summary(t1)
 
+# The emmeans package can be used to adjust p-values by taking multiple comparisons into consideration
+library(emmeans)
+contrast(emmeans(t1, specs="region"), "pairwise")
+
 # We can conclude that skin region impacts Shannon diversity 
 ```
