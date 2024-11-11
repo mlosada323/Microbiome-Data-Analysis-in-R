@@ -222,5 +222,50 @@ ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) +
   #Add Facet Wrap
   facet_wrap(~ Species, nrow=2) 
 ```
+## Creating plots using ggpubr
 
+### Box plots
+```r
 
+install.packages("ggpubr")
+library(ggpubr)
+
+data(iris)
+df <- iris
+head(df, 3)
+
+# Use outline colors for groups: Species
+# Use custom color palette
+# Add jitter points and use different shapes for groups
+
+p <- ggboxplot(df, x = "Species", y = "Sepal.Length",
+               color = "Species", palette =c("#00AFBB", "#E7B800", "#FC4E07"),
+               add = "jitter", shape = "Species")
+p
+
+# Add p-values for comparing groups
+# Specify the pairwise group comparisons
+
+comps <- list( c("setosa", "versicolor"), c("setosa", "virginica"), c
+               ("versicolor", "virginica") )
+p + stat_compare_means(comparisons = comps) + # Add global p-value and p-values for pairwise comparisons
+  stat_compare_means(label.y = 12)
+
+# Specify the comparisons of interest
+comps <- list( c("setosa", "versicolor"), c("setosa", "virginica"), c
+               ("versicolor", "virginica") )
+p + stat_compare_means(comparisons = comps,label = "p.signif") + # Show the signicance levels
+  stat_compare_means(label.y = 12) # Add global p-value
+```
+### Histogram plots
+```r
+# Change outline and fill different color for groups ("Species")
+# Use custom color palette
+
+gghistogram(df, x = "Sepal.Width",
+            add = "mean", rug = TRUE,
+            color = "Species", fill = "Species",
+            bins = 20,
+            palette = c("#00AFBB", "#E7B800","#FC4E07"))
+
+```
