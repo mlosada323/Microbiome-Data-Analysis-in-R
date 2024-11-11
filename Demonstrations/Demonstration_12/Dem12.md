@@ -170,4 +170,7 @@ reduced.lmer <- lmer(testScore ~ 1 + (1|mountainRange), data = dragons, REML = F
 anova(reduced.lmer, full.lmer)  
 # the two models are not significantly different
 
+# The Akaike Information Criteria is a good criterion of the quality of the model
+AIC(reduced.lmer, full.lmer)
+
 ```
