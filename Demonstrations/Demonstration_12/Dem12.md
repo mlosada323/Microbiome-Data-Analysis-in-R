@@ -121,7 +121,6 @@ fixed effect. But the response variable has some residual variation (i.e. unexpl
 
 ```r
 # Fit the LMM
-library(lme4)
 
 # LMM general formula: lmer(response variable ~ fixed effect + random effect, data)
   
