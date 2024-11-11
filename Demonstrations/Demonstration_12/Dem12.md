@@ -28,6 +28,7 @@ Fit the model with testScore as the response and bodyLength2 as the predictor an
 ```r
 
 library(lme4)
+library(lmerTest)
 
 basic.lm <- lm(testScore ~ bodyLength2, data = dragons)
 
