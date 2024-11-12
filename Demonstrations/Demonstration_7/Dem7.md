@@ -201,7 +201,7 @@ histogram(~ value|Group4, data=df_CH_G,layout=c(2,2))
 #kruskal wallis test of Chao 1 richness
 kruskal.test(value ~ Group4, data = df_CH_G) 
 
-# as for ANOVA, for the purpose of illustration, we perform a post hoc analysis is further conducted to nd which levels of the groups are different from each other if the Kruskal-Wallis test is signicant
+# if the Kruskal-Wallis test is significant and for the purpose of illustration, we perform a post hoc analysis to assess which levels of the groups are different from each other 
 
 # Tukey test
 library(DescTools)
