@@ -32,6 +32,23 @@ fit_t
 fit_w <- wilcox.test(value ~ Group, data=Fecal_G)
 fit_w 
 ```
+### boxplot with statistical analysis and significance
+```r
+library(ggpubr)
+library(ggplot2)
+
+# create the groups to compare
+my_comparisons <- list( c("Vdr-/-", "WT"))
+
+# run Wilcoxon Rank Sum Test
+compare_means(formula = Bacteroides~Group, data = Fecal_Bacteroides_G, method = "wilcox.test", exact= FALSE)
+
+# create box plot
+p <- ggplot(Fecal_Bacteroides_G, aes(factor(Group), Bacteroides)) +
+    geom_boxplot(aes(fill = factor(Group)),outlier.colour = "black", outlier.size = 0.2)+ geom_jitter(size=0.2,shape=1)+panel_border(colour = "black", size = 0.5)+ ggtitle("Species richness")+labs(y = "Species richness") + stat_compare_means(mapping = NULL, comparisons = my_comparisons, hide.ns = FALSE, label = "p.signif",  label.x = NULL, label.y = NULL, exact =FALSE)
+p
+```
+
 ## 8.2 Comparisons of a Taxon of Interest between Two Groups                                                                     
 
 ### 8.2.1 Comparison of Relative Abundance using Wilcoxon Rank Sum Test
