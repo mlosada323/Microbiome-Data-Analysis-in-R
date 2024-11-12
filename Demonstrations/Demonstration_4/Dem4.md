@@ -122,7 +122,7 @@ tbl
 # Butyrate      0       9
 # Control       3       4
 
-# The above table shows the distribution of the proportion–4 (57%) out of 7 control samples had Butyrivibrio brisolvens, while 9 (100%) out of 9 Butyrate treatment samples did
+# The above table shows the distribution of the proportion: 4 (57%) out of 7 control samples had Butyrivibrio brisolvens, while 9 (100%) out of 9 Butyrate treatment samples did
 
 # The following plain R codes are used to implement the sample size and power calculations using formulas in (5.16) and (5.17)
 
