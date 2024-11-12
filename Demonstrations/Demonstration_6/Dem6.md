@@ -199,6 +199,27 @@ p2
 
 plot_grid(p1, p2, ncol = 1, nrows=1, align = "v")
 
+# create PCoA plots for 2 factors using list 
+
+library(cowplot)
+
+myTheme <- list(geom_point(size = 3),
+                panel_border(colour = "black", size = 0.75),
+                labs(color = "region_c",
+                     shape = "gender"))
+
+p1 <- plot_ordination(ps1, ordinate(ps1, method="PCoA", dist="unifrac"), color = "region_c", shape = "gender")  +
+  myTheme +
+  labs(title = "PCoA unweighted unifrac")
+p1
+
+# create a NMDS plots for 2 factors using list
+
+p3 <- plot_ordination(ps1, ordinate(ps1, method="NMDS", dist="unifrac"), color = "region_c", shape = "gender")  +
+  myTheme +
+  labs(title = "NMDS unweighted unifrac")
+p3
+
 # Loop through several ordination plots
 dist = "bray"
 ord_meths = c("CCA", "NMDS", "RDA", "PCoA")
