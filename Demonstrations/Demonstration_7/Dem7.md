@@ -55,7 +55,7 @@ relative_abund_table[1:16,1:8]
 (Bacteroides <-relative_abund_table[,8]) 
 
 # combine Bacteroides and grouping data frames
-Bacteroides_G <-cbind(Bacteroides, grouping)
+Bacteroides_G <-cbind(Bacteroides, Fecal_G)
 rownames(Bacteroides_G)<-NULL
 Fecal_Bacteroides_G <- subset(Bacteroides_G, Location=="Fecal")
 Fecal_Bacteroides_G
