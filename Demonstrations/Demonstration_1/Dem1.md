@@ -65,6 +65,7 @@ head(tab)
 boxplot(write ~ female,data=tab, main="High School Students Data", 
         xlab="Gender", ylab="Writing score by gender")
 ```
+![Alt text](image1.png)
 ## Package readxl for reading excell files
 ```r
 install.packages ("readxl")
