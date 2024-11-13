@@ -185,6 +185,8 @@ TukeyHSD(aov_fit, conf.level=.95)
 
 plot(TukeyHSD(aov(df_CH_G$value~df_CH_G$Group4), conf.level=.95))
 ```
+![Alt text](image4.png)
+
 ## 8.4 Comparisons among More than Two Groups Using Kruskal-Wallis Test                           
 
 ### 8.4.2 Compare Diversities among Groups
@@ -307,6 +309,8 @@ summary(fit)
 
 plot(fit)
 ```
+![Alt text](image5.png)
+
 ## 9.4 Hypothesis Tests of Multi-Response Permutation Procedures (MRPP)
 ```r
 mrpp(bray, grouping$Group,permutations = 1000)
