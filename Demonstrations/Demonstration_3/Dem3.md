@@ -66,7 +66,9 @@ sample_variables
 library("ape")
 random_tree = ape::rtree(ntaxa(physeq), rooted=TRUE, tip.label=taxa_names(physeq))
 plot(random_tree)
-
+```
+![Alt text](image1.png)
+```r
 # Now merge the tree data to the phyloseq object we already have by using the merge_phyloseq()
 ps = merge_phyloseq(physeq, random_tree)
 ps
