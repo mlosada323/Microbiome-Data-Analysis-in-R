@@ -54,10 +54,11 @@ ggplot(imp.20, aes(x = predictors, y = MeanDecreaseGini)) +
   geom_bar(stat = "identity", fill = "indianred") +
   coord_flip() +
   ggtitle("Most important OTUs for classifying skin samples\n into more washed or less washed")
-
+```
 ![image1](https://github.com/user-attachments/assets/8c75cd0c-20fd-4fec-a381-64edb42c2085)
-
+```r
 # What are those ASVs?
 otunames <- imp.20$predictors
 r <- rownames(tax_table(ps1)) %in% otunames
 kable(tax_table(ps1)[r, ])
+```
