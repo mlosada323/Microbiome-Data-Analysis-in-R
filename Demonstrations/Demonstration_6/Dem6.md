@@ -23,7 +23,9 @@ plot_richness(physeq, measures = c("Chao1", "Shannon"),x = "Group ", color = "Gr
 theme_set(theme_bw())
 plot_bar(physeq)
 plot_bar(physeq, fill="Group")
-
+```
+![Alt text](image2.png)
+```r
 TopNGenus <- names(sort(taxa_sums(physeq), TRUE)[1:5])
 Top5Genus  <- prune_taxa(TopNGenus, physeq)
 
@@ -34,13 +36,17 @@ TopNGenus <- names(sort(taxa_sums(physeq), TRUE)[1:5])
 Top5Genus  <- prune_taxa(TopNGenus, physeq)
 
 plot_heatmap(Top5Genus) 
-
+```
+![Alt text](image3.png)
+```r
 # 7.2.4	Plot Network
 set.seed(123)
 library(igraph)
 ig <- make_network(physeq, max.dist=0.8)
 plot_network(ig, physeq, color="Group", shape="Group")
-
+```
+![Alt text](image4.png)
+```r
 # create a network based on a maximum distance between connected nodes of 0.5
 plot_net(physeq, maxdist = 0.5, color = "Group", shape="Group")
 
@@ -58,7 +64,10 @@ ps
 psp = prune_taxa(taxa_names(ps)[1:50], ps) 
 
 plot_tree(psp, ladderize = "left", color = "Group") 
-plot_tree(psp, ladderize = "left", color = "Group",shape = "Group") 
+plot_tree(psp, ladderize = "left", color = "Group",shape = "Group")
+```
+![Alt text](image5.png)
+```r
 plot_tree(psp, color = "Group", 
           shape = "Group", ladderize = "left") + coord_polar(theta = "y")
 ```
@@ -82,6 +91,9 @@ byphylum.tr <- transform_sample_counts(byphylum, function (x) x/sum(x))
 
 p<-plot_bar(byphylum.tr, x="sampleID", fill="Phylum") + geom_bar(aes(color=Phylum, fill=Phylum), stat="identity", position="stack")
 p
+```
+![Alt text](image6.png)
+```r
 p<-plot_bar(byphylum.tr, x="region", fill="Phylum") + geom_bar(aes(color=Phylum, fill=Phylum), stat="identity", position="stack")
 p
 
@@ -94,7 +106,7 @@ myTheme <- list(geom_bar(stat = "identity", color = "black"),
                 scale_y_continuous(expand = c(0,0), limits = c(0, 1.001)),
                 theme(axis.text.y = element_text(size = 18),
                       axis.title = element_text(size = 20),
-                      strip.text = element_text(size = 18, margin = margin(0.3,0,0.3,0, "cm")),
+                      strip.text = element_text(size = 18),
                       plot.title = element_text(size = 20),
                       legend.text = element_text(size = 18)),
                 labs(x = ""))
@@ -110,6 +122,8 @@ p <- ggplot(data = byphylum.df, aes(x = sampleID, y = Abundance, fill = Phylum))
   myTheme
 p
 ```
+![Alt text](image7.png)
+
 ## 7.3	Clustering                                                                   
 ```r
 # 7.3.2 Load the package and datasets
@@ -125,7 +139,9 @@ bc_dist<- vegdist(abund_table_norm , method = "bray")
 # 7.3.2.1 Single Linkage Agglomerative Clustering
 cluster_single <- hclust (bc_dist, method = 'single')
 plot(cluster_single)
-
+```
+![Alt text](image8.png)
+```r
 # 7.3.2.2 Complete Linkage Agglomerative Clustering
 cluster_complete <- hclust (bc_dist, method = 'complete')
 plot(cluster_complete)
@@ -147,6 +163,7 @@ plot(cluster_ward)
 
 par (mfrow = c(1,1))
 ```
+![Alt text](image9.png)
 ## 7.4	Ordination                          
 
 ### 7.4.1	Principal Component Analysis (PCA)
@@ -200,30 +217,41 @@ p2
 # In NMDS the stress score measures how well the ordination summarizes the distances between samples. It's a key indicator of the ordination's "goodness of fit"
 # a stress <0.10 is a Good fit 
 
-plot_grid(p1, p2, ncol = 1, nrows=1, align = "v")
-
+plot_grid(p1, p2)
+```
+![Alt text](image10.png)
+```r
 # create PCoA plots for 2 factors using list 
+
+readRDS(file = "Demo6b.RDS") -> ps1
+ps1
 
 library(cowplot)
 
 myTheme <- list(geom_point(size = 3),
                 panel_border(colour = "black", size = 0.75),
-                labs(color = "region_c",
+                labs(color = "region",
                      shape = "gender"))
 
-p1 <- plot_ordination(ps1, ordinate(ps1, method="PCoA", dist="unifrac"), color = "region_c", shape = "gender")  +
+p1 <- plot_ordination(ps1, ordinate(ps1, method="PCoA", dist="bray"), color = "region", shape = "gender")  +
   myTheme +
-  labs(title = "PCoA unweighted unifrac")
+  labs(title = "PCoA Bray-Curtis")
 p1
 
 # create a NMDS plots for 2 factors using list
 
-p3 <- plot_ordination(ps1, ordinate(ps1, method="NMDS", dist="unifrac"), color = "region_c", shape = "gender")  +
+p3 <- plot_ordination(ps1, ordinate(ps1, method="NMDS", dist="bray"), color = "region", shape = "gender")  +
   myTheme +
-  labs(title = "NMDS unweighted unifrac")
+  labs(title = "NMDS Bray-Curtis")
 p3
-
+plot_grid(p1, p3)
+```
+![Alt text](image11.png)
+```r
 # Loop through several ordination plots
+
+readRDS(file = "Demo6a.RDS") -> physeq
+
 dist = "bray"
 ord_meths = c("CCA", "NMDS", "RDA", "PCoA")
 plist = plyr::llply(as.list(ord_meths), function(i, physeq, dist){
@@ -243,7 +271,9 @@ p = ggplot(pdataframe, aes(Axis_1, Axis_2, color=Group, fill=Group)) +
   scale_fill_brewer(type="qual", palette="Set1") +
   scale_colour_brewer(type="qual", palette="Set1")
 p
-
+```
+![Alt text](image12.png)
+```r
 # Print one plot of the loop
 p = plist[[2]] + scale_colour_brewer(type="qual", palette="Set1") +
   scale_fill_brewer(type="qual", palette="Set1") +
@@ -252,6 +282,8 @@ p
 ```
 ## Constrained Correspondence Analysis (CCA)
 ```r
+readRDS(file = "Demo6a.RDS") -> ps1
+
 # delete taxa with abundance = 0
 ps1 <- prune_taxa(taxa_sums(ps) > 1, ps)
 ps1
@@ -264,7 +296,7 @@ head(otu_c)
 meta <- meta(ps1)
 head(meta)
 
-# estiate CCA
+# estimate CCA
 cca1<-cca(otu_c~Group, data=meta)
 cca1
 
@@ -298,3 +330,4 @@ core.taxa.class <- dplyr::filter(tax.df, rownames(tax.df) %in% core.taxa)
 knitr::kable(head(core.taxa.class))
 knitr::kable(core.taxa.class)
 ```
+![Alt text](image13.png)
