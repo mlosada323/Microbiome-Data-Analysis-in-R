@@ -14,6 +14,9 @@ sample_variables(physeq)
 # 7.2.1 Plot Richness
 library(ggplot2)
 plot_richness(physeq, x = "Group ", color = "Group ")
+```
+![Alt text](image1.png)
+```r
 plot_richness(physeq, measures = c("Chao1", "Shannon"),x = "Group ", color = "Group ")
 
 # 7.2.2 Plot Abundance Bar
