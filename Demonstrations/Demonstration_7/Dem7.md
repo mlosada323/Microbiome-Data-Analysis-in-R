@@ -63,7 +63,7 @@ Fecal_Bacteroides_G
 # generate box plot
 boxplot(Bacteroides ~ Group,data=Fecal_Bacteroides_G, col=rainbow(2),main="Bacteroides in Vdr WT/KO mice")
 ```
-
+![Alt text](image1.png)
 ```r
 ggplot(Fecal_Bacteroides_G, aes(x=Group, y=Bacteroides,col=factor(Group))) + 
   geom_boxplot(notch=FALSE)
@@ -87,12 +87,14 @@ p <- ggplot(Fecal_Bacteroides_G, aes(factor(Group), Bacteroides)) +
     geom_boxplot(aes(fill = factor(Group)),outlier.colour = "black", outlier.size = 0.2)+ geom_jitter(size=0.2,shape=1)+panel_border(colour = "black", size = 0.5)+ ggtitle("Species richness")+labs(y = "Species richness") + stat_compare_means(mapping = NULL, comparisons = my_comparisons, hide.ns = FALSE, label = "p.signif",  label.x = NULL, label.y = NULL, exact =FALSE)
 p
 ```
+![Alt text](image2.png)
+
 ### 8.2.2 Comparison of Present or Absent Taxon using Chi-square Test
 ```r
 abund_table[1:16,1:27]
 (Parabacteroides <- abund_table[,27])
 
-Parabacteroides_G <-cbind(Parabacteroides, grouping)
+Parabacteroides_G <-cbind(Parabacteroides, Fecal_G)
 rownames(Parabacteroides_G)<-NULL
 
 Cecal_Parabacteroides_G <- subset(Parabacteroides_G, Location=="Cecal")
@@ -118,9 +120,10 @@ fisher.test(tbl)
 ```r
 # The following codes make a dataframe of Chao1 richness and add group information into this dataframe
 CH=estimateR(abund_table)[2,] 
-df_CH <-data.frame(sample=names(CH),value=CH,measure=rep("Chao1",length(CH))) 
-df_CH_G <-cbind(df_CH, grouping)
-rownames(df_G)<-NULL
+df_CH <-data.frame(sample=names(CH),value=CH,measure=rep("Chao1",length(CH)))
+Fecal_G_S <- dplyr::select(Fecal_G, Location, Group)
+df_CH_G <-cbind(df_CH, Fecal_G_S)
+rownames(df_CH_G)<-NULL
 df_CH_G
 
 # create a new four levels group using interaction of Location and Group
@@ -128,12 +131,9 @@ df_CH_G$Group4<- with(df_CH_G, interaction(Location,Group))
 df_CH_G
 
 boxplot(value~Group4, data=df_CH_G, col=rainbow(4), main="Chao1 index")
-
-library(ggplot2)
-p <-ggplot(df_CH_G, aes(x=Group4, y=value,col=factor(Group4))) + 
-  geom_boxplot(notch=FALSE)
-p
 ```
+![Alt text](image3.png)
+
 To apply ANOVA we must first test for normality and homogeneity of variances (homoscedasticity) using the Shapiro-Wilk test and the Bartlett test or Fligner-Killeen tests, respectively 
 ```r
 library(dplyr)
