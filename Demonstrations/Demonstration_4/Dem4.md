@@ -26,6 +26,7 @@ p+geom_vline(data=mu, aes(xintercept=grp.mean, color="red"),
              linetype="dashed")
 
 ```
+![Alt text](image1.png)
 ## 5.2.3 Calculating Power or Sample Size Using R Function power.t.test
 Here, we focus on illustrating how to calculate the power or sample size using R software. In R, the function power.t.test() in basic R and the function pwr.t.test() in the pwr package can be used to conduct power analysis. We use the power.t.test. The usage of this function is shown below:
 power.t.test (n = sample size, delta = effect size, sd = standard deviation, sig. level = 0.05, power = NULL, type = c(“two.sample”, “one.sample”, “paired”), alternative = (“two.sided”, “one.sided”))
@@ -89,22 +90,29 @@ abline(h = 0.90, col="blue")
 
 power.t.test(n=2:10,delta=2.504-2.205,sd=0.05012, type = "one.sample" )
 ```
+![Alt text](image2.png)
 ## 5.3 Power Analysis for Comparing Diversity Across More than Two Groups Using ANOVA	
 
 ### 5.3.2 Calculating Power or Sample Size Using R Function pwr.avova.test	
 ```r
-# First, we subset data of four groups of months 1 and 4 with treatment and control
-df_H_G93WTm1N4 <- filter(df_H_G6,Group%in%c("G93m1","WTm1","G93m4","WTm4"))
-df_H_G93WTm1N4 
+ALSsel <- read.csv("ALSsel.csv",row.names=1,check.names=FALSE) 
 
-# Then, we get F statistic by fitting linear model.
-fit = lm(formula = value~Group,data=df_H_G93WTm1N4)
+# First, we get F statistic by fitting linear model.
+fit = lm(formula = value~Group,data=ALSsel)
 anova (fit)
 
-# Finally, we call the pwr.anova.test() function from pwr package to calculate powers
+# Then, we call the pwr.anova.test() function from pwr package to calculate powers
 install.packages("pwr")
 library(pwr)
 pwr.anova.test(f= 0.23,k=4,n=45:55,sig.level=0.05)
+
+n=c(n = 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55)
+power = c(0.7276151, 0.7382780, 0.7486181, 0.7586391, 0.7683450, 0.7777403, 0.7868298, 0.7956185, 0.8041118, 0.8123153, 0.8202347)
+
+df_P <-data.frame(n,power)
+df_P
+
+# The results above show that 53 samples are needed for each group to obtain 80% based on the effect sizes detected in this pilot study using ANOVA test.
 ```
 ## 5.4 Power Analysis for Comparing a Taxon of Interest Across Groups 
 
