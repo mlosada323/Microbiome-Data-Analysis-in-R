@@ -55,6 +55,7 @@ ggplot(imp.20, aes(x = predictors, y = MeanDecreaseGini)) +
   coord_flip() +
   ggtitle("Most important OTUs for classifying skin samples\n into more washed or less washed")
 
+![image1](https://github.com/user-attachments/assets/6bbf91d4-180a-4319-80f9-8aeff3cacbb1)
 
 
 # What are those ASVs?
