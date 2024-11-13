@@ -184,7 +184,7 @@ ggplot(iris, aes(x=Sepal.Width, y=Sepal.Length)) +
   labs(title="Sepal width vs sepal length", subtitle="Using iris dataset", 
        y="Length of Sepal", x="Width of Sepal")
 ```
-
+![Alt text](image1.png)
 ### 4.3.3.5 Using Faceting to Detect Patterns Across Conditions
 ```r
 #Spliting plots by rows
