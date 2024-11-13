@@ -65,12 +65,15 @@ head(diver_all,3)
 # generate boxplots using the ggboxplot() function from the ggpubr package
 p <- ggboxplot(diver_all, x = "SampleType", y = "Shannon", color = "SampleType", add = "jitter", shape = "SampleType")
 p
-
+```
+![Alt text](image1.png)
+```r
 # generate boxplots using ggplot
 chao <- ggplot(diver_all, aes(factor(SampleType), Chao1)) +
         geom_boxplot(aes(fill = factor(SampleType)),outlier.colour = "black", outlier.size = 1)+ geom_jitter(size=1,shape=1)+ ggtitle("Chao1 richness")+labs(y = "Chao1 richness")
 chao
 ```
+![Alt text](image2.png)
 ### Summarize the Diversity Measures per group using FSA R package
 ```r
 library(FSA)
@@ -80,6 +83,7 @@ Summarize(Shannon ~ SampleType, data = diver_all)
 library(lattice)
 histogram(~ Shannon|SampleType, data=diver_all,layout=c(3,3))
 ```
+![Alt text](image3.png)
 ### Boxplots of alpha-diversity indices for two factors 
 ```r
 library(ggplot2)
@@ -111,7 +115,9 @@ shan <- ggplot(diver_all, aes(year, Shannon)) +
        y = "Shannon") +
   myTheme
 shan
-
+```
+![Alt text](image4.png)
+```r
 chao <- ggplot(diver_all, aes(year, Chao1)) +
   facet_grid(~region) +
   labs(title = "Chao1",
@@ -175,7 +181,9 @@ fit_mt
 # Estimate tree under best fit model - TrN+G(4) using the maximum likelihood (ML)
 fitTrNG <- pml_bb(primates, model="TrN+G(4)")
 plot(fitTrNG, "phylogram", main="ML")
-
+```
+![Alt text](image5.png)
+```r
 # write tree
 write.tree(fitTrNG$tree,digits=3, file="primates.tree")
 ```
