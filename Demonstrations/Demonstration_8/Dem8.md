@@ -135,9 +135,12 @@ ggplot(imp.20, aes(x = predictors, y = IncNodePurity)) +
   geom_bar(stat = "identity", fill = "indianred") +
   coord_flip() +
   ggtitle("Most important OTUs for classifying skin samples\n into more washed or less washed")
-
+```
+![Alt text](image4.png)
+```r
 # What are those ASVs?
 otunames <- imp.20$predictors
 r <- rownames(tax_table(ps1)) %in% otunames
 kable(tax_table(ps1)[r, ])
 ```
+![Alt text](image5.png)
