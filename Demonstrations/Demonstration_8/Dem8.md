@@ -148,3 +148,4 @@ r <- rownames(tax_table(ps1)) %in% otunames
 kable(tax_table(ps1)[r, ])
 ```
 ![Alt text](image5.png)
+
