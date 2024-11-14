@@ -86,3 +86,5 @@ r <- rownames(tax_table(ps1)) %in% otunames
 kable(tax_table(ps1)[r, ])
 ```
 ![Alt text](image2.png)
+
+Now we could look into the literature to see what is known about these biomarker taxa
