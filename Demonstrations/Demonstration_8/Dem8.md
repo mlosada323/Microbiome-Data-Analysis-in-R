@@ -38,6 +38,8 @@ rf.data <- data.frame(response, predictors)
 ```
 Now we will use the randomForest package to train and test our random forest model using the “out of bag” error to estimate our model error. OOB is a nice feature of random forest models whereby since the training data is bootstrapped, you only use approximately 2/3 of the data at each iteration. The remaining 1/3 or “out of bag” data (test data) can be used to validate your model. This removes the need to use another form of cross-validation such as using a separate validation set or k-folds. The out-of-bag error then is a performance metric that estimates the performance of the Random Forest model using samples not included in the bootstrap sample for training, i.e., the test data.
 
+The randomForest package is used for both classification and regression. In a Random Forest analysis, the key difference between classification and regression lies in the type of target variable you're predicting: classification tasks aim to predict a categorical outcome (like "yes" or "no") by taking a majority vote across the decision trees, while regression tasks predict a continuous numerical value by averaging the predictions from each tree; essentially, classification is about assigning data points to distinct categories, while regression predicts a specific value on a continuous scale
+
 ```r
 install.packages("randomForest")
 library(randomForest)
