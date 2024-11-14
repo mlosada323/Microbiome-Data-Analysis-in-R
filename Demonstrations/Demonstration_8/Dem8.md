@@ -51,7 +51,7 @@ imp <- data.frame(predictors = rownames(imp), imp)
 imp.sort <- arrange(imp, desc(MeanDecreaseGini))
 imp.sort$predictors <- factor(imp.sort$predictors, levels = imp.sort$predictors)
 
-# Select the top 10 predictors
+# Select the top 20 predictors
 imp.20 <- imp.sort[1:20, ]
 
 # ggplot
