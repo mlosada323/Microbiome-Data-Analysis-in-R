@@ -23,9 +23,9 @@ plot_ordination(
 # both groups look very distinct 
 ```
 ![Alt text](image3.png)
-```r
-# A random forest analyses should be able to pull out the key ASVs that separate these two groups and accurately classify them
 
+A random forest analyses should be able to pull out the key ASVs that separate these two groups and accurately classify them
+```r
 # Make a dataframe of training data with OTUs as column and samples as rows
 predictors <- t(otu_table(ps1))
 dim(predictors)
