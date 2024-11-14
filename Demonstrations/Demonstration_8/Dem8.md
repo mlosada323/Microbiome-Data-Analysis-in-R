@@ -1,5 +1,5 @@
 # Demonstration 8
-Complete the following demonstration in RStudio. 
+Complete the following demonstration of a random forest analysis in RStudio. Random forest is a powerful machine learning algorithm for classification and identification of predictive features or biomarkers (e.g., mcirobial taxa). It operates by constructing a multitude of decission trees (i.e., forests) at training time and predicting the class as the majority vote of the individual trees. 
 
 # Machine learning approaches for microbiome analysis
 ```r
@@ -18,20 +18,23 @@ response <- as.factor(sample_data(ps1)$wash)
 # Combine them into 1 data frame
 rf.data <- data.frame(response, predictors)
 ```
-Now we will use the randomForest package to train and test our random forest model using the “out of bag” error to estimate our model error. OOB is a nice feature of random forest models whereby since the training data is bootstrapped, you only use approximately 2/3 of the data at each iteration. The remaining 1/3 or “out of bag” data can be used to validate your model. This removes the need to use another form of cross-validation such as using a separate validation set or k-folds
+Now we will use the randomForest package to train and test our random forest model using the “out of bag” error to estimate our model error. OOB is a nice feature of random forest models whereby since the training data is bootstrapped, you only use approximately 2/3 of the data at each iteration. The remaining 1/3 or “out of bag” data (test data) can be used to validate your model. This removes the need to use another form of cross-validation such as using a separate validation set or k-folds. The out-of-bag error then is a performance metric that estimates the performance of the Random Forest model using samples not included in the bootstrap sample for training, i.e., the test data.
+
 ```r
 install.packages("randomForest")
 library(randomForest)
 library(knitr)
 library(dplyr)
 ```
-It is important to set a seed for reproducability. By default, randomForest uses p/3 variables when building a random forest of regression trees and root(p) variables when building a random forest of classification trees. In this case, p/3 = 129
+It is important to set a seed for reproducability. By default, randomForest uses p/3 variables when building a random forest of regression trees and root(p) variables when building a random forest of classification trees. In this case, p=number of ASVs, hence 329/3 = 110
 ```r
 set.seed(2)
 skin.classify <- randomForest(response~., data = rf.data, ntree = 1000)
 print(skin.classify)
 ```
-In most statistical learning algorithms, the data needs to be split up into “training” and “test” data. The idea is to train the model on one set of data and test it on a naive set of data. Random forests are nice because you have a built-in way of estimating the model error. Since only ~2/3 of the data is used everytime we bootstrap our samples for construction of the kth tree, we can use the remaining ~1/3 of the data (called the out of bag samples) to test model error
+In most statistical learning algorithms, the data needs to be split up into “training” and “test” data. The idea is to train the model on one set of data and test it on a naive set of data. Random forests are nice because you have a built-in way of estimating the model error. Since only ~2/3 of the data is used everytime we bootstrap our samples for construction of the kth tree, we can use the remaining ~1/3 of the data (called the out of bag samples) to test model error 
+
+In our example the OOB (Out-of-Bag) was ~16%. An "acceptable" OOB error rate depends heavily on the specific problem domain and desired accuracy, but generally, an OOB error rate below 30% is considered acceptable for most classification tasks; for highly complex problems or situations requiring very high precision, a lower OOB error rate would be preferable
 ```r
 # What variables are stored in the output?
 names(skin.classify)
