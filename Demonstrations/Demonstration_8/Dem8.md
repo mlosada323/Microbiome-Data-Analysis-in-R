@@ -140,7 +140,7 @@ ggplot(imp.20, aes(x = predictors, y = IncNodePurity)) +
   coord_flip() +
   ggtitle("Most important OTUs for classifying skin samples\n into more washed or less washed")
 ```
-![Alt text](image4.png)
+![Alt text](image6.png)
 ```r
 # What are those ASVs?
 otunames <- imp.20$predictors
