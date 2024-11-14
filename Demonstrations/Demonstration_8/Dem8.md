@@ -73,6 +73,8 @@ imp <- data.frame(predictors = rownames(imp), imp)
 imp.sort <- arrange(imp, desc(MeanDecreaseGini))
 imp.sort$predictors <- factor(imp.sort$predictors, levels = imp.sort$predictors)
 
+# Mean Decrease Gini (MDG) is a measure of how important a variable is in a random forest model. It measures how much a variable decreases the Gini impurity, which is a way to calculate the probability of misclassifying a data point
+
 # Select the top 20 predictors
 imp.20 <- imp.sort[1:20, ]
 
@@ -126,6 +128,8 @@ imp <- data.frame(predictors = rownames(imp), imp)
 # Order the predictor levels by importance, higher value mean more important:
 imp.sort <- arrange(imp, desc(IncNodePurity))
 imp.sort$predictors <- factor(imp.sort$predictors, levels = imp.sort$predictors)
+
+# IncNodePurity: Increase in Node Purity, measures how well a predictor decreases variance
 
 # Select the top 20 predictors
 imp.20 <- imp.sort[1:20, ]
