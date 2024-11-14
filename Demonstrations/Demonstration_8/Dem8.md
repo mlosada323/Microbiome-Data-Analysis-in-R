@@ -31,10 +31,12 @@ It is important to set a seed for reproducability. By default, randomForest uses
 set.seed(2)
 skin.classify <- randomForest(response~., data = rf.data, ntree = 1000)
 print(skin.classify)
+
+# the OOB estimate of  error rate was ~16%. 
 ```
 In most statistical learning algorithms, the data needs to be split up into “training” and “test” data. The idea is to train the model on one set of data and test it on a naive set of data. Random forests are nice because you have a built-in way of estimating the model error. Since only ~2/3 of the data is used everytime we bootstrap our samples for construction of the kth tree, we can use the remaining ~1/3 of the data (called the out of bag samples) to test model error 
 
-In our example the OOB (Out-of-Bag) was ~16%. An "acceptable" OOB error rate depends heavily on the specific problem domain and desired accuracy, but generally, an OOB error rate below 30% is considered acceptable for most classification tasks; for highly complex problems or situations requiring very high precision, a lower OOB error rate would be preferable
+An "acceptable" OOB (out-of-bag) error rate depends heavily on the specific problem domain and desired accuracy, but generally, an OOB error rate below 30% is considered acceptable for most classification tasks; for highly complex problems or situations requiring very high precision, a lower OOB error rate would be preferable
 ```r
 # What variables are stored in the output?
 names(skin.classify)
