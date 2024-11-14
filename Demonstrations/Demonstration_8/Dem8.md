@@ -8,6 +8,24 @@ ps1<-readRDS(file="ps1.RDS")
 ps1
 sample_variables(ps1)
 
+# To get a sense of how these samples differ at the ASV level, let’s make an NMDS to look at the bray-curtis dissimilarity of the wash groups we want to compare below
+bray.nmds <- ordinate(physeq = ps1, method = "NMDS", distance = "bray")
+
+# Plot NMDS and color samples by wash
+plot_ordination(
+  physeq = ps1, 
+  ordination = bray.nmds, 
+  color = "wash"
+) + 
+  geom_point(size = 3) + 
+  ggtitle("wash frequency")
+
+# both groups look very distinct 
+```
+![Alt text](image3.png)
+```r
+# A random forest analyses should be able to pull out the key ASVs that separate these two groups and accurately classify them
+
 # Make a dataframe of training data with OTUs as column and samples as rows
 predictors <- t(otu_table(ps1))
 dim(predictors)
