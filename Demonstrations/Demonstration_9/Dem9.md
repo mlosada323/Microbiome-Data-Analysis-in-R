@@ -176,3 +176,30 @@ kw.ep (expected p-value of Kruskal-Wallis test)
 kw.eBH (expected Benjamini-Hochberg corrected p-value of Kruskal-Wallis test)
 glm.ep (expected p-value of glm test), and glm.eBH (expectedBenjamini-Hochberg corrected p-value of glm test)
 
+## Rarefaction Analysis
+
+Rarefaction analysis is a technique used to compare the diversity of different samples by adjusting for differences in sample size
+Rarefaction analysis involves randomly discarding reads from larger samples to create subsamples of equal size. This allows for the calculation of comparable diversity metrics, which can then be used to compare ecosystems
+```r
+# load data
+ps=readRDS(file="Demo9.RDS")
+ps
+
+par (mfrow = c(2,1))
+
+# rarefy to the minimum sample size
+ps1<-rarefy_even_depth(ps, sample.size = min(colSums(otu_table(ps))),replace=FALSE, rngseed=T)
+otu.rare = otu_table(ps1)
+otu.rare = as.data.frame(t(otu.rare))
+otu.rarecurve1 <-rarecurve(otu.rare, step = 500, xlab = "Sample Size", ylab = "ASV", label = T)
+
+# rarefy to a very small saple size size for comparison
+ps2<-rarefy_even_depth(ps, sample.size = 50,replace=FALSE, rngseed=T)
+otu.rare = otu_table(ps2)
+otu.rare = as.data.frame(t(otu.rare))
+otu.rarecurve2 <- rarecurve(otu.rare, step = 1, xlab = "Sample Size", ylab = "ASV", label = T)
+par (mfrow = c(1,1))
+```
+![Alt text](image4.png)
+
+The rarefaction curves plateau in the top plot (i.e., most of the microbial species diversity in the microbiome has been sampled), but not in the bottom plot
