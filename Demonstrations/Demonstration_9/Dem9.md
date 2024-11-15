@@ -194,6 +194,7 @@ ps1<-rarefy_even_depth(ps, sample.size = min(colSums(otu_table(ps))),replace=FAL
 otu.rare = otu_table(ps1)
 otu.rare = as.data.frame(t(otu.rare))
 otu.rarecurve1 <-rarecurve(otu.rare, step = 500, xlab = "Sample Size", ylab = "ASV", label = T)
+# Step: size for sample sizes in rarefaction curves
 
 # rarefy to a very small saple size size for comparison
 ps2<-rarefy_even_depth(ps, sample.size = 50,replace=FALSE, rngseed=T)
