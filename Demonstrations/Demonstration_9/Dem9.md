@@ -202,4 +202,4 @@ par (mfrow = c(1,1))
 ```
 ![Alt text](image4.png)
 
-The rarefaction curves plateau in the top plot (i.e., most of the microbial species diversity in the microbiome has been sampled), but not in the bottom plot
+The rarefaction curves plateau for all samples in the top plot (i.e., most of the microbial species diversity in the microbiome has been sampled), but not in the bottom plot
