@@ -71,6 +71,8 @@ coloredBiplot(abund_PCX, col="black", cex=c(0.8, 0.8),xlabs.col=samples,
               ylab=paste("PC2 ", round (sum(abund_PCX$sdev[2]^2)/mvar(abund_clr),3), sep=""),
               expand=0.8,var.axes=T, scale=1, main="Biplot")
 ```
+![Alt text](image1.png)
+
 The Vdr−/− and WT samples are separated very well: 3 wild types (in blue) on the left and 5 Vdr−/− (in red) on the right
 The first two components explained 69% of the total variance (42.7% for component 1, 26.3% for component 2) in the dataset 
 The length and direction of the arrows (taxa location) is proportional to the standard deviation of the taxon in the dataset. Lactobacillus is a highly variable genus along the same direction as samples 22 and 23, which indicates that this bacterial is more abundant in WT samples than in Vdr−/− samples.
@@ -86,6 +88,8 @@ hc
 # plot the dendrogram
 plot(hc, cex=1.0)
 ```
+![Alt text](image2.png)
+
 ### 10.3.4 Compositional Barplot
 ```r
 re_order <- abund_table_prop_reduced[,hc$order]
@@ -118,6 +122,8 @@ legend(x="center", legend=names_add, col=colours, lwd=5, cex=.6, border=NULL)
 
 par (mfrow = c(1,1))
 ```
+![Alt text](image3.png)
+
 ## 10.4.Comparison between the Groups Using ALDEx2 Package
 
 ALDEx2: Analysis Of Differential Abundance Taking Sample and Scale Variation Into Account
