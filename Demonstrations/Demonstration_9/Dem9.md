@@ -1,1 +1,2 @@
-
+# Demonstration 9
+Complete the following demonstration of a random forest analysis in RStudio. Random forest is a powerful machine learning algorithm for classification and identification of predictive features or biomarkers (e.g., mcirobial taxa). It operates by constructing a multitude of decission trees (i.e., forests) at training time and predicting the class as the majority vote of the individual trees.
