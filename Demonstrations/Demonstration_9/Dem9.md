@@ -27,6 +27,8 @@ head(abund_table_t)
 #install.packages("zCompositions")
 
 library (zCompositions)
+library (compositions)
+
 abund_table_r <- t(cmultRepl((abund_table_t), method="CZM", output="p-counts"))
 head(abund_table_r)
 
