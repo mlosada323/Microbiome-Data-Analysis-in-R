@@ -185,6 +185,8 @@ Rarefaction analysis involves randomly discarding reads from larger samples to c
 ps=readRDS(file="Demo9.RDS")
 ps
 
+library(vegan)
+
 par (mfrow = c(2,1))
 
 # rarefy to the minimum sample size
