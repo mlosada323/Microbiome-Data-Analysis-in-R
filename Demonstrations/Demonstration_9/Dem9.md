@@ -159,23 +159,23 @@ head(vdr_t)
 
 vdr_t_f <- vdr_t %>% filter(wi.eBH < 0.1)
 head(vdr_t_f)
-```
+
 we.ep (expected p-value of Welch’s t test)
 we.eBH (expected Benjamini-Hochberg corrected p-value of Welch’s t test)
 wi.ep (expected p-value of Wilcoxon rank sum test)
 wi.eBH (expected Benjamini-Hochberg corrected p-value of Wilcoxon rank sum test).
-```r
+
 vdr_kw <- aldex(abund_table, groups, mc.samples=128, test="kw", effect=TRUE,
                include.sample.summary=FALSE, denom="iqlr", verbose=FALSE)
 head(vdr_kw)
 
 vdr_kw_f <- vdr_kw %>% filter(glm.eBH < 0.1)
 head(vdr_kw_f)
-```
+
 kw.ep (expected p-value of Kruskal-Wallis test)
 kw.eBH (expected Benjamini-Hochberg corrected p-value of Kruskal-Wallis test)
 glm.ep (expected p-value of glm test), and glm.eBH (expectedBenjamini-Hochberg corrected p-value of glm test)
-
+```
 ## Rarefaction Analysis
 
 Rarefaction analysis is a technique used to compare the diversity of different samples by adjusting for differences in sample size
