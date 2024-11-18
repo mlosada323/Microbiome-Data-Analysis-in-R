@@ -177,7 +177,7 @@ table(res[,"padj"] < 0.1)
 
 res[1:2,]
 ```
-## use Negative Binomial distribution on phyloseq object to normalize counts and correct over-dispersion
+## Using Negative Binomial distribution on phyloseq object to normalize counts and correct over-dispersion
 ```r
 ps<-readRDS(file="Demo10.RDS")
 ps
