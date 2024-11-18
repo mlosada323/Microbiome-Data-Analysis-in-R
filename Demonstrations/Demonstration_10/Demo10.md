@@ -84,19 +84,19 @@ sum(res$padj < 0.1, na.rm=TRUE )
 res_Sig <- res[which(res$padj < 0.1 ),]
 head(res_Sig[order(res_Sig$log2FoldChange),])
 ```
-![Alt text](Rplo7.png)
+![Alt text](Rplot7.png)
 ```r
 tail(res_Sig[order( res_Sig$log2FoldChange ),])
 
 ##Diagnostic Plots Using plotMA
 plotMA(res)
 ```
-![Alt text](Rplo1.png)
+![Alt text](Rplot1.png)
 ```r
 ##Diagnostic Plots Using plotDispEsts
 plotDispEsts(dds, ylim = c(1e-2, 1e3))
 ```
-![Alt text](Rplo2.png)
+![Alt text](Rplot2.png)
 ```r
 ##Clustering with Heatmap
 rld <- rlog(dds)
@@ -107,7 +107,7 @@ plot(log2( 1+counts(dds, normalized=TRUE)[,1:2] ), main="Ordinary log2",col="#00
 plot(assay(rld)[,1:2], main="Regularized-logarithm", col="#00000020", pch=20, cex=0.3 )
 plot(assay(vst)[,1:2], main="Variance stabilizing",col="#00000020", pch=20, cex=0.3 )
 ```
-![Alt text](Rplo3.png)
+![Alt text](Rplot3.png)
 ```r
 head(assay(rld))[,1-3]
 
@@ -123,14 +123,14 @@ heatmap.2(assay(rld)[ topVarGenes, ], scale="row",
           trace="none", dendrogram="column",
           col = colorRampPalette( rev(brewer.pal(9, "RdBu")) )(255))
 ```
-![Alt text](Rplo4.png)
+![Alt text](Rplot4.png)
 ```r
 
 ##Histogram of p-Values
 hist(res$pvalue, breaks=20, col="grey",
      main = "Smoker vs. NonSmoker", xlab = "p-values")
 ```
-![Alt text](Rplo5.png)
+![Alt text](Rplot5.png)
 ```r
 ##Independent Filtering
 metadata(res)
@@ -170,7 +170,7 @@ res[,"padj"] <- p.adjust(res_fdr$pval, method = "BH")
 hist(res_fdr$pval, col = "gray",
      main = "Smoker vs. NonSkoer, correct null model", xlab = "Corrected p-values")
 ```
-![Alt text](Rplo6.png)
+![Alt text](Rplot6.png)
 ```r
 # Extract Differentially Abundant OTUs and Export Results Table
 table(res[,"padj"] < 0.1)
