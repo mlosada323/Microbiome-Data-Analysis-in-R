@@ -123,7 +123,35 @@ p <- ggplot(data = byphylum.df, aes(x = sampleID, y = Abundance, fill = Phylum))
 p
 ```
 ![Alt text](image7.png)
+```r
+# bar plot of metabolic functions
+# create phyloseq object
 
+taxa1 <- read.delim("PWtax.txt")
+otu <- read.delim("PWdsq.txt", skip = 1, row.names = 1, check.names = FALSE)
+metadata <- read.csv("metadata_f1.csv", header=TRUE, row.names = 1, na.strings = "NA")
+ps <- phyloseq(tax_table(as.matrix(taxa1)), sample_data(metadata), otu_table(otu, taxa_are_rows = TRUE))
+ps
+
+# subset samples 
+ps1 <- subset_samples(ps, asthma_rhinitis ==  "AS"); ps1
+
+## select most abundant pathways 
+ps2 <- prune_taxa(taxa_sums(ps1) > 95000, ps1) 
+ps2
+
+# list taxonomic ranks
+rank_names(ps2, errorIfNULL=TRUE)
+
+# estimate relative proportions
+bypathway.tr <- transform_sample_counts(ps2, function (x) x/sum(x))
+
+# create bar plot
+p<-plot_bar(bypathway.tr, x="sampleID", fill="Pathways") + geom_bar(aes(color=Pathways, fill=Pathways), stat="identity", position="stack")
+p
+
+![Alt text](image14.png)
+```
 ## 7.3	Clustering                                                                   
 ```r
 # 7.3.2 Load the package and datasets
