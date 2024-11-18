@@ -1,6 +1,5 @@
 # Demonstration 9
-Complete the following demonstration in RStudio. You can follow detail instructions in Xia et al. (2018), Chapter 10: Compositional Analysis of Microbiome
-Data. All the sections below match the sections in the book
+Complete the following demonstration in RStudio. You can follow detail instructions in Xia et al. (2018), Chapter 10: Compositional Analysis of Microbiome Data. All the sections below match the sections in the book
 
 # Chapter 10: Compositional Analysis of Microbiome Data 
 
