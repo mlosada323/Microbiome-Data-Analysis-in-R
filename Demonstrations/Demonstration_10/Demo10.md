@@ -184,7 +184,7 @@ ps
 sample_variables(ps)
 head(otu_table(ps))
 ```
-![Alt text](Rplot9.png)
+![Alt text](Rplot8.png)
 ```r
 # create DESeQ object
 diagdds = phyloseq_to_deseq2(ps, ~region_c) 
