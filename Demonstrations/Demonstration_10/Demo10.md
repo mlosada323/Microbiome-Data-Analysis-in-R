@@ -214,3 +214,4 @@ head(otu_table(ps))
 ```
 ![Alt text](Rplot10.png)
 
+Now you can apply all the statistical analyses we have revised in previous chapters
