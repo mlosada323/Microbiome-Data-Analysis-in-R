@@ -149,9 +149,9 @@ bypathway.tr <- transform_sample_counts(ps2, function (x) x/sum(x))
 # create bar plot
 p<-plot_bar(bypathway.tr, x="sampleID", fill="Pathways") + geom_bar(aes(color=Pathways, fill=Pathways), stat="identity", position="stack")
 p
-
-![Alt text](image14.png)
 ```
+![Alt text](image14.png)
+
 ## 7.3	Clustering                                                                   
 ```r
 # 7.3.2 Load the package and datasets
