@@ -215,3 +215,36 @@ head(otu_table(ps))
 ![Alt text](Rplot10.png)
 
 Now you can apply all the statistical analyses we have revised in previous chapters
+
+## DESeq analysis of differentially abundant taxa across factors using ps object
+```r
+ps<-readRDS(file="Demo10.RDS")
+
+# create DESeQ object
+diagdds = phyloseq_to_deseq2(ps, ~wash) # less significant results
+
+dds = DESeq(diagdds, test="Wald", fitType="local")
+# This function is the same as 'diagdds = estimateSizeFactors(diagdds)' above
+
+res = results(dds, cooksCutoff = FALSE) 
+# alpha=0.1 is the default, reduce for more restringing results
+res
+head(res,10)
+summary(res)
+# Count the number of taxa DE with a padj under 0.1
+sum(res$padj < 0.01, na.rm=TRUE) 
+
+# order our results table by the smallest p value
+resOrdered <- res[order(res$padj),] 
+
+head(resOrdered, 10)
+resSig <- subset(res, padj < 0.01)
+# significant taxa with the strongest down-regulation
+head(resSig[ order( resSig$log2FoldChange ), ])
+
+# significant taxa with the strongest up-regulation
+head(resSig[ order( resSig$log2FoldChange, decreasing=TRUE ), ]) 
+```
+
+
+
