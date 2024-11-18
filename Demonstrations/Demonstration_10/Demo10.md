@@ -176,3 +176,41 @@ hist(res_fdr$pval, col = "gray",
 table(res[,"padj"] < 0.1)
 
 res[1:2,]
+```
+## use Negative Binomial distribution on phyloseq object to normalize counts and correct over-dispersion
+```r
+ps<-readRDS(file="Demo10.RDS")
+ps
+sample_variables(ps)
+head(otu_table(ps))
+```
+![Alt text](Rplot9.png)
+```r
+# create DESeQ object
+diagdds = phyloseq_to_deseq2(ps, ~region_c) 
+# Any variable of the metadata would work to create the DESeQ object
+
+# Calculate geometric means
+gm_mean = function(x, na.rm=TRUE){
+  exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x))
+}
+geoMeans = apply(counts(diagdds), 1, gm_mean)
+
+# Estimate size factors
+diagdds = estimateSizeFactors(diagdds, geoMeans = geoMeans)
+
+# Get Normalized read counts
+normcounts <- counts(diagdds, normalized = TRUE)
+
+# Round read counts
+round(normcounts, digits = 0) -> normcountsrd
+
+# Transform matrix of normalized counts to phyloseq object
+otu_table(normcountsrd, taxa_are_rows = TRUE) -> ncr
+
+# Replace otu_table in original phyloseq object
+otu_table(ps) <- ncr
+head(otu_table(ps))
+```
+![Alt text](Rplot10.png)
+
