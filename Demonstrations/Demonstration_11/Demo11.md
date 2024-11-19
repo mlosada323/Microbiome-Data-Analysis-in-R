@@ -88,6 +88,11 @@ ZINB28 <- zeroinfl(formula = f28, dist = "negbin", link = "logit", data = abund_
 # dist = "poisson": specifies NB distribution for count data
 # link= logit: specifies the logistic link for the zeros
 summary(ZINB28)
+
+# alternativelly you can also set up the models as:
+ZIP28 <- zeroinfl(Y ~  fx + offset(Offset)|fx, dist = "poisson", link = "logit", data = abund_table_28a)
+ZINB28 <- zeroinfl(Y ~  fx + offset(Offset)|fx, dist = "negbin", link = "logit", data = abund_table_28a)
+
 ```
 ## 12.3 Zero-Hurdle Models: ZHP and ZHNB 
 A hurdle model is a two-part model that separates zero counts from positive counts by assuming that a threshold, or "hurdle", must be overcome for positive counts to occur
