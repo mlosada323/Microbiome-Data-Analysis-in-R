@@ -194,8 +194,6 @@ hist(res_fdr$pval, col = "gray",
 ```
 ![Alt text](Rplot6.png)
 
-Plot of false discovery rate 
-
 ```r
 # Extract Differentially Abundant OTUs and Export Results Table
 table(res[,"padj"] < 0.1)
