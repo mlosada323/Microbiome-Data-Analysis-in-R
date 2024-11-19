@@ -46,7 +46,7 @@ In linear regression, an "offset" refers to a known variable that is added direc
 The total count read is used to create the offset. The offset will be adjusted as a covariate in the model later to ensure microbiome response is relative abundance instead of count data
 ```r
 # Create the Offset
-abund_table_28a$Offset <- log(abund_table_28a$nReads);
+abund_table_28a$Offset <- log(abund_table_28a$nReads)
 head(abund_table_28a$Offset)
 head(abund_table_28a)
 ```
