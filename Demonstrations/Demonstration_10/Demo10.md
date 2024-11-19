@@ -1,8 +1,11 @@
 # Demonstration 10
-Complete the following demonstration in RStudio. You can follow detail instructions in Xia et al. (2018), Chapter 11: Modeling Over-Dispersed Microbiome Data. All the sections below match the sections in the book
+Complete the following demonstration in RStudio. You can follow detail instructions in Xia et al. (2018), Chapter 11: Modeling Over-Dispersed Microbiome Data. Most sections below match the sections in the book
 
 # Modeling Over-Dispersed Microbiome Data
-## 11.5. The DESeq2 Package                                              
+## 11.5. The DESeq2 Package
+DESeq is a variance stabilization technique based on a NB model that was recommended and adapted for microbiome count data (McMurdie and Holmes 2014) - https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531. 
+
+### 11.5.2 Step-by-Step Implementing DESeq2
 ```r
 install.packages("GUniFrac")
 library(GUniFrac)
@@ -12,14 +15,14 @@ otu_tab<-throat.otu.tab
 head(otu_tab)
 
 # prepare dataset
-
 countData<-as(otu_tab, "matrix")
 head(countData)
 
-#DESeq2 need taxa(genes=rows) by samples(=columns)format
+#DESeq2 needs taxa(genes=rows) by samples(=columns)format
 countData<-(t(countData))
 head(countData)
 
+# Create the Sample Metadata Table
 data(throat.meta)
 head(throat.meta)
 
@@ -29,8 +32,7 @@ head(group)
 metaData<-data.frame(row.names=colnames(countData),group=group)
 head(metaData)
 
-# create DESeq2 object and run
-
+# create DESeq2 object
 library("DESeq2")
 dds <- DESeqDataSetFromMatrix(countData = countData,
                               colData = metaData,
@@ -87,13 +89,16 @@ head(res_Sig[order(res_Sig$log2FoldChange),])
 ![Alt text](Rplot7.png)
 ```r
 tail(res_Sig[order( res_Sig$log2FoldChange ),])
-
+```
+### Diagnose and Improve the Testing Results
+Data visualization and clustering can diagnose and help interpreting the results of differential abundance analysis. Here, we introduce several different plots that are associated with diagnostics, clustering, interpretation of differential abundance analysis.
+```r
 ##Diagnostic Plots Using plotMA
 plotMA(res)
 ```
 ![Alt text](Rplot1.png)
 ```r
-##Diagnostic Plots Using plotDispEsts
+## Diagnostic Plots Using plotDispEsts
 plotDispEsts(dds, ylim = c(1e-2, 1e3))
 ```
 ![Alt text](Rplot2.png)
@@ -143,8 +148,10 @@ hist(res$pvalue, breaks=20, col="grey",
      main = "Smoker vs. NonSmoker", xlab = "p-values")
 ```
 ![Alt text](Rplot5.png)
+
+### Independent Filtering
+DESeq2 automatically performs independent ltering to filter out weakly differential OTUs. Although these weak OTUs are tested as non-signicant; however, they affect the multiple testing procedure. Thus, it is better to remove them for the analysis. Let's do it
 ```r
-##Independent Filtering
 metadata(res)
 
 metadata(res)$alpha
@@ -155,8 +162,10 @@ plot(metadata(res)$filterNumRej,
      xlab="quantiles of filter")
 lines(metadata(res)$lo.fit, col="red")
 abline(v=metadata(res)$filterTheta)
-
-
+```
+![Alt text](Rplot13.png)
+The figure plots the number of rejections (adjusted p-value less than a significance level) against the quantiles of a filter statistic (the mean of normalized counts). The number of rejections is maximized by the function results(). The vertical line presents the threshold chosen
+```r
 ##Re-estimate the p-Values
 res   
 
@@ -183,6 +192,8 @@ hist(res_fdr$pval, col = "gray",
      main = "Smoker vs. NonSkoer, correct null model", xlab = "Corrected p-values")
 ```
 ![Alt text](Rplot6.png)
+Plot of false discovery rate 
+
 ```r
 # Extract Differentially Abundant OTUs and Export Results Table
 table(res[,"padj"] < 0.1)
