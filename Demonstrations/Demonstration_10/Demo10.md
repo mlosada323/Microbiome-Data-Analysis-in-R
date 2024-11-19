@@ -98,10 +98,22 @@ plotDispEsts(dds, ylim = c(1e-2, 1e3))
 ```
 ![Alt text](Rplot2.png)
 ```r
-##Clustering with Heatmap
+## create a volcano plot of fold changes
+with(res, plot(log2FoldChange, -log2(pvalue), pch=20, main="Volcano plot", xlim=c(-4,4))) +
+with(subset(res, padj<.1 ), points(log2FoldChange, -log2(pvalue), pch=20, col="blue")) +
+with(subset(res, padj<.1 & abs(log2FoldChange)>2), points(log2FoldChange, -log2(pvalue), pch=20, col="red"))
+```
+![Alt text](Rplot11.png)
+```r
+## transform counts
+# To make certain plots we have to transform the raw counts of reads to approximately homoskedastic data. The transformation can be done either by the rlog() or varianceStabilizingTransformation(). The latter is recommended by the DESeq2.
+
 rld <- rlog(dds)
 vst <-varianceStabilizingTransformation(dds)
-
+```
+![Alt text](Rplot12.png)
+```r
+## create Heatmap
 par(mfrow = c(1, 3))
 plot(log2( 1+counts(dds, normalized=TRUE)[,1:2] ), main="Ordinary log2",col="#00000020", pch=20, cex=0.3 )
 plot(assay(rld)[,1:2], main="Regularized-logarithm", col="#00000020", pch=20, cex=0.3 )
