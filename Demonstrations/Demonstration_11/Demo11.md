@@ -51,7 +51,7 @@ head(abund_table_28a$Offset)
 head(abund_table_28a)
 ```
 ![Alt text](Rplot2.png)
-
+```r
 ID represents the identifier of a given subject
 nReads is the total number of reads in the sample
 DX is the group indicator (0 = non-pregnant; 1 = pregnant)
@@ -59,7 +59,7 @@ Y is the number of sequences (count) for each ASV
 Spec gives the species
 Ind is a numeric indicator for the ASV (1,…, 28)
 x = fx = DX
-```r
+
 # Create a Formula for Fitting ZIP and ZINB
 # The formula is used to specify both components of the model: counts and zeros
 # The two components are separated by | as: count covariables | zero covariables and they can be different in each component
