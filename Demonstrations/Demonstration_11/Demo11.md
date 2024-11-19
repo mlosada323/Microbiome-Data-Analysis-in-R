@@ -66,6 +66,8 @@ x = fx = DX
 f <- formula(Y ~  fx | fx)
 # if eequal you can also use:
 f <- formula(Y ~  fx)
+# Y = response variable
+# fx = predictor
 
 # Offsets can be specified in both parts of the model pertaining to count and structural zero models:
 f <- formula(Y ~  fx + offset(Offset)|fx)
