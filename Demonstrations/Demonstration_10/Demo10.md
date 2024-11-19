@@ -164,6 +164,7 @@ lines(metadata(res)$lo.fit, col="red")
 abline(v=metadata(res)$filterTheta)
 ```
 ![Alt text](Rplot13.png)
+
 The figure plots the number of rejections (adjusted p-value less than a significance level) against the quantiles of a filter statistic (the mean of normalized counts). The number of rejections is maximized by the function results(). The vertical line presents the threshold chosen
 ```r
 ##Re-estimate the p-Values
@@ -192,6 +193,7 @@ hist(res_fdr$pval, col = "gray",
      main = "Smoker vs. NonSkoer, correct null model", xlab = "Corrected p-values")
 ```
 ![Alt text](Rplot6.png)
+
 Plot of false discovery rate 
 
 ```r
