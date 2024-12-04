@@ -222,4 +222,23 @@ library(readr)
 write_csv(otu_df, le = "otu_tab_GlobalPatterns.csv")
 write_csv(tax_df, le = "tax_tab_GlobalPatterns.csv")
 write_csv(sam_df, le = "sam_tab_GlobalPatterns.csv")
+
+# core microbiome analysis per phylum
+
+pseq.rel <- microbiome::transform(physeq, "compositional")
+pseq.rel.gen <- aggregate_taxa(pseq.rel, "Phylum")
+
+library(RColorBrewer)
+prevalences <- seq(.05, 1, .05)
+detections <- round(10^seq(log10(1e-5), log10(.2), length = 10), 3)
+
+p1 <- plot_core(pseq.rel.gen, 
+                plot.type = "heatmap", 
+                colours = rev(brewer.pal(5, "RdBu")),
+                prevalences = prevalences, 
+                detections = detections, min.prevalence = 0.99) +
+  xlab("Detection Threshold (Relative Abundance (%))")
+p1 <- p1 + theme_bw() + ylab("Phylum")
+p1
 ```
+![Alt text](image2.png)
