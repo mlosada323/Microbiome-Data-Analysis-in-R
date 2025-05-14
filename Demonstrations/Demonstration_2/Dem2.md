@@ -67,13 +67,13 @@ tab %>% select(id, female, read) %>%
 
 #Create new columns using mutate()
 #Calculate average read and write scores
-head(mutate(tab, avg_read = sum(read)/n()))
+head(mutate(tab, avg_read = read/n()))
 
 #To keep only the new variables, use transmute()
-head(transmute(tab,avg_read = sum(read)/n()))
+head(transmute(tab,avg_read = read/n()))
 
 #Create new columns using mutate() and pipe operator
-tab %>% mutate(avg_read = sum(read/n())) %>%
+tab %>% mutate(avg_read = read/n()) %>%
   head
 
 #To collapses a data frame to a single row.
