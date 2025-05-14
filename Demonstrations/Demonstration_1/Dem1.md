@@ -91,7 +91,7 @@ data()
 attach(iris)
 head(iris)
 
-?data.frame 
+# Different ways of creating a data frame
 
 # Create data frame using column indices
 df <- iris[,c(1,2,3)]
@@ -113,7 +113,8 @@ head(df)
 df <- iris[,c("Sepal.Width", "Petal.Length", "Petal.Width")]
 head(df)
 
-# Create data frame using data.frame()
+# Create data frame using function data.frame()
+?data.frame 
 df <- data.frame(iris$Sepal.Width, iris$Petal.Length, iris$Petal.Width)
 head(df)
 
