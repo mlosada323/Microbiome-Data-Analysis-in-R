@@ -199,11 +199,12 @@ head(rev_iris)
 head(iris[order(Sepal.Length),])
 head(iris[order(iris[,'Sepal.Length']),])
 
-# Use the ifelse() function to recode variables based on original values
+# Use the ifelse() function to recode variables based on original values a create a new vector fulfilling certain conditions 
+# ifelse(condition, value_if_true, value_if_false)
 group <- ifelse(iris$Petal.Length < 4,1,2) 
-head(group)
+group
 group_s <- ifelse(iris$Species %in% "setosa",1,
                   ifelse(iris$Species %in% "versicolor",2,3))
-head(group_s)
+group_s
 ```
 
