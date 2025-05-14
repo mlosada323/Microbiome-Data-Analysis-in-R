@@ -163,12 +163,14 @@ head(apply(iris_1, 1, mean))
 apply(iris_1, 2, mean)
 apply(iris_1, 2, mean,na.rm = TRUE)
 
+# calculate percentages using apply
 tab_perc <- apply(tab, 2, function(x){x/sum(x)})  
 tab_perc <- apply(tab[,1:ncol(tab)-1], 2, function(x){x/sum(x)})
 tab_p1 <- tab[apply(tab_perc, 1, max)>0.01,]
 tab_p2 <- tab[apply(tab_perc, 1, min)>0.01,]
 head(tab_p2)
 
+# The scripts below apply filters to a function 
 count <- 1
 tab_min <- data.frame(tab[which(apply(tab, 1, function(x){mean(x)}) > count),], check.names=F) 
 
