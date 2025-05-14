@@ -38,7 +38,9 @@ getwd()
 setwd("your working directory")
 
 # working directory for my files
-setwd("/Users/mlosada/Library/CloudStorage/Box-Box/Dropbox/Academia/Teaching/Microbiome\ Data\ Analysis\ in\ R\ 2024/Sessions/Session1")
+setwd("your working directoty")
+# list files in working directory
+list.files()
 ```
 
 ## 4.1.4 Data Import and Export
