@@ -21,7 +21,6 @@ installed.packages()[1:5,]
 a<-installed.packages()
 packages<-a[,1] 
 is.element("ALDEx2", packages)
-# [1] TRUE
 ```
 
 ## 4.1.2 Set Working Directory in R
