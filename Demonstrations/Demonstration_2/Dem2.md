@@ -39,7 +39,7 @@ filter(tab, read >= 70)
 #Filter the rows for students with both reading and math scores greater than or equal 70
 filter(tab, read >= 70, math >= 70)
 
-#Re-order by read and write
+#Re-order by id, read and write
 head(arrange(tab, id, read, write))
 
 #Use desc() to order a column in descending order
