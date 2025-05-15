@@ -161,7 +161,7 @@ ceiling(n2)
 z=(p1-p2)/sqrt(p1*(1-p1)/n2/r+p2*(1-p2)/n2)
 (Power=pnorm(z-qnorm(1-alpha/2))+pnorm(-z-qnorm(1-alpha/2)))
 
-# However, the convenient way is to use following R function power.prop.test.
+# However, an easier way is to use the R function power.prop.test.
 # You can specify multiple samples to test the powers
 
 power.prop.test(n=10:20,  p1=1,  p2=.57,  sig.level=0.05, power=NULL,  alternative=c("one.sided"), strict  = FALSE)
