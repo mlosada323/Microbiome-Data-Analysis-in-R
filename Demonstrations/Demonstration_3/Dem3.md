@@ -64,7 +64,7 @@ ps = merge_phyloseq(physeq, random_tree)
 ps
 
 # create phyloseq object in one step
-ps <- phyloseq(tax_table(as.matrix(tax_tab)), phy_tree(tree), sample_data(meta_tab), otu_table(otu_tab, taxa_are_rows = TRUE))
+ps <- phyloseq(tax_table(as.matrix(tax_tab)), phy_tree(random_tree), sample_data(meta_tab), otu_table(otu_tab, taxa_are_rows = TRUE))
 ps
 
 # phyloseq object information
@@ -81,8 +81,6 @@ head(otu_table(ps))
 head(tax_table(ps))
 rank_names(ps)
 get_taxa_unique(ps, "Genus")
-
-# manipulate phyloseq object
 
 # separate phylum Proteobacteria
 ps_prot <- subset_taxa(ps, Phylum=="Proteobacteria")
