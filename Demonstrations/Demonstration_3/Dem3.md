@@ -218,9 +218,8 @@ pseq.rel <- microbiome::transform(physeq, "compositional")
 pseq.rel.gen <- aggregate_taxa(pseq.rel, "Phylum")
 
 library(RColorBrewer)
-prevalences <- seq(.05, 1, .05) # creates a sequence of numbers from 0.05 to 1 in increments of 0.05 for prevalences
-detections <- round(10^seq(log10(1e-5), log10(.2), length = 10), 3) # Creates a logarithmically spaced sequence of detection thresholds between 1e-5 and 0.2 (relative abundance), and rounds them to 3 decimal places
-
+prevalences <- seq(.05, 1, .05)
+detections <- round(10^seq(log10(1e-5), log10(.2), length = 10), 3)
 p1 <- plot_core(pseq.rel.gen, 
                 plot.type = "heatmap", 
                 colours = rev(brewer.pal(5, "RdBu")),
