@@ -171,7 +171,7 @@ power.prop.test(n=10:20,  p1=1,  p2=.57,  sig.level=0.05, power=NULL,  alternati
 ## 5.5 Comparing the Frequency of All Taxa Across Groups Using Dirichlet-Multinomial Model                            
 ### 5.5.3 Power and Size Calculations Using HMP Package
 ```r
-# 5.5.3.1 Preparing Data Sets for Use of HMP Package
+# Preparing Data Sets for Use of HMP Package
 
 install.packages("HMP",repo="http://cran.r-project.org", dep=TRUE)
 library(HMP)
@@ -196,7 +196,7 @@ ncol(NOButy_t)  # for the number of taxa
 nrow(NOButy_t)  # for the number of samples
 
 
-### 5.5.3.2 Power and Size Calculations Using Taxa Composition Data Analysis
+# Power and Size Calculations Using Taxa Composition Data Analysis
 # get a list of Dirichlet-multinomial parameters
 
 fit_Buty <- DM.MoM(Buty_t)
