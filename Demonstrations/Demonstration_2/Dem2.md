@@ -243,15 +243,15 @@ p <- ggboxplot(df, x = "Species", y = "Sepal.Length",
                add = "jitter", shape = "Species") # Adds jittered points (individual data points) to the boxplot for visualization and their shape varies by species
 p
 
-# Compare species groups using statistics
+# Compare species groups using statistics (Wilcoxon test and Kruskal-Wallis test)
 
 # Specify the pairwise group comparisons
 comps <- list( c("setosa", "versicolor"), c("setosa", "virginica"), c
                ("versicolor", "virginica") )
-p + stat_compare_means(comparisons = comps) + # Add global p-value and p-values for pairwise comparisons
+p + stat_compare_means(comparisons = comps, method = "wilcox.test") + # Add global p-value and p-values for pairwise comparisons
   stat_compare_means(label.y = 10) # range of y-axis
 
-p + stat_compare_means(comparisons = comps,label = "p.signif") + # Show the significance levels for all
+p + stat_compare_means(comparisons = comps,method = "wilcox.test", label = "p.signif") + # Show the significance levels for all
   stat_compare_means(label.y = 10) # range of y-axis
 
 ```
@@ -261,7 +261,7 @@ p + stat_compare_means(comparisons = comps,label = "p.signif") + # Show the sign
 # Use custom color palette
 
 gghistogram(df, x = "Sepal.Width",
-            add = "mean", rug = TRUE,
+            add = "mean",
             color = "Species", fill = "Species",
             bins = 20,
             palette = c("#00AFBB", "#E7B800","#FC4E07"))
