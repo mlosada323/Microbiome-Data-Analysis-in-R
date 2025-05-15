@@ -168,3 +168,56 @@ power.prop.test(n=10:20,  p1=1,  p2=.57,  sig.level=0.05, power=NULL,  alternati
 
 # The results show that 11 samples in each group can obtain 83% power to detect the effect sizes based on our pilot study.
 ```
+## 5.5 Comparing the Frequency of All Taxa Across Groups Using Dirichlet-Multinomial Model                            
+### 5.5.3 Power and Size Calculations Using HMP Package
+# 5.5.3.1 Preparing Data Sets for Use of HMP Package
+```r
+install.packages("HMP",repo="http://cran.r-project.org", dep=TRUE)
+library(HMP)
+
+Buty=read.csv("ALSG93A3.5mButyrateGenus.csv",row.names=1,check.names=FALSE)
+NOButy=read.csv("ALSG93A3.5mNoButyrateGenus.csv",row.names=1,check.names=FALSE) 
+
+head(Buty)
+head(NOButy)
+
+# transpose files
+Buty_t <- t(Buty)
+NOButy_t<-t(NOButy)
+
+head(Buty_t)
+head(NOButy_t)
+
+ncol(Buty_t)  # for the number of taxa
+nrow(Buty_t)  # for the number of samples
+
+ncol(NOButy_t)  # for the number of taxa
+nrow(NOButy_t)  # for the number of samples
+
+
+### 5.5.3.2 Power and Size Calculations Using Taxa Composition Data Analysis
+# get a list of Dirichlet-multinomial parameters
+
+fit_Buty <- DM.MoM(Buty_t)
+fit_Buty 
+fit_NOButy <- DM.MoM(NOButy_t)
+fit_NOButy
+
+# set up the number of Monte-Carlo experiments
+numMC <- 1000
+
+#The first number is the number of reads and the second is the number of subjects
+nrsGrp1 <- rep(1000, 10)
+nrsGrp2 <- rep(1000, 10) 
+group_Nrs <- list(nrsGrp1, nrsGrp2)
+
+# compute size of the test statistics (Type I error)
+alphap <- fit_Buty$gamma
+pval1 <- MC.Xdc.statistics(group_Nrs, numMC, alphap, "hnull")
+pval1
+
+# Compute power of the test statistics (Type II error)
+alphap <- rbind(fit_Buty$gamma, fit_NOButy$gamma)
+pval2 <- MC.Xdc.statistics(group_Nrs, numMC, alphap)
+pval2
+```
