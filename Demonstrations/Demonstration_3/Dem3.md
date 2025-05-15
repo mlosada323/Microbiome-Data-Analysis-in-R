@@ -7,25 +7,29 @@ Complete the following demonstration in RStudio. Xia et al. (2018), Chapter 7: E
 phyloseq provides a set of classes and tools to facilitate the import, storage, analysis, and graphical display of microbiome census data
 
 ```r
-# Here, we use some datasets to illustrate how to create a phyloseq object and some operations on phyloseq object. First, we need to install this package using BiocManager
+# First, we install phyloseq via BiocManager
 
-# install physloseq
+# install BiocManager
 if (!requireNamespace("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
 
+# install phyloseq
 BiocManager::install("phyloseq")
+
+# phyloseq version
 packageVersion("phyloseq")
 library(phyloseq)
 
-# Set the R working directory to the folder where you'll store the datasets and load them
+# Set the R working directory to the folder where you stored the datasets and load them
 setwd("your directory")
 
+# Our phyloseq object contains three data frames: ASV abundances, taxonomic information and metadata
 tax_tab <- read.delim("new_tax_tab.txt")
 otu_tab <- read.delim("new_otu_tab.txt", row.names = 1)
 meta_tab <- read.csv("new_meta_tab.csv", header=TRUE, row.names = 1)
 
 # Check and make sure that the datasets have been correctly loaded
-head(otu_tab,3) # are taxa rows or not? see below
+head(otu_tab,3) # are taxa as rows or not? see below
 head(tax_tab)
 head(meta_tab,3)
 
@@ -41,26 +45,12 @@ taxmat<-as.matrix(tax_tab)
 class(otumat)
 class(taxmat)
 
-# Create phyloseq object using phyloseq () 
+# Create a phyloseq object using phyloseq () and calling the three elements (otu_table, tax_table and sample_data)
 otu<-otu_table(otumat,taxa_are_rows = TRUE)
 tax<-tax_table(taxmat)
 sam<-sample_data(meta_tab)
 physeq <- phyloseq(otu, tax, sam)
 physeq
-
-ps1 <- prune_taxa(taxa_sums(physeq) > 10000, physeq);ps1
-new_metadata <- meta(ps1)
-write.csv(new_metadata,file="new_meta_tab.csv")
-table_otu<-otu_table(ps1)
-write.csv(table_otu,file="new_otu_tab.csv")
-table_tax<-tax_table(ps1)
-write.csv(table_tax,file="new_tax_tab.csv")
-
-# check names
-sample_names(otu)
-sample_names(sam)
-sample_variables
-
 
 # Add a random phylogenetic tree component
 library("ape")
