@@ -170,8 +170,9 @@ power.prop.test(n=10:20,  p1=1,  p2=.57,  sig.level=0.05, power=NULL,  alternati
 ```
 ## 5.5 Comparing the Frequency of All Taxa Across Groups Using Dirichlet-Multinomial Model                            
 ### 5.5.3 Power and Size Calculations Using HMP Package
-# 5.5.3.1 Preparing Data Sets for Use of HMP Package
 ```r
+# 5.5.3.1 Preparing Data Sets for Use of HMP Package
+
 install.packages("HMP",repo="http://cran.r-project.org", dep=TRUE)
 library(HMP)
 
