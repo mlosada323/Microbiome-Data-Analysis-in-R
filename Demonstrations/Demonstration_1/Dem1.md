@@ -26,7 +26,7 @@ is.element("ALDEx2", packages)
 ## 4.1.2 Set Working Directory in R
 ```r
 getwd()
-# Set Working Directory in R to a file of your choice
+# Set Working Directory in R to a folder of your choice
 setwd("your working directory") 
 # check your new working directory
 getwd() 
