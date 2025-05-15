@@ -34,7 +34,7 @@ where, n is the number of sample size per group, delta is true difference in mea
 Since the standard deviation of the mean difference is unknown, it needs to be estimated using formula in this chapter (5.5).
 
 ```r
-# calculate variance
+# calculate mean and variance
 mu <- ddply(df_H_G93BUm3, "Group", summarise, grp.mean=mean(value));mu
 
 #         Group grp.mean
@@ -55,11 +55,16 @@ s1
 s2<-sqrt(0.04349)
 s2
 #[1] 0.2085
-s=sqrt((n1-1)*s1^2+(n2-1)*s2^2)/(n1+n2-2)
-s
+sd=sqrt((n1-1)*s1^2+(n2-1)*s2^2)/(n1+n2-2)
+sd
 #[1] 0.05012
 
 power.t.test(n=2:10,delta=2.504-2.205,sd=0.05012)
+
+# From output create the vectors below
+n = c(2, 3, 4, 5, 6, 7, 8, 9, 10)  
+power = c(0.8324, 0.9994, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000, 1.0000)
+
 df_P <-data.frame(n,power)
 df_P
 
