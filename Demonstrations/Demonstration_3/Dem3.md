@@ -127,29 +127,31 @@ The microbiome package is built on the phyloseq objects and extends some functio
 microbiome datasets
 
 ```r
-# install microbiome
+# Install microbiome R package
 remotes::install_github("microbiome/microbiome")
 library(microbiome)
 
-# Use the GlobalPatterns datasets included in the phyloseq package to illustrate how to use the microbiome
-library(microbiome)
-library(phyloseq)
+# Install also R package knitr: a powerful tool used for dynamic report generation
+install.packages("knitr")
 library(knitr)
 
+# Use the GlobalPatterns datasets included in the phyloseq package to illustrate how to use the microbiome
+# GlobalPatterns is a phyloseq object
 data(GlobalPatterns)
+GlobalPatterns
 
-# Rename GlobalPatterns data (which is a phyloseq object)
+# Rename GlobalPatterns data 
 physeq <- GlobalPatterns
 physeq
 
 # Summarize the Contents of phyloseq Object
 summarize_phyloseq(physeq)
 
-# display absolute abundances
-head(otu_abs <- abundances(physeq),3)
+# display absolute abundances for 5 rows
+head(otu_abs <- abundances(physeq),5)
 
-# Relative abundances
-head(otu_rel <- abundances(physeq, "compositional"),3)
+# Estimate and display relative abundances
+head(otu_rel <- abundances(physeq, "compositional"),5)
 
 # retrieve the total read counts
 read_tot <- readcount(physeq)
@@ -163,18 +165,17 @@ head((tax),3)
 meta <- meta(physeq)
 head((meta),3)
 
-# melt the phyloseq data as a data frame table for easier plotting and downstream statistical analysis
-# Melt phyloseq data as a data frame table
+# convert the phyloseq data to a data frame for easier plotting and downstream statistical analysis using function melt
 df <- psmelt(physeq)
+
+library(knitr)
 kable(head(df,4))
 
 # Number of taxa
-num_tax <- ntaxa(physeq)
-num_tax
+ntaxa(physeq)
 
 # Most abundant taxa
-top10tax <- top_taxa(physeq, n = 10)
-top10tax
+top_taxa(physeq, n = 10)
 
 # Data Transformations
 # Transform absolute abundances to relative abundances
@@ -204,7 +205,7 @@ otu_df = as.data.frame(physeq@otu_table)
 tax_df = as.data.frame(physeq@tax_table)
 sam_df = as.data.frame(physeq@sam_data)
 
-# export otu_table, tax_table, and sam_data using the readr package.
+# export otu_table, tax_table, and sam_data using the readr package
 library(readr)
 
 write_csv(otu_df, le = "otu_tab_GlobalPatterns.csv")
@@ -217,16 +218,15 @@ pseq.rel <- microbiome::transform(physeq, "compositional")
 pseq.rel.gen <- aggregate_taxa(pseq.rel, "Phylum")
 
 library(RColorBrewer)
-prevalences <- seq(.05, 1, .05)
-detections <- round(10^seq(log10(1e-5), log10(.2), length = 10), 3)
+prevalences <- seq(.05, 1, .05) # creates a sequence of numbers from 0.05 to 1 in increments of 0.05 for prevalences
+detections <- round(10^seq(log10(1e-5), log10(.2), length = 10), 3) # Creates a logarithmically spaced sequence of detection thresholds between 1e-5 and 0.2 (relative abundance), and rounds them to 3 decimal places
 
 p1 <- plot_core(pseq.rel.gen, 
                 plot.type = "heatmap", 
                 colours = rev(brewer.pal(5, "RdBu")),
                 prevalences = prevalences, 
                 detections = detections, min.prevalence = 0.99) +
-  xlab("Detection Threshold (Relative Abundance (%))")
-p1 <- p1 + theme_bw() + ylab("Phylum")
+  xlab("Detection Threshold (Relative Abundance (%))") +  ylab("Phylum")
 p1
 ```
 ![Alt text](image2.png)
