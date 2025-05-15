@@ -93,6 +93,7 @@ plot(n, power, xlab  = "Sample Size per group", ylab  = "Power to reject null",
 
 abline(h = 0.90, col="blue")
 
+# same as above for one sample t-test
 power.t.test(n=2:10,delta=2.504-2.205,sd=0.05012, type = "one.sample" )
 ```
 ![Alt text](image2.png)
