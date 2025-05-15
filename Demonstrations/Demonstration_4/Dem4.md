@@ -116,7 +116,7 @@ power = c(0.7276151, 0.7382780, 0.7486181, 0.7586391, 0.7683450, 0.7777403, 0.78
 df_P <-data.frame(n,power)
 df_P
 
-# The results above show that 53 samples are needed for each group to obtain 80% based on the effect sizes detected in this pilot study using ANOVA test.
+# The results above show that 53 samples are needed for each group to obtain 80% power based on the effect sizes detected in this pilot study using ANOVA test.
 ```
 ## 5.4 Power Analysis for Comparing a Taxon of Interest Across Groups 
 
