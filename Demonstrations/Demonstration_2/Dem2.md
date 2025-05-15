@@ -103,10 +103,10 @@ tab %>% group_by(female) %>%
             max_read = max(read))
 
 
-#Use sample_n() to sample a fixed number
+#Use sample_n() to sample a fixed random number of rows
 sample_n(tab, 5)
 
-#Use sample_frac() to sample a fixed fraction
+#Use sample_frac() to sample a fixed random fraction of rows
 sample_frac(tab, 0.02)
 
 #Use replace = TRUE to perform a bootstrap sampling
