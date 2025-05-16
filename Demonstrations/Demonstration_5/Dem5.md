@@ -103,7 +103,7 @@ diver<-estimate_richness(physeq, measures=c("Chao1","Shannon"))
 # Add diversity indices to metadata
 diver_all<-cbind(sample_data(physeq),diver)
 
-# list the ggplot elements
+# Create a ggplot2 theme: a list of layers and settings saved into an object (myTheme)
 myTheme <- list(geom_boxplot(aes(fill = region), outlier.colour = "black", outlier.size = 1),
                 geom_jitter(size=1, shape=1),
                 panel_border(colour = "black", size = 0.75),
