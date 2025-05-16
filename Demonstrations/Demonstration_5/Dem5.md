@@ -182,7 +182,7 @@ fit_mt
 fitTrNG <- pml_bb(primates, model="TrN+G(4)")
 plot(fitTrNG, "phylogram", main="ML")
 ```
-![Alt text](image5.png)
+![Alt text](image6.png)
 ```r
 # write tree
 write.tree(fitTrNG$tree,digits=3, file="primates.tree")
