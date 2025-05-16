@@ -102,7 +102,7 @@ diver<-estimate_richness(physeq, measures=c("Chao1","Shannon"))
 # Add diversity indices to metadata
 diver_all<-cbind(sample_data(physeq),diver)
 
-# Create a ggplot2 theme: a list of layers and settings saved into an object (myTheme)
+# Create a ggplot2 theme: a list of layers and settings saved into an object (myTheme) 
 myTheme <- list(geom_boxplot(aes(fill = region), outlier.colour = "black", outlier.size = 1),
                 geom_jitter(size=1, shape=1),
                 panel_border(colour = "black", size = 0.75),
@@ -110,18 +110,14 @@ myTheme <- list(geom_boxplot(aes(fill = region), outlier.colour = "black", outli
                       legend.position = "none"))
 
 # create plots calling the theme above
-shan <- ggplot(diver_all, aes(year, Shannon)) +
-  facet_grid(~region) +
+shan <- ggplot(diver_all, aes(region, Shannon)) +
   labs(title = "Shannon",
        x = "",
        y = "Shannon") +
   myTheme
 shan
-```
-![Alt text](image4.png)
-```r
-chao <- ggplot(diver_all, aes(year, Chao1)) +
-  facet_grid(~region) +
+
+chao <- ggplot(diver_all, aes(region, Chao1)) +
   labs(title = "Chao1",
        x = "",
        y = "Chao1") +
@@ -130,6 +126,8 @@ chao
 
 plot_grid(chao, shan, ncol = 2, nrow = 1)
 ```
+![Alt text](image4.png)
+
 ## Estimate beta-diversity indices
 ```r
 # Use phyloseq to estimate beta-diversity indices
