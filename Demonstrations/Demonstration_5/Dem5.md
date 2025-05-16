@@ -174,16 +174,22 @@ plot(treeNJ, "unrooted", main="NJ")
 # Model selection: estimate model fitness for all 35 models in Model Test
 mt <- modelTest(primates)
 
-# Determine best fit model using maximum likelihood (ML)
+# Determine best fit model using maximum likelihood ratio test
 fit_mt <- pml_bb(mt, control = pml.control(trace = 0))
 fit_mt
+# the best model is TrN+G(4) 
 
-# Estimate tree under best fit model - TrN+G(4) using the maximum likelihood (ML)
-fitTrNG <- pml_bb(primates, model="TrN+G(4)")
-plot(fitTrNG, "phylogram", main="ML")
+# Estimate tree under best fit model TrN+G(4) using the maximum likelihood (ML) method
+MLtre <- pml_bb(primates, model="TrN+G(4)")
+best_MLtree <- MLtre$tree # Extract best ML tree
+midpoint_best_MLtree  <- midpoint(best_MLtree) # root tree using mid point rooting
+
+plot(midpoint_best_MLtree, "tidy", main="ML", edge.width = 2, label.offset = 0.1, root.edge = T)
+
 ```
 ![Alt text](image6.png)
+
 ```r
-# write tree
-write.tree(fitTrNG$tree,digits=3, file="primates.tree")
+# write tree in Newick annotation (parentheses)
+write.tree(MLtre$tree,digits=3, file="ML.tree")
 ```
