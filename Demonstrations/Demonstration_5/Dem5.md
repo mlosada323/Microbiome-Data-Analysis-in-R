@@ -184,7 +184,8 @@ MLtre <- pml_bb(primates, model="TrN+G(4)")
 best_MLtree <- MLtre$tree # Extract best ML tree
 midpoint_best_MLtree  <- midpoint(best_MLtree) # root tree using mid point rooting
 
-plot(midpoint_best_MLtree, "tidy", main="ML", edge.width = 2, label.offset = 0.1, root.edge = T)
+plot(midpoint_best_MLtree, "cladogram", main="ML", edge.width = 2, label.offset = 0.1, root.edge = T, use.edge.length = F)
+plot(midpoint_best_MLtree, "phylogram", main="ML", edge.width = 2, label.offset = 0.1, root.edge = T)
 
 ```
 ![Alt text](image6.png)
