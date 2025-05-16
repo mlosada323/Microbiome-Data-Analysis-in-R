@@ -221,4 +221,6 @@ pval1
 alphap <- rbind(fit_Buty$gamma, fit_NOButy$gamma)
 pval2 <- MC.Xdc.statistics(group_Nrs, numMC, alphap)
 pval2
+
+# See table 5.3 in Xia el al. (2018) for interpretation 
 ```
