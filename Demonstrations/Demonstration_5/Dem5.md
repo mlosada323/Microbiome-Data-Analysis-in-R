@@ -109,7 +109,8 @@ myTheme <- list(geom_boxplot(aes(fill = region), outlier.colour = "black", outli
                 panel_border(colour = "black", size = 0.75),
                 theme(axis.text.x = element_text(angle = 90, vjust=0.5, hjust=0.95),
                       legend.position = "none"))
-# create plots
+
+# create plots calling the theme above
 shan <- ggplot(diver_all, aes(year, Shannon)) +
   facet_grid(~region) +
   labs(title = "Shannon",
@@ -130,7 +131,7 @@ chao
 
 plot_grid(chao, shan, ncol = 2, nrow = 1)
 ```
-## Estimate beta-diversity
+## Estimate beta-diversity indices
 ```r
 # Use phyloseq to estimate beta-diversity indices
 
@@ -143,7 +144,7 @@ jaccd<-phyloseq::distance(physeq, method="jaccard")
 # Phylogenetic Beta Diversity: Unweighted UniFrac
 uniun<-phyloseq::distance(physeq, method="unifrac")
 
-# # Phylogenetic Beta Diversity: Weighted UniFrac
+# Phylogenetic Beta Diversity: Weighted UniFrac
 uniweigh<-phyloseq::distance(physeq, method="wunifrac")
 
 # Save distance matrix as table
@@ -166,17 +167,17 @@ fdir <- system.file("extdata/trees", package = "phangorn")
 primates <- read.phyDat(file.path(fdir, "primates.dna"), format = "interleaved")
 primates
 
-# Estimate a tree useing distance based methods (no model of evolution)
+# Estimate a tree using distance based methods (no model of evolution)
 dm  <- dist.ml(primates)
 treeUPGMA  <- upgma(dm)
 treeNJ  <- NJ(dm)
 plot(treeUPGMA, main="UPGMA")
 plot(treeNJ, "unrooted", main="NJ")
 
-# Model selection: estimate model fitness for all models
+# Model selection: estimate model fitness for all 35 models in Model Test
 mt <- modelTest(primates)
 
-# Determine best fit model
+# Determine best fit model using maximum likelihood (ML)
 fit_mt <- pml_bb(mt, control = pml.control(trace = 0))
 fit_mt
 
