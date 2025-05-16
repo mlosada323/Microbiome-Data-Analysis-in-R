@@ -39,6 +39,9 @@ filter(tab, read >= 70)
 #Filter the rows for students with both reading and math scores greater than or equal 70
 filter(tab, read >= 70, math >= 70)
 
+#Delete rows 1 to 195
+slice(tab, -c(1:195))
+
 #Re-order by id, read and write
 head(arrange(tab, id, read, write))
 
