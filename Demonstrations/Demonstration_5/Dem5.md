@@ -50,7 +50,6 @@ library(picante)
 otuD<-as.data.frame(t(otu_table(physeq)))
 
 # Estimates phylogenetic diversity including a rooted tree via midpoint rooting
-# Use phylogenetic tree from Demonstration 3
 PD<-pd(otuD, phy_tree(physeq), include.root=TRUE)
 head(PD)
 ```
