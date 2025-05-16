@@ -77,6 +77,7 @@ chao
 ![Alt text](image2.png)
 ### Summarize the Diversity Measures per group using FSA R package
 ```r
+install.packages("FSA")
 library(FSA)
 Summarize(Shannon ~ SampleType, data = diver_all)
 
