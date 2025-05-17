@@ -209,14 +209,9 @@ PCA
 # check the total variance
 sum (apply (stand_abund_table, 2, var))
 
-# create a biplot
-biplot(PCA, display = 'species')
-
-# The above diagrams plotted by biplot() is just drawing arrows for genus, which is not informative.
-
+# Create plot 
 ordiplot(PCA, display = "sites", type = "text")
 
-# The more informative plot is to use function ordiplot() to draw both genus and sample scores as centroids as below
 ```
 ## Other ordination methods
 ```r
