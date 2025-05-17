@@ -29,7 +29,7 @@ plot_bar(physeq, fill="Group")
 TopNGenus <- names(sort(taxa_sums(physeq), TRUE)[1:5])
 Top5Genus  <- prune_taxa(TopNGenus, physeq)
 
-plot_bar(Top5Genus, fill="Group", facet_grid=~Group)
+plot_bar(Top5Genus, fill="Group")
 
 # 7.2.3 Plot Heat Map                                                                      
 TopNGenus <- names(sort(taxa_sums(physeq), TRUE)[1:5])
@@ -47,9 +47,6 @@ plot_network(ig, physeq, color="Group", shape="Group")
 ```
 ![Alt text](image4.png)
 ```r
-# create a network based on a maximum distance between connected nodes of 0.5
-plot_net(physeq, maxdist = 0.5, color = "Group", shape="Group")
-
 # 7.2.5	Plot Phylogenetic Tree
 
 # Add a random phylogenetic tree component
