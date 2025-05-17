@@ -24,7 +24,7 @@ head(mu)
 p+geom_vline(data=mu, aes(xintercept=grp.mean, color="red"),
              linetype="dashed")
 
-fit_t <- t.test(value ~ Group, data=Fecal_G)
+fit_t <- t.test(value ~ Group, data=Fecal_G,alternative="two.sided")
 fit_t
 ```
 ### 8.1.2 Wilcoxon Rank Sum Test
