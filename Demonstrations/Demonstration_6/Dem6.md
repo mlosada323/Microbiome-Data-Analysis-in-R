@@ -238,12 +238,13 @@ p2
 # The function call produces stress value of 7.57%.
 # In NMDS the stress score measures how well the ordination summarizes the distances between samples. It's a key indicator of the ordination's "goodness of fit"
 # a stress <0.10 is a Good fit 
+# a stress <0.20 is a Fair fit
 
 plot_grid(p1, p2)
 ```
 ![Alt text](image10.png)
 ```r
-# create PCoA plots for 2 factors using list 
+# create PCoA plots for 2 factors
 
 readRDS(file = "Demo6b.RDS") -> ps1
 ps1
@@ -260,7 +261,7 @@ p1 <- plot_ordination(ps1, ordinate(ps1, method="PCoA", dist="bray"), color = "r
   labs(title = "PCoA Bray-Curtis")
 p1
 
-# create a NMDS plots for 2 factors using list
+# create a NMDS plots for 2 factors
 
 p3 <- plot_ordination(ps1, ordinate(ps1, method="NMDS", dist="bray"), color = "region", shape = "gender")  +
   myTheme +
@@ -350,6 +351,5 @@ tax.df$ASV <- rownames(tax.df)
 # select taxonomy of only those ASVs that are core members based on the thresholds that were used
 core.taxa.class <- dplyr::filter(tax.df, rownames(tax.df) %in% core.taxa)
 knitr::kable(head(core.taxa.class))
-knitr::kable(core.taxa.class)
 ```
 ![Alt text](image13.png)
