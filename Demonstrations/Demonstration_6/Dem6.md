@@ -73,7 +73,7 @@ plot_tree(psp, color = "Group",
 # load RDS file
 readRDS(file = "Demo6b.RDS") -> physeq
 physeq
-sample_variables(physeq)
+head(sample_data(physeq))
 
 # list taxonomic ranks
 rank_names(physeq, errorIfNULL=TRUE)
