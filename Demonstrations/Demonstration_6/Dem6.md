@@ -6,10 +6,10 @@ Complete the following demonstration in RStudio. You can follow detail instructi
 ## 7.2 Exploratory Analysis with Graphic Summary
 ```r
 # load RDS (R Data Serialization) file 
-# An RDS file is a binary file format for storing data in R that's highly compressed and can be read quickly
+# RDS is a binary file format for storing data in R that's highly compressed and can be read quickly
 readRDS(file = "Demo6a.RDS") -> physeq
 physeq
-sample_variables(physeq)
+head(sample_data(physeq))
 
 # 7.2.1 Plot Richness
 library(ggplot2)
