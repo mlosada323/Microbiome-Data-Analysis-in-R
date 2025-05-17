@@ -137,14 +137,15 @@ ps1 <- subset_samples(ps, asthma_rhinitis ==  "AS"); ps1
 ps2 <- prune_taxa(taxa_sums(ps1) > 95000, ps1) 
 ps2
 
-# list taxonomic ranks
+# list ranks in phyloseq object
 rank_names(ps2, errorIfNULL=TRUE)
 
 # estimate relative proportions
-bypathway.tr <- transform_sample_counts(ps2, function (x) x/sum(x))
+pathways.tr <- transform_sample_counts(ps2, function (x) x/sum(x))
 
-# create bar plot
-p<-plot_bar(bypathway.tr, x="sampleID", fill="Pathways") + geom_bar(aes(color=Pathways, fill=Pathways), stat="identity", position="stack")
+# create bar plot for pathways
+p<-plot_bar(pathways.tr, x="sampleID", fill="Pathways") + 
+  geom_bar(aes(color=Pathways, fill=Pathways), stat="identity", position="stack")
 p
 ```
 ![Alt text](image14.png)
@@ -158,6 +159,7 @@ abund_table=read.csv("VdrFecalGenusCounts.csv",row.names=1, check.names=FALSE)
 abund_table<-t(abund_table)
 
 # normalize the abundance table using the function decostand() and calculate the Bray-Curtis dissimilarities
+# "normalize" applies Euclidean norm (i.e., the square root of the sum of squares of the row values)
 abund_table_norm <- decostand(abund_table, "normalize")
 bc_dist<- vegdist(abund_table_norm , method = "bray")
 
