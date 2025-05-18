@@ -143,19 +143,19 @@ df_CH_G4
 # Shapiro-Wilk normality test
 shapiro.test(df_CH_G4$value)
 
-# Bartlett test of homogeneity of variances
+# Bartlett test of homoscedasticity (homogeneity of variances)
 bartlett.test(value~Group4, data=df_CH_G4) 
 qchisq(0.95, 1)
 
 # Because Chi-squared is less than Bartlett’s K-squared, we reject the null hypothesis and conclude that the variances are not same.
 
-# We now use Fligner-Killeen test to check the homoscedasticity
+# We can also use Fligner-Killeen test to check the homoscedasticity
 fligner.test(df_CH_G4, Group4)
 # the variances are not the same
 
 # Conclusion: AVOVA should not be applied
 
-# However, for the purpose of illustration, we proceed to analyze the data by ANOVA regardless of the test results of homegeneity of variances.
+# However, for the purpose of illustration, we proceed to analyze the data by ANOVA regardless of the test results of homogeneity of variances.
 aov_fit <- aov(value~Group4,data=df_CH_G) 
 summary(aov_fit, intercept=T) 
 
