@@ -267,7 +267,7 @@ KW_alpha=0.05
 last.significant.item <- max(which(KW_table$q.value <= KW_alpha))
 last.significant.item
 
-# there are no q-value less than or equal to the speci ed alpha, so the program returns negative infinite
+# there are no q-value less than or equal to the specified alpha, so the program returns negative infinite
 ```
 # Multivariate Community Analysis
 
@@ -279,7 +279,7 @@ last.significant.item
 abund_table=read.csv("VdrGenusCounts.csv",row.names=1,check.names=FALSE)
 abund_table<-t(abund_table)
 
-# estimate Bray-Curtis dissiimilarity
+# estimate Bray-Curtis disiimilarity
 library(vegan)
 bray<-vegdist(abund_table, "bray")
 
