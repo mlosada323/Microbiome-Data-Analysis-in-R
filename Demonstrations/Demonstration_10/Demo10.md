@@ -101,17 +101,6 @@ vst <-varianceStabilizingTransformation(dds)
 ![Alt text](Rplot12.png)
 ```r
 ## create Heatmap
-par(mfrow = c(1, 3))
-plot(log2( 1+counts(dds, normalized=TRUE)[,1:2] ), main="Ordinary log2",col="#00000020", pch=20, cex=0.3 )
-plot(assay(rld)[,1:2], main="Regularized-logarithm", col="#00000020", pch=20, cex=0.3 )
-plot(assay(vst)[,1:2], main="Variance stabilizing",col="#00000020", pch=20, cex=0.3 )
-```
-![Alt text](Rplot3.png)
-```r
-head(assay(rld))[,1-3]
-
-par(mfrow = c(1, 1))
-
 install.packages("gplots")
 library("gplots" )
 library("RColorBrewer" )
