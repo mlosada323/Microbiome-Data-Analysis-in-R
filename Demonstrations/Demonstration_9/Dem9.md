@@ -28,6 +28,8 @@ head(abund_table_t)
 library (zCompositions)
 library (compositions)
 
+# Replace zero values using the CZM method: Count Zero Multiplicative replacement. It outputs p-counts (pseudo-counts). That means zeros are replaced with small, estimated positive values in a way that maintains the compositional structure of the data
+
 abund_table_r <- t(cmultRepl((abund_table_t), method="CZM", output="p-counts"))
 head(abund_table_r)
 
