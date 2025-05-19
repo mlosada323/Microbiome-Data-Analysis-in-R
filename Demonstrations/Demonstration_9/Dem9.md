@@ -167,7 +167,7 @@ vdr_t <- aldex(abund_table, groups, mc.samples=128, test="t", effect=TRUE,
                 include.sample.summary=FALSE, denom="iqlr", verbose=FALSE)
 head(vdr_t)
 
-vdr_t_f <- vdr_t %>% filter(wi.eBH < 0.1)
+vdr_t_f <- vdr_t %>% filter(wi.eBH < 0.15)
 head(vdr_t_f)
 
 we.ep (expected p-value of Welch’s t test)
@@ -189,7 +189,7 @@ glm.ep (expected p-value of glm test), and glm.eBH (expectedBenjamini-Hochberg c
 ## Rarefaction Analysis
 
 Rarefaction analysis is a technique used to compare the diversity of different samples by adjusting for differences in sample size
-Rarefaction analysis involves randomly discarding reads from larger samples to create subsamples of equal size. This allows for the calculation of comparable diversity metrics, which can then be used to compare ecosystems
+Rarefaction analysis involves randomly discarding reads from larger samples to create subsamples of equal size. This allows for the calculation of comparable diversity metrics, which can then be used to compare groups
 ```r
 # load data
 ps=readRDS(file="Demo9.RDS")
@@ -199,7 +199,7 @@ library(vegan)
 
 par (mfrow = c(2,1))
 
-# rarefy to the minimum sample size
+# rarefy to the minimum sample size in the dataset
 ps1<-rarefy_even_depth(ps, sample.size = min(colSums(otu_table(ps))),replace=FALSE, rngseed=T)
 otu.rare = otu_table(ps1)
 otu.rare = as.data.frame(t(otu.rare))
