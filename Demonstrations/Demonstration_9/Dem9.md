@@ -184,7 +184,8 @@ head(vdr_kw_f)
 
 kw.ep (expected p-value of Kruskal-Wallis test)
 kw.eBH (expected Benjamini-Hochberg corrected p-value of Kruskal-Wallis test)
-glm.ep (expected p-value of glm test), and glm.eBH (expectedBenjamini-Hochberg corrected p-value of glm test)
+glm.ep (expected p-value of glm test)
+glm.eBH (expected Benjamini-Hochberg corrected p-value of glm test)
 ```
 ## Rarefaction Analysis
 
