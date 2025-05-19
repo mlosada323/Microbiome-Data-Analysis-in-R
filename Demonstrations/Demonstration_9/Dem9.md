@@ -89,7 +89,7 @@ Clostridium and Alistipes point to the upper right → samples in that region (e
     
 ### 10.3.3 Compositional Cluster Dendrogram
 ```r
-# generate the distance matrix
+# generate the distance matrix using the CLR data frame 
 dist <- dist(abund_clr, method="euclidian")
 
 # cluster the data
