@@ -37,11 +37,11 @@ head(abund_table_r)
 abund_table_prop <- apply(abund_table_r, 2, function(x){x/sum(x)})
 head(abund_table_prop)
 
-# filter the data to remove all taxa that are less than 0.1% abundance in any sample using the function apply() again.
+# filter the data in abund_table_r to remove all taxa in bund_table_prop that with a <0.1% abundance in any sample using the function apply() again.
 abund_table_prop_f<- abund_table_r[apply(abund_table_prop, 1, min) > 0.001,]
 head(abund_table_prop_f)
 
-# Perform the clr Data Transformation
+# Perform the Centered Log-Ratio (CLR) data transformation
 names_add <- rownames(abund_table_prop_f)[
   order(apply(abund_table_prop_f, 1, sum), decreasing=T) ]
 
@@ -51,7 +51,7 @@ head(abund_table_prop_reduced)
 abund_clr <- t(apply(abund_table_prop_reduced, 2, function(x){log(x) - mean(log(x))}))
 head(abund_clr)
 
-# Perform the Singular Value Decomposition Using the Function prcomp()
+# Perform Principal Component Analysis (PCA) using function prcomp()
 abund_PCX <- prcomp(abund_clr)
 abund_PCX$x 
 
@@ -62,10 +62,8 @@ sum(abund_PCX$sdev[1:2]^2)/mvar(abund_clr)
 
 # the total variance explained by the first two principal components (PC) is 68.94% 
 
-samples <- c(rep(1, 5,rownames(abund_PCX$x)),
-    rep(2, 3,rownames(abund_PCX$x))) 
-
-palette=palette(c(rgb(1,0,0,0.6), rgb(0,0,1,0.6), rgb(.3,0,.3,0.6)))
+samples <- c(rep(1, 5), rep(2, 3)) # create a vector that labels 5 samples as group 1 and 3 samples as group 2
+palette=palette(c(rgb(1,0,0,0.6), rgb(0,0,1,0.6), rgb(.3,0,.3,0.6))) # define a custom color palette using semi-transparent colors
 palette
 par (mfrow = c(1,1))
 coloredBiplot(abund_PCX, col="black", cex=c(0.8, 0.8),xlabs.col=samples, 
@@ -78,7 +76,7 @@ coloredBiplot(abund_PCX, col="black", cex=c(0.8, 0.8),xlabs.col=samples,
 
 The Vdr−/− and WT samples are separated very well: 3 wild types (in blue) on the left and 5 Vdr−/− (in red) on the right
 The first two components explained 69% of the total variance (42.7% for component 1, 26.3% for component 2) in the dataset 
-The length and direction of the arrows (taxa location) is proportional to the standard deviation of the taxon in the dataset. Lactobacillus is a highly variable genus along the same direction as samples 22 and 23, which indicates that this bacterial is more abundant in WT samples than in Vdr−/− samples.
+The length and direction of the arrows (taxa location) is proportional to the standard deviation of the taxon in the dataset. Lactobacillus is a highly variable genus along the same direction as samples 22 and 23, which indicates that this bacterial genus is more abundant in WT samples than in Vdr−/− samples.
     
 ### 10.3.3 Compositional Cluster Dendrogram
 ```r
