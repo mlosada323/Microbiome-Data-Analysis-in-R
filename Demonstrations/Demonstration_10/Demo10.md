@@ -5,7 +5,6 @@ Complete the following demonstration in RStudio. You can follow detail instructi
 ## 11.5. The DESeq2 Package
 DESeq is a variance stabilization technique based on a NB model that was recommended and adapted for microbiome count data (McMurdie and Holmes 2014) - https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003531. 
 
-### 11.5.2 Step-by-Step Implementing DESeq2
 ```r
 install.packages("GUniFrac")
 library(GUniFrac)
