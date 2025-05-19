@@ -167,7 +167,7 @@ vdr_t <- aldex(abund_table, groups, mc.samples=128, test="t", effect=TRUE,
                 include.sample.summary=FALSE, denom="iqlr", verbose=FALSE)
 head(vdr_t)
 
-vdr_t_f <- vdr_t %>% filter(wi.eBH < 0.15)
+vdr_t_f <- vdr_t %>% filter(wi.eBH < 0.1)
 head(vdr_t_f)
 
 we.ep (expected p-value of Welch’s t test)
