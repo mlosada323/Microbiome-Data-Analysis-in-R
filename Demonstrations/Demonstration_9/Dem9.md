@@ -23,8 +23,8 @@ head(abund_table_t)
 
 # Replace 0 Values Using the zCompositions Package
 # This function expects the samples to be in rows and taxa (or OTUs) to be in columns. Because the abund_table_t dataset already have the appropriate data format, we directly use here. But in order to convert the count data to proportion, we use the t() function to transpose the data back to taxa by samples format.
-#install.packages("zCompositions")
 
+install.packages("zCompositions")
 library (zCompositions)
 library (compositions)
 
