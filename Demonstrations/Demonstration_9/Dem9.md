@@ -75,8 +75,17 @@ coloredBiplot(abund_PCX, col="black", cex=c(0.8, 0.8),xlabs.col=samples,
 ![Alt text](image1.png)
 
 The Vdr−/− and WT samples are separated very well: 3 wild types (in blue) on the left and 5 Vdr−/− (in red) on the right
-The first two components explained 69% of the total variance (42.7% for component 1, 26.3% for component 2) in the dataset 
-The length and direction of the arrows (taxa location) is proportional to the standard deviation of the taxon in the dataset. Lactobacillus is a highly variable genus along the same direction as samples 22 and 23, which indicates that this bacterial genus is more abundant in WT samples than in Vdr−/− samples.
+The first two components explained 69% of the total variance (42.7% for component 1, 26.3% for component 2) in the dataset
+Arrows are bacterial genera (e.g., Lactobacillus, Clostridium, Akkermansia) and indicate how they contribute to variation in the data
+Direction: Points in the direction of increasing abundance of that genus.
+Length: Longer arrows = greater influence on sample separation.
+Angle between arrows:
+Small angle = positively correlated
+Large (near 180°) = negatively correlated
+90° = uncorrelated
+For example:
+Lactobacillus points toward the upper left → samples in that region (e.g., blue samples) have higher relative abundance of Lactobacillus.
+Clostridium and Alistipes point to the upper right → samples in that region (e.g., red samples) are influenced more by these genera.
     
 ### 10.3.3 Compositional Cluster Dendrogram
 ```r
