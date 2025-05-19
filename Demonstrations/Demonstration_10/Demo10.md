@@ -36,23 +36,6 @@ library("DESeq2")
 dds <- DESeqDataSetFromMatrix(countData = countData,
                               colData = metaData,
                               design = ~ group)
-# filter data
-dds <- dds[rowSums(counts(dds)) > 0,]
-dds
-
-# Normalize the Count Data 
-dds <- estimateSizeFactors(dds) 
-sizeFactors(dds)
-
-# Estimate the Dispersion
-dds<- estimateDispersions(dds)
-
-# Test the Differential Abundance
-dds$group <- relevel(dds$group, "NonSmoker")
-
-#or by
-
-dds$group <- factor(dds$group, levels = c("NonSmoker", "Smoker"))
 
 dds <- DESeq(dds)
 
