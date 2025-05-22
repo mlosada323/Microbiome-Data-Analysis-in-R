@@ -101,7 +101,7 @@ summary(ZHP28)
 ZHNB28 <- hurdle(formula = f28, dist= "negbin", data = abund_table_28a)
 summary(ZHNB28)
 
-# both models show that the group variable (fx1) is significant 
+# both models show that the group variable (fx) is significant 
 # The theta value in the output indicates that the data are overdispersed.
 ```
 ## 12.3.4 Comparing Zero-inflated and Zero-Hurdle Models
