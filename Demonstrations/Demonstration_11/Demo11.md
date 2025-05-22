@@ -39,7 +39,7 @@ plot(sort(abund_table_28a$Y),ylab="Frequencies",main="Lactobacillus.vaginalis",
      xlab="Observed read values")
 par(mfrow=c(1,1))
 ```
-![Alt text](Rplot1.png)
+![Alt text](Rplot3.png)
 
 Offsets:
 In linear regression, an "offset" refers to a known variable that is added directly to the linear predictor, with a fixed coefficient of 1, meaning it is not estimated by the model but is included to adjust for a pre-determined factor that influences the response variable; essentially, it shifts the entire regression line up or down without affecting the slope of the line itself. 
