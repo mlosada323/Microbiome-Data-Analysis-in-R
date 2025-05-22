@@ -151,7 +151,7 @@ res <- res[, -which(names(res) == "padj")]
 
 install.packages("fdrtool")
 library(fdrtool)
-res_fdr <- fdrtool(res$stat, statistic= "normal", plot = T)
+res_fdr <- fdrtool(res$stat, statistic= "normal", plot = F)
 
 head(res_fdr)
 
@@ -160,7 +160,7 @@ sd
 
 res[,"padj"] <- p.adjust(res_fdr$pval, method = "BH")
 
-hist(res_fdr$pval, col = "gray",
+hist(res_fdr$pval, breaks=20, col = "gray",
      main = "Smoker vs. NonSkoer, correct null model", xlab = "Corrected p-values")
 ```
 ![Alt text](Rplot6.png)
