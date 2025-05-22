@@ -45,16 +45,14 @@ The total count read is used to create the offset. The offset will be adjusted a
 abund_table_28a$Offset <- log(abund_table_28a$nReads)
 head(abund_table_28a$Offset)
 head(abund_table_28a)
-```
-![Alt text](Rplot2.png)
-```r
+
 ID represents the identifier of a given subject
 nReads is the total number of reads in the sample
 DX is the group indicator (0 = non-pregnant; 1 = pregnant)
-Y is the number of sequences (count) for each ASV
+Y is the number of sequences (count) of Lactobacillus vaginalis
 Spec gives the species
 Ind is a numeric indicator for the ASV (1,…, 28)
-x = fx = DX
+fx = DX, but with (NP = non-pregnant; P = pregnant)
 
 # Create a Formula for Fitting ZIP and ZINB
 # The formula is used to specify both components of the model: counts and zeros
@@ -118,7 +116,7 @@ lrtest(ZHP28,ZHNB28)
 #lower is better
 t(AIC(ZIP28, ZINB28, ZHP28, ZHNB28))
 
-# ZINB and ZHNB fit the data best
+# ZINB and ZHNB fit the data best, but Zero-Inflated Negative Binomial (ZINB) is the best fit
 ```
 
 
