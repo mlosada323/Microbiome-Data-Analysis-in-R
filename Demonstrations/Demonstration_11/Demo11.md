@@ -45,7 +45,7 @@ The total count read is used to create the offset. The offset will be adjusted a
 abund_table_28a$Offset <- log(abund_table_28a$nReads)
 head(abund_table_28a$Offset)
 head(abund_table_28a)
-
+```
 ![Alt text](Rplot4.png)
 
 ID represents the identifier of a given subject
