@@ -18,12 +18,8 @@ library(dplyr)
 abund_table_28 <- filter(abund_table, Ind == 28)
 head(abund_table_28)
 
-# The following R codes create the group variable“x”, and define it as a factor
-abund_table_28$x<- with(abund_table_28,ifelse(as.factor(DX)%in% "0",0, 1))
-names(abund_table_28)
-
-abund_table_28$fx <- factor(abund_table_28$x)
-names(abund_table_28)
+# The following R codes create the group variable “x” where DX=="0" is "NP" and otherwise is "P"
+abund_table_28$fx <- factor(ifelse(abund_table_28$DX == "0", "NP", "P"), levels = c("NP", "P"))
 head(abund_table_28)
 View(abund_table_28)
 
