@@ -46,6 +46,8 @@ abund_table_28a$Offset <- log(abund_table_28a$nReads)
 head(abund_table_28a$Offset)
 head(abund_table_28a)
 
+![Alt text](Rplot4.png)
+
 ID represents the identifier of a given subject
 nReads is the total number of reads in the sample
 DX is the group indicator (0 = non-pregnant; 1 = pregnant)
