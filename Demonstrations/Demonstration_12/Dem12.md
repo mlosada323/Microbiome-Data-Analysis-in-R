@@ -141,7 +141,7 @@ Then, we can see the variance for mountainRange (random effects) is 339.7. Mount
 
 So the differences between mountain ranges explain ~60% of the variance that’s “left over” after the variance explained by our fixed effects
 
-## compare LME models
+## Compare LME models
 
 You should use maximum likelihood when comparing models with different fixed effects, so REML = FALSE
 ```r
