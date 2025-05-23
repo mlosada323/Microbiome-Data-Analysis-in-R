@@ -1,13 +1,6 @@
 # Linear mixed effects modelling in R
 
-You can read more about this tutorial here: https://ourcodingclub.github.io/tutorials/mixed-models/
-
-What is mixed effects modelling and why does it matter? 
-Longitudinal data are often complex and messy. We can have different grouping factors like populations, species, sites where we collect the data, etc. Sample sizes might leave something to be desired too, especially if we are trying to fit complicated models with many parameters. On top of that, our data points might not be truly independent. For instance, we might be using quadrats within our sites to collect the data (and so there is structure to our data: quadrats are nested within the sites). This is why mixed models were developed, to deal with such messy data and to allow us to use all our data, even when we have low sample sizes, structured data and many covariates to fit. Oh, and on top of all that, mixed models allow us to save degrees of freedom compared to running standard linear models! Sounds good, doesn’t it? 
-
-# Dragons
-
-We are going to focus on a fictional study system, dragons, so that we don’t have to get too distracted with the specifics of this example. Imagine that we decided to train dragons and so we went out into the mountains and collected data on dragon intelligence ( testScore) as a prerequisite. We sampled individuals with a range of body lengths across three sites in eight different mountain ranges. 
+We are going to focus on a fictional study system, dragons, so that we don’t have to get too distracted with the specifics of this example. Imagine that we decided to train dragons and so we went out into the mountains and collected data on dragon intelligence ( testScore) as a prerequisite. We sampled individuals with a range of body lengths in eight different mountain ranges at three different times (a, b and c)
 ```r
 # load the data and have a look at it
 load("dragons.RData")
@@ -27,7 +20,7 @@ dragons$bodyLength2 <- scale(dragons$bodyLength)
 head(dragons)
 ```
 Back to our question: is test score affected by body length?
-One way to analyse this data would be to try fitting a linear model to all our data, ignoring the sites and the mountain ranges for now.
+One way to analyse this data would be to try fitting a linear model to all our data, ignoring the times and the mountain ranges for now.
 Fit the model with testScore as the response and bodyLength2 as the predictor and have a look at the output
 ```r
 
@@ -91,8 +84,8 @@ ggplot(aes(bodyLength, testScore), data = dragons) + geom_point() +
     facet_wrap(~ mountainRange) +
     xlab("length") + ylab("test score")
 ```
-That’s eight analyses. Oh wait, we also have different sites in each mountain range, which similarly to mountain ranges aren’t independent. So we could run an analysis for each site in each range separately.
-To do the above, we would have to estimate a slope and intercept parameter for each regression. That’s two parameters, three sites and eight mountain ranges, which means 48 parameter estimates (2 x 3 x 8 = 48)! Moreover, the sample size for each analysis would be only 20 (dragons per site).
+That’s eight analyses. Oh wait, we also have different time points in each mountain range, which similarly to mountain ranges aren’t independent. So we could run an analysis for each time point in each range separately.
+To do the above, we would have to estimate a slope and intercept parameter for each regression. That’s two parameters, three times and eight mountain ranges, which means 48 parameter estimates (2 x 3 x 8 = 48)! Moreover, the sample size for each analysis would be only 20 (dragons per time point).
 This presents problems: not only are we hugely decreasing our sample size, but we are also increasing chances of a Type I Error (where you falsely reject the null hypothesis) by carrying out multiple comparisons. Not ideal!
 
 ## Option 2: Modify the model
@@ -108,7 +101,7 @@ Now body length is not significant. But let’s think about what we are doing he
 
 ## Option 3: Linear mixed effects models (LMM)
 
-A mixed model is a good choice here: it will allow us to use all the data we have (higher sample size) and account for the correlations between data coming from the sites and mountain ranges.  We will also estimate fewer parameters and avoid problems with multiple comparisons that we would encounter while using separate regressions
+A mixed model is a good choice here: it will allow us to use all the data we have (higher sample size) and account for the correlations between data collected across time points and mountain ranges. We will also estimate fewer parameters and avoid problems with multiple comparisons that we would encounter while using separate regressions
 
 Fixed and random effects
 Let’s talk a little about the difference between fixed and random effects first. It’s important to note that this difference has little to do with the variables themselves, and a lot to do with your research question! In many cases, the same variable could be considered either a random or a fixed effect (and sometimes even both at the same time!) so always refer to your questions and hypotheses to construct your models accordingly.
