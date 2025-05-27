@@ -1,14 +1,14 @@
 # LM, LMM, GLM, GLMM and Bayesian modeling of longitudinal data in R
 
+Let's say we want to understand how Moraxella relative abundance (predictor) impacts health status (response) and cyt abundance (response) while accounting for variation across time points and patient repeated measures
+You can’t linear model multiple dependent variables of different types (factor + numeric) simultaneously in a standard lmer() or glmer() setup. To do that, however, you can use Bayesian modeling. 
+Additionally you cannot use LM or LMM when your response variable is a factor, but you can use GLM or GLMM. Let's eee how
+
 ```r
 # load the data and have a look at it
 mora <- read.csv("demo12s.csv", header=TRUE, row.names = 1)
 head(mora)
 dim(mora)
-
-# Let's say we want to understand how Moraxella relative abundance (predictor) impacts health status (response) and cyt abundance (response) while accounting for variation across time points and patient repeated measures
-# You can’t linear model multiple dependent variables of different types (factor + numeric) simultaneously in a standard lmer() or glmer() setup.
-# Additionally you cannot you cannot use LM or LMM when your response variable is a factor. You must use GLM or GLMM
 
 # Have a look at the data distribution of the numerical responses
 hist(mora$cyt)
