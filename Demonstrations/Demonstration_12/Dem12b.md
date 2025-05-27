@@ -1,178 +1,160 @@
-# Linear mixed effects modelling in R
+# LM, LMM, GLM, GLMM and Bayesian modeling of longitudinal data in R
 
-We are going to focus on a fictional study system, dragons, so that we don’t have to get too distracted with the specifics of this example. Imagine that we decided to train dragons and so we went out into the mountains and collected data on dragon intelligence ( testScore) as a prerequisite. We sampled individuals with a range of body lengths in eight different mountain ranges at three different times (a, b and c)
 ```r
 # load the data and have a look at it
-load("dragons.RData")
-head(dragons)
+mora <- read.csv("demo12s.csv", header=TRUE, row.names = 1)
+head(mora)
+dim(mora)
 
-# Let's say we want to know how the body length affects test scores.
-## Have a look at the data distribution:
-hist(dragons$testScore)  
+# Let's say we want to understand how Moraxella relative abundance (predictor) impacts health status (response) and cyt abundance (response) while accounting for variation across time points and patient repeated measures
+# You can’t linear model multiple dependent variables of different types (factor + numeric) simultaneously in a standard lmer() or glmer() setup.
+# Additionally you cannot you cannot use LM or LMM when your response variable is a factor. You must use GLM or GLMM
 
-# seems close to normal distribution - good!
-```
-It is good practice to standardise your explanatory variables before proceeding so that they have a mean of zero (“centering”) and standard deviation of one (“scaling”). It ensures that the estimated coefficients are all on the same scale, making it easier to compare effect sizes. You can use scale() to do that:
+# Have a look at the data distribution of the numerical responses
+hist(mora$cyt)
+# it’s roughly bell-shaped, so I can use linear models
 
-scale() centers the data (the column mean is subtracted from the values in the column) and then scales it (the centered column values are divided by the column’s standard deviation)
-```r
-dragons$bodyLength2 <- scale(dragons$bodyLength)
-head(dragons)
-```
-Back to our question: is test score affected by body length?
-One way to analyse this data would be to try fitting a linear model to all our data, ignoring the times and the mountain ranges for now.
-Fit the model with testScore as the response and bodyLength2 as the predictor and have a look at the output
-```r
+# Have a look at the predictors using a box plot
+boxplot(Moraxella ~ timepoint, data = mora)
 
-library(lme4)
-library(lmerTest)
-
-basic.lm <- lm(testScore ~ bodyLength2, data = dragons)
-
-summary(basic.lm)
-
-# Let's plot the data with ggplot2
-
+# Let's also plot the data with ggplot2
 library(ggplot2)
-
-ggplot(dragons, aes(x = bodyLength, y = testScore)) +
+ggplot(mora, aes(x = cyt, y = Moraxella)) +
   geom_point()+
   geom_smooth(method = "lm")
 
-```
-Okay, so both from the linear model and from the plot, it seems like bigger dragons do better in our intelligence test. That seems a bit odd: size shouldn’t really affect the test scores.
+## Analysis using LM
+library(lme4)
+m1.lm <- lm(cyt~Moraxella + timepoint, data = mora)
+anova(m1.lm)
+# linear regression and ANOVA F-test to evaluate the significance of the predictors.
+# Analysis of Variance Table
+# 
+# Response: cyt
+# Df Sum Sq Mean Sq F value    Pr(>F)    
+# Moraxella   1  38538   38538 172.186 < 2.2e-16 ***
+# timepoint   7 109830   15690  70.103 < 2.2e-16 ***
+# Residuals 471 105417     224  
 
-But are assumptions of the lm met?
-```r
-# Plot the residuals - the red line should be close to being flat, like the dashed grey line
+# Sum Sq: Total variation explained
+# Moraxella explains 38,538 units of variation in cyt
+# timepoint explains 109,830
+# Residuals account for 105,417 (unexplained noise)
+# F value: Measures the ratio of explained variance to unexplained variance
+# Higher = stronger effect (Moraxella > Timepoint)
+# Pr(>F):P-value for the F test
+# Both predictors have very strong effects on cyt (p < 2e-16)
 
-plot(basic.lm, which = 1)  
+## Analysis using LMM
+library(lme4)
+m1.lmer <- lmer(cyt~Moraxella + timepoint + (1|patient), data = mora)
+anova(m1.lmer)
+# The singular fit warning suggests that the random effect (patient) might not be contributing meaningfully—worth checking its variance.
+# Type III Analysis of Variance Table with Satterthwaite's method
+#           Sum Sq Mean Sq NumDF DenDF F value Pr(>F)    
+# Moraxella      4     3.9     1   471  0.0175 0.8949    
+# timepoint 109830 15690.0     7   471 70.1029 <2e-16 ***
+# timepoint strongly influences cytokine levels.
+# Moraxella has no apparent effect on cytokines
 
-# not perfect, but look alright
+# The lm() model assumes all observations are independent, which they are not in your data (due to repeated measures per patient). 
+# So lm() underestimates standard errors → false positives.
+# lmer() accounts for repeated measures (within-patient correlation). It allows each patient to have their own baseline cytokine level (random intercept).
+# This absorbs a portion of the variance in cyt that would otherwise be attributed to Moraxella or other fixed effects.
+# lmer() also correctly reduces the effective sample size, leading to less power and wider confidence intervals.
+# Hence we should use LMM
 
-# Have a quick look at the  qqplot too - point should ideally fall onto the diagonal dashed line
+## compare LME models using different predictors
+# You should use maximum likelihood when comparing models with different fixed effects, so REML = FALSE
+m1.lmer <- lmer(cyt~1 + (1|patient), data = mora, REML = FALSE)
+m2.lmer <- lmer(cyt~Moraxella + (1|patient), data = mora, REML = FALSE)
+m3.lmer <- lmer(cyt~Moraxella + timepoint + (1|patient), data = mora, REML = FALSE)
+anova(m1.lmer, m2.lmer, m3.lmer)
 
-plot(basic.lm, which = 2)  
+## Analysis using GLM
+library(lme4)
+m1.glm <- glm(status ~ Moraxella + timepoint, data = mora, family = binomial) 
+anova(m1.glm)
 
-# a bit off at the extremes, but that's often the case; again doesn't look too bad
-```
-However, what about observation independence? Are our data independent?
-We collected multiple samples from eight mountain ranges
-It's perfectly plausible that the data from within each mountain range are more similar to each other than the data from different mountain ranges, they are correlated.
-```r
-# Have a look at the data to see if above is true
-boxplot(testScore ~ mountainRange, data = dragons)  
+## Analysis using GLMM
+library(lme4)
+m2.glmer <- glmer(status ~ Moraxella + timepoint + (1|patient), data = mora, family = binomial) 
+summary(m1.glmer)
+# Df Deviance Resid. Df Resid. Dev  Pr(>Chi)    
+# NULL                        479     665.12              
+# Moraxella  1    8.132       478     656.99  0.004349 ** 
+# timepoint  7   47.608       471     609.38 4.248e-08 ***
+# NULL row: This is the intercept-only model (model without predictors). It serves as a baseline for evaluating whether adding predictors significantly improves the model. It has a total deviance = 665.12.
+# Moraxella: Adding Moraxella to the model reduces the deviance by 8.13 points, which is statistically significant: p-value = 0.0043
+# Interpretation: Moraxella abundance significantly improves prediction of status (e.g., sick vs. healthy), controlling for nothing else yet.
+# timepoint: Adding timepoint (after Moraxella) reduces deviance by 47.61 points — highly significant: p-value < 0.0000001
+# Interpretation: Timepoint is a very strong predictor of status, over and above Moraxella.
 
-# certainly looks like something is going on here
+m1.glmer <- glmer(status ~ Moraxella + (1|patient), data = mora, family = binomial) 
+summary(m1.glmer)
+# Generalized linear mixed model fit by maximum likelihood (Laplace Approximation) ['glmerMod']
+# Family: binomial  ( logit )
+# Formula: status ~ Moraxella + (1 | patient)
+# Data: mora
+# AIC      BIC   logLik deviance df.resid 
+# 143.6    156.1    -68.8    137.6      477 
+# Scaled residuals: 
+#   Min      1Q  Median      3Q     Max 
+# -2.9671 -0.0850  0.0008  0.0021  3.3501
+# These help assess model fit. Your residuals are mostly centered near 0, but you have some large residuals (Max ≈ 3.35), suggesting a few outliers or mismatches between prediction and observed outcome.
+# Random effects:
+# Groups  Name        Variance Std.Dev.
+# patient (Intercept) 397.7    19.94   
+# Number of obs: 480, groups:  patient, 20
+# There is substantial variability between patients. Std.Dev of 19.94 (on the logit scale) suggests wide differences in baseline probability of being sick per patient.
+# Fixed effects:
+# Estimate Std. Error z value Pr(>|z|)    
+# (Intercept)   -7.359      4.896  -1.503 0.132801    
+# Moraxella     97.726     26.763   3.651 0.000261 ***
+# Since the coefficient for Moraxella is large and positive, this suggests a strong, statistically significant positive association: higher Moraxella → higher chance of status 1 (i.e., [0]"disease" [1]"healthy").
+# Correlation of Fixed Effects:
+#   (Intr)
+# Moraxella -0.894
 
-# We could also plot it colouring points by mountain range
-ggplot(dragons, aes(x = bodyLength, y = testScore, colour = mountainRange))+
-  geom_point(size = 2)+
-  theme_classic()+
-    theme(legend.position = "none")
-```
-From the above plots it looks like our mountain ranges vary both in the dragon body length and in their test scores. This confirms that our observations from within each of the ranges aren't independent. We can't ignore that. 
-So what do we do?
+# compare GLMM models
+anova(m1.glmer, m2.glmer)
+AIC(m1.glm, m1.glmer, m2.glmer) # not nested models
+BIC(m1.glm, m1.glmer, m2.glmer) # not nested models
 
-## Option 1: Run multiple analyses
+## Analysis using Bayesian Joint Model
+# model both cyt and health status simultaneously with shared predictors/random effects using Bayesian Joint Model
+install.packages("brms")
+library(brms)
+joint_model <- brm(mvbind(status, cyt) ~ Moraxella + timepoint + (1 | patient),
+  data = mora,
+  family = list(bernoulli(), gaussian()))  # for binary status and continuous cytokine
+# A Bernoulli GLMM for status (binary outcome: e.g., healthy vs sick)
+# A Gaussian LMM for cyt (cytokine abundance, continuous)
+# Both models share fixed effects: Moraxella, timepoint, and random intercepts for patient
+summary(joint_model)
 
-We could run many separate analyses and fit a regression for each of the mountain ranges
-```r
-# Lets have a quick look at the data split by mountain range. We use the facet_wrap to do that
+# sd(status_Intercept) = 19.03
+# sd(cyt_Intercept) = 1.16
+# This suggests substantial inter-patient variation in baseline status (which is logistic, so it's on the log-odds scale).
+# Less variation in cyt (continuous)
+# Estimate:	Posterior mean (Bayesian equivalent of coefficient)
+# Rhat:	Convergence diagnostic — should be ~1.00
+# status_Moraxella = 299.12 (CI: 122.25 – 539.60). Strong positive association between Moraxella abundance and the probability of status = 1 (i.e., [0]"disease" [1]"healthy").
+# CI excludes 0 → statistically credible effect
+# cyt_Moraxella = -8.66 (CI: -176.71 to 156.31)
+# Wide credible interval including 0 → uncertain effect of Moraxella on cytokine level.
+# Low certainty, possibly no effect.
+# status_timepointTimeX & cyt_timepointTimeX
+# Timepoint has strong associations with both outcomes.
+# All status_timepoint terms have negative coefficients → decreasing probability of illness over time?
+# cyt_timepoint terms show clear positive/variable effects → cytokines fluctuate significantly with time.
+conditional_effects(joint_model)
+# plot 1: status	Moraxella	Shows how the probability of being sick changes with Moraxella abundance. Y-axis is on probability scale (logit-transformed).
+# plot 2: cyt	Moraxella	Shows how cytokine abundance changes with Moraxella abundance. Y-axis is on raw scale (Gaussian).
+# plot 3: status	timepoint	Estimated probability of being sick at each timepoint. Each dot = marginal estimate; error bars = credible intervals.
+# plot 4: cyt	timepoint	Same, but showing cytokine levels across timepoints.
+hypothesis(joint_model, "status_Moraxella = 0")
+hypothesis(joint_model, "cyt_Moraxella = 0")
+hypothesis(joint_model, "status_timepointTime2 = 0")
 
-ggplot(aes(bodyLength, testScore), data = dragons) + geom_point() +
-    facet_wrap(~ mountainRange) +
-    xlab("length") + ylab("test score")
-```
-That’s eight analyses. Oh wait, we also have different time points in each mountain range, which similarly to mountain ranges aren’t independent. So we could run an analysis for each time point in each range separately.
-To do the above, we would have to estimate a slope and intercept parameter for each regression. That’s two parameters, three times and eight mountain ranges, which means 48 parameter estimates (2 x 3 x 8 = 48)! Moreover, the sample size for each analysis would be only 20 (dragons per time point).
-This presents problems: not only are we hugely decreasing our sample size, but we are also increasing chances of a Type I Error (where you falsely reject the null hypothesis) by carrying out multiple comparisons. Not ideal!
-
-## Option 2: Modify the model
-
-We want to use all the data, but account for the data coming from different mountain ranges
-```r
-# let's add mountain range as a fixed effect to our basic.lm
-
-mountain.lm <- lm(testScore ~ bodyLength2 + mountainRange, data = dragons)
-summary(mountain.lm)
-```
-Now body length is not significant. But let’s think about what we are doing here for a second. The above model is estimating the difference in test scores between the mountain ranges - we can see all of them in the model output returned by summary(). But we are not interested in quantifying test scores for each specific mountain range: we just want to know whether body length affects test scores and we want to simply control for the variation coming from mountain ranges. This is what we refer to as “random factors” and so we arrive at mixed effects models. Ta-daa!
-
-## Option 3: Linear mixed effects models (LMM)
-
-A mixed model is a good choice here: it will allow us to use all the data we have (higher sample size) and account for the correlations between data collected across time points and mountain ranges. We will also estimate fewer parameters and avoid problems with multiple comparisons that we would encounter while using separate regressions
-
-Fixed and random effects
-Let’s talk a little about the difference between fixed and random effects first. It’s important to note that this difference has little to do with the variables themselves, and a lot to do with your research question! In many cases, the same variable could be considered either a random or a fixed effect (and sometimes even both at the same time!) so always refer to your questions and hypotheses to construct your models accordingly.
-
-Should my variables be fixed or random effects?
-In broad terms, fixed effects are variables that we expect will have an effect on the dependent/response variable: they’re what you call explanatory variables in a standard linear regression. In our case, we are interested in making conclusions about how dragon body length impacts the dragon’s test score. So body length is a fixed effect and test score is the dependent variable.
-On the other hand, random effects are usually grouping factors for which we are trying to control. They are always categorical, as you can’t force R to treat a continuous variable as a random effect. A lot of the time we are not specifically interested in their impact on the response variable, but we know that they might be influencing the patterns we see. Additionally, the data for our random effect is just a sample of all the possibilities: with unlimited time and funding we might have sampled every mountain where dragons live, but we usually tend to generalise results to a whole population based on representative sampling.
-In our particular case, we are looking to control for the effects of mountain range. We haven’t sampled all the mountain ranges in the world (we have eight) so our data are just a sample of all the existing mountain ranges. We are not really interested in the effect of each specific mountain range on the test score: we hope our model would also be generalisable to dragons from other mountain ranges! However, we know that the test scores from within the ranges might be correlated so we want to control for that. If we specifically chose eight particular mountain ranges a priori and we were interested in those ranges and wanted to make predictions about them, then mountain range would be fitted as a fixed effect
-Note that the golden rule is that you generally want your random effect to have at least five levels. So, for instance, if we wanted to control for the effects of dragon’s sex on intelligence, we would fit sex (a two level factor: male or female) as a fixed, not random, effect.
-
-Let’s fit our first mixed model
-We have a response variable, the test score and we are attempting to explain part of the variation in test score through fitting body length as a
-fixed effect. But the response variable has some residual variation (i.e. unexplained variation) associated with mountain ranges. By using random effects, we are modeling that unexplained variation through variance
-
-```r
-# Fit the LMM
-
-# LMM general formula: lmer(response variable ~ fixed effect + random effect, data)
-  
-mixed.lmer <- lmer(testScore ~ bodyLength2 + (1|mountainRange), data = dragons)
-summary(mixed.lmer)
-```
-Take a look at the ouput:
-
-First, dragon's body length does not seem to impact dragon’s test score
-
-Then, we can see the variance for mountainRange (random effects) is 339.7. Mountain ranges are clearly important, they explain a lot of variation. How do we know that? We can take the variance for the mountainRange and divide it by the total variance:
-
-339.7/(339.7 + 223.8)=0.60 ~60 %
-
-So the differences between mountain ranges explain ~60% of the variance that’s “left over” after the variance explained by our fixed effects
-
-## Compare LME models
-
-You should use maximum likelihood when comparing models with different fixed effects, so REML = FALSE
-```r
-full.lmer <- lmer(testScore ~ bodyLength2 + (1|mountainRange), data = dragons, REML = FALSE)
-
-# a reduced LMM model in which we dropped our fixed effect
-reduced.lmer <- lmer(testScore ~ 1 + (1|mountainRange), data = dragons, REML = FALSE)
-
-anova(reduced.lmer, full.lmer)  
-
-# The Akaike Information Criteria is also a good criterion of the quality of the model
-AIC(reduced.lmer, full.lmer)
-
-# the two models are not significantly different, as expected since dragon's body length does not impact dragon’s test score
-
-```
-# Microbiome data
-
-Now we want to test if microbial diversity estimates (response variable) is impacted by skin region and gender (fixed effect) while contoling by patient (random effects) 
-```r
-# load RDS file 
-readRDS(file = "Demo6b.RDS") -> physeq
-physeq
-
-# phyloseq: The following R commands estimate multiple indices
-diver<-estimate_richness(physeq, measures=c("Chao1","Shannon"))
-
-# Add diversity indices to metadata
-diver_all<-cbind(sample_data(physeq),diver)
-head(diver_all)
-
-t1 <- lmer(Shannon ~ region + gender +(1|patient), data = diver_all)
-anova(t1)
-summary(t1)
-
-# The emmeans package can be used to adjust p-values by taking multiple comparisons into consideration
-library(emmeans)
-contrast(emmeans(t1, specs="region"), "pairwise")
-
-# We can conclude that skin region impacts Shannon diversity 
 ```
