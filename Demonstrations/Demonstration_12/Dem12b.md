@@ -62,7 +62,7 @@ anova(m1.lmer)
 # lmer() also correctly reduces the effective sample size, leading to less power and wider confidence intervals.
 # Hence we should use LMM
 ```
-## compare LME models using different predictors
+### Compare LME models using different predictors
 ```r
 # You should use maximum likelihood when comparing models with different fixed effects, so REML = FALSE
 m1.lmer <- lmer(cyt~1 + (1|patient), data = mora, REML = FALSE)
@@ -113,7 +113,7 @@ summary(m1.glmer)
 # Moraxella     97.726     26.763   3.651 0.000261 ***
 # Since the coefficient for Moraxella is large and positive, this suggests a strong, statistically significant positive association: higher Moraxella → higher chance of status 1 (i.e., [0]"disease" [1]"healthy").
 ```
-# compare GLMM models
+### compare GLMM models
 ```r
 anova(m1.glmer, m2.glmer)
 AIC(m1.glm, m1.glmer, m2.glmer) # not nested models
@@ -153,7 +153,7 @@ hypothesis(joint_model, "status_Moraxella = 0")
 hypothesis(joint_model, "cyt_Moraxella = 0")
 hypothesis(joint_model, "status_timepointTime2 = 0")
 ```
-# Plot results
+### Plot results
 ```r
 conditional_effects(joint_model)
 
