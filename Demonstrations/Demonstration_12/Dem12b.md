@@ -135,6 +135,7 @@ joint_model <- brm(mvbind(status, cyt) ~ Moraxella + timepoint + (1 | patient),
   data = mora,
   family = list(bernoulli(), gaussian()))  # for binary status and continuous cytokine
 
+# mvbind: Bind response variables in multivariate models
 # A Bernoulli GLMM for status (binary outcome: e.g., healthy vs sick)
 # A Gaussian LMM for cyt (cytokine abundance, continuous)
 # Both models share fixed effects: Moraxella, timepoint, and random intercepts for patient
