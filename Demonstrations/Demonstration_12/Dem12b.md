@@ -13,15 +13,21 @@ dim(mora)
 # Have a look at the data distribution of the numerical responses
 hist(mora$cyt)
 # it’s roughly bell-shaped (normal), so you can use linear models
-
+```
+![Alt text](Image1.png)
+```r
 # Have a look at the predictors using a box plot
 boxplot(Moraxella ~ timepoint, data = mora)
-
+```
+![Alt text](Image2.png)
+```r
 # Let's also plot the data with ggplot2
 library(ggplot2)
 ggplot(mora, aes(x = cyt, y = Moraxella)) +
   geom_point()+
   geom_smooth(method = "lm")
+
+![Alt text](Image3.png)
 ```
 ## Analysis using LM
 ```r
