@@ -172,3 +172,30 @@ conditional_effects(joint_model)
 ```
 ![Alt text](Presentation1.png)
 
+### Compare Bayesian models
+```r
+# we can use LOO-CV (Leave-One-Out cross-validation) to compare Bayesian models
+joint_model_r <- brm(mvbind(status, cyt) ~ Moraxella + (1 | patient),
+                   data = mora,
+                   family = list(bernoulli(), gaussian()))
+
+loo_full <- loo(joint_model)
+loo_reduced <- loo(joint_model_r)
+
+loo_compare(loo_full, loo_reduced)
+
+#                  elpd_diff se_diff
+# joint_model      0.0       0.0 
+# joint_model_r -169.1      16.2 
+
+# elpd_diff is the difference in expected log predictive density (ELPD) between models
+# The first row is always the best model, so its elpd_diff is 0.0.
+# The second row (joint_model_r) is 169.1 points worse in predictive accuracy.
+# se_diff is the standard error of the difference — here, about 16.2.
+# A difference of 169.1 in ELPD with a standard error of 16.2 is statistically and practically very large.
+# Hence, the full model (Moraxella and timepoint) has significantly better out-of-sample predictive performance than the reduced model (Moraxella)
+# Rule of thumb: If elpd_diff / se_diff > ~4, the model with higher ELPD is clearly better.
+# Here: 169.1 / 16.2 ≈ 10.4 → Very strong evidence in favor of the full model.
+# Conclusion: The model including both Moraxella and timepoint fits the data much better and generalizes far better than the model with only Moraxella.
+```
+
