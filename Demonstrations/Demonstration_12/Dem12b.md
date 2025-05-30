@@ -168,3 +168,5 @@ conditional_effects(joint_model)
 # plot 3: status	timepoint	Estimated probability of being sick at each timepoint. Each dot = marginal estimate; error bars = credible intervals.
 # plot 4: cyt	timepoint	Same, but showing cytokine levels across timepoints.
 ```
+![Alt text](Presentation1.pdf)
+
