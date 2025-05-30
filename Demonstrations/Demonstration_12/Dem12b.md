@@ -26,11 +26,11 @@ library(ggplot2)
 ggplot(mora, aes(x = cyt, y = Moraxella)) +
   geom_point()+
   geom_smooth(method = "lm")
-
-![Alt text](Image3.png)
 ```
+![Alt text](Image3.png)
+
 ## Analysis using LM
-```r
+```
 library(lme4)
 m1.lm <- lm(cyt~Moraxella + timepoint, data = mora)
 anova(m1.lm)
