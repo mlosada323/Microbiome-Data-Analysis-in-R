@@ -31,6 +31,7 @@ ggplot(mora, aes(x = cyt, y = Moraxella)) +
 
 ## Analysis using LM
 ```
+install.packages("lme4")
 library(lme4)
 m1.lm <- lm(cyt~Moraxella + timepoint, data = mora)
 anova(m1.lm)
