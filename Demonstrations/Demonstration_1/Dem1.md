@@ -206,8 +206,8 @@ group_s <- ifelse(iris$Species %in% "setosa",1,
                   ifelse(iris$Species %in% "versicolor",2,3))
 group_s
 ```
-# Quiz
-# Once you have completed the Demonstration in GitHub respond to the following questions. Paste scripts
+## Quiz 1
+### Once you have completed the Demonstration in GitHub respond to the following questions. Paste scripts
 
 # 1 Is the R package ALDEx2 installed?
  
