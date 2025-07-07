@@ -7,5 +7,6 @@ Sincerely,
 Marcos
 
 # Timeline
-Paste table here
+```
+![Alt text](Session Outline.pdf)
 
