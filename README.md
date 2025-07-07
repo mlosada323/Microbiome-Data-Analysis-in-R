@@ -7,9 +7,9 @@ Sincerely,
 Marcos
 
 # Problem Sets Schedule
-| Metric             | Value     | Change vs Q1 | Notes                         |
-|--------------------|-----------|---------------|-------------------------------|
-| Users Registered   | 2,340     | +12%          | Highest growth in April       |
-| Active Users       | 1,420     | +8%           | Weekly average                |
-| Crash Reports      | 15        | -25%          | Stability improvements noted  |
-| Avg. Session Time  | 7.2 mins  | +0.5 mins     | Slight increase           
+| Problem Set        | Due day     |
+|--------------------|-------------|
+| PS1                |August 28    |
+| PS2                |September 4  |
+| PS3                |September 11 |
+     
