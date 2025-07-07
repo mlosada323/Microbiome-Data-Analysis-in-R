@@ -12,4 +12,13 @@ Marcos
 | PS1                |August 28    |
 | PS2                |September 4  |
 | PS3                |September 11 |
-     
+| PS4                |September 18 |
+| PS5                |September 25 |
+| PS6                |October 2    |
+| PS7                |October 16   |
+| PS8                |October 23   |
+| PS9                |October 30   |
+| PS10               |November 6   |
+| PS11               |November 13  |
+| PS12               |November 20  |
+| PS13               |December 4   |
