@@ -206,26 +206,27 @@ group_s <- ifelse(iris$Species %in% "setosa",1,
                   ifelse(iris$Species %in% "versicolor",2,3))
 group_s
 ```
+
 ## Quiz 1
 Once you have completed the Demonstration in GitHub respond to the following questions. Paste scripts
 
 ### 1 Is the R package ALDEx2 installed?
  
-# 2 Create a data frame of the iris dataset by subsetting columns 2,3 and 4. Paste top rows
+### 2 Create a data frame of the iris dataset by subsetting columns 2,3 and 4. Paste top rows
 
-# 3 Create the same data frame above by selecting their corresponding column names. Paste top rows
+### 3 Create the same data frame above by selecting their corresponding column names. Paste top rows
 
-# 4 Create data frame of the iris dataset by selecting the columns named Sepal.Width and Petal.Width and paste the top rows (default)
+### 4 Create data frame of the iris dataset by selecting the columns named Sepal.Width and Petal.Width and paste the top rows (default)
  
-# 5 What is the number of elements (rows) in Petal.Width column from the iris data frame?
+### 5 What is the number of elements (rows) in Petal.Width column from the iris data frame?
 
-# 6 Estimate the mean across columns with numerical values in the iris data set  
+### 6 Estimate the mean across columns with numerical values in the iris data set  
 
-# 7 Convert the tab data set to % but exclude all columns from 2 to 8. Paste top rows
+### 7 Convert the tab data set to % but exclude all columns from 2 to 8. Paste top rows
 
-# 8 Selects all rows from the data frame tab where the mean of the values in that row is greater than 40. Paste top rows
+### 8 Selects all rows from the data frame tab where the mean of the values in that row is greater than 40. Paste top rows
 
-# 9 sort entrire tab dataset in ascending order by label math. Paste top results
+### 9 sort entrire tab dataset in ascending order by label math. Paste top results
 
-# 10 Recode Petal.Length in iris data set based on original values and create a new vector assigning a "2" to values >2 and a "3" to any other values. Paste full vector 
+### 10 Recode Petal.Length in iris data set based on original values and create a new vector assigning a "2" to values >2 and a "3" to any other values. Paste full vector 
 
