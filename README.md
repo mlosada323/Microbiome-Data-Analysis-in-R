@@ -6,7 +6,4 @@ Sincerely,
 
 Marcos
 
-# Timeline
-```
-![Alt text](Session Outline.pdf)
 
