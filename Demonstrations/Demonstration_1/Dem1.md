@@ -207,9 +207,9 @@ group_s <- ifelse(iris$Species %in% "setosa",1,
 group_s
 ```
 ## Quiz 1
-### Once you have completed the Demonstration in GitHub respond to the following questions. Paste scripts
+Once you have completed the Demonstration in GitHub respond to the following questions. Paste scripts
 
-# 1 Is the R package ALDEx2 installed?
+### 1 Is the R package ALDEx2 installed?
  
 # 2 Create a data frame of the iris dataset by subsetting columns 2,3 and 4. Paste top rows
 
